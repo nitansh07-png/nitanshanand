@@ -1,0 +1,14 @@
+# Nitansh Anand, portfolio
+#
+# Everything real is open to every crawler. The only things closed off are the
+# single-file bundles that tools/build-standalone.js generates. They inline the
+# CSS, JS and images of index.html and agent-mode.html, so the markup differs but
+# the content is the same, and indexing them would compete with the originals.
+
+User-agent: *
+Allow: /
+
+Disallow: /portfolio-standalone.html
+Disallow: /agent-mode-standalone.html
+
+Sitemap: https://nitanshanand.com/sitemap.xml

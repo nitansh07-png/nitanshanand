@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Nitansh Anand, a product designer who builds systems</title>
+<meta name="description" content="Nitansh Anand, a product designer working on design systems and enterprise UX. Career, selected work and writing." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://nitanshanand.com/" />
+
+<!-- Social preview. og:image is intentionally omitted until there are real
+     1200x630 cards; a badly cropped one reads worse than a text preview. -->
+<meta property="og:type" content="profile" />
+<meta property="og:url" content="https://nitanshanand.com/" />
+<meta property="og:title" content="Nitansh Anand, a product designer who builds systems" />
+<meta property="og:description" content="Nitansh Anand, a product designer working on design systems and enterprise UX. Career, selected work and writing." />
+<meta property="og:site_name" content="Nitansh Anand" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Nitansh Anand, a product designer who builds systems" />
+<meta name="twitter:description" content="Nitansh Anand, a product designer working on design systems and enterprise UX. Career, selected work and writing." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script src="analytics.js" defer></script>
+<script>
+  /* Set theme before first paint so there is no flash. */
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("theme"); } catch (e) {}
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    var dark = t === "dark" || (t !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("theme-dark", dark);
+  })();
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="gutter">
+    <div class="col-wide header-bar">
+      <a class="site-signature" href="#top" aria-label="Nitansh Anand, home">
+        <span class="site-signature-mark" aria-hidden="true">Nitansh&nbsp;Anand</span>
+        <span class="site-signature-name" aria-hidden="true">
+          <span class="site-signature-photo"></span>
+          Nitansh Anand
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#labs">Labs</a>
+        <a href="#ask" class="nav-ask">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="nav-label">Ask me anything</span>
+        </a>
+        <a href="agent-mode.html" class="agent-mode-link">
+          <span class="agent-launcher-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="nav-label">Playground</span>
+        </a>
+
+        <button type="button" class="theme-toggle" aria-label="Switch colour theme" title="Switch colour theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.5"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="home-page" id="main">
+
+  <!-- ─────────────────────────  HERO  ───────────────────────── -->
+  <section class="section gutter hero-section" id="top">
+    <div class="col-wide">
+
+      <div class="home-heading">
+        <!-- Small circular slot above the copy. Swap the image for anything. -->
+        <div class="hero-widget">
+          <img src="assets/portrait.jpg" alt="Nitansh Anand" width="400" height="400" decoding="async" />
+        </div>
+
+        <div class="home-copy">
+          <h1 class="t-display home-title" id="hero-title">I turn enterprise complexity into patterns engineers can reuse.</h1>
+
+      <p class="t-lede home-intro">
+        I&rsquo;m Nitansh Anand, a product designer working on design systems and enterprise UX. Over 2+ years I&rsquo;ve
+        worked with
+        <span class="brand-wrap" data-tooltip="System Design Intern, Sep 2023–Nov 2023"><button type="button" class="inline-brand company-brand brand-trigger" style="--brand-color:#c8102e" data-buzz="3.3 million riders a day."><span class="brand-logo"><img src="assets/logos/dmrc.webp" alt="" loading="lazy" decoding="async" width="24" height="24" /></span><span class="brand-name">Delhi Metro</span></button></span>
+        and
+        <span class="brand-wrap" data-tooltip="UX Design Intern, Jan 2024–Jul 2024"><button type="button" class="inline-brand company-brand brand-trigger" style="--brand-color:#c9a227" data-buzz="Where the interning happened."><span class="brand-logo"><img src="assets/logos/maxlence.webp" alt="" loading="lazy" decoding="async" width="24" height="24" /></span><span class="brand-name">Maxlence</span></button></span>,
+        and I&rsquo;m currently an Associate Product Designer at
+        <span class="brand-wrap" data-tooltip="Associate Product Designer, Oct 2024–Present"><button type="button" class="inline-brand company-brand brand-trigger" style="--brand-color:#1f6feb" data-buzz="Current employer. Hi, team."><span class="brand-logo"><img src="assets/logos/bigohtech.webp" alt="" loading="lazy" decoding="async" width="24" height="24" /></span><span class="brand-name">BigOhTech</span></button></span>.
+      </p>
+
+      <p class="t-lede home-intro">
+        I own the system side end to end: tokens, master components, accessibility and developer handoff.
+        Lately that means
+        <span class="brand-wrap" data-tooltip="Design systems: tokens, components, prototypes, specs"><button type="button" class="inline-brand company-brand brand-trigger" style="--brand-color:#f24e1e" data-buzz="Where the pixels live."><span class="brand-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 24a3.5 3.5 0 0 0 3.5-3.5V17H8.5a3.5 3.5 0 0 0 0 7Z" fill="#0acf83"/><path d="M5 13.5A3.5 3.5 0 0 1 8.5 10H12v7H8.5A3.5 3.5 0 0 1 5 13.5Z" fill="#a259ff"/><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3H12v7H8.5A3.5 3.5 0 0 1 5 6.5Z" fill="#f24e1e"/><path d="M12 3h3.5a3.5 3.5 0 1 1 0 7H12V3Z" fill="#ff7262"/><path d="M19 13.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" fill="#1abcfe"/></svg></span><span class="brand-name">Figma</span></button></span>,
+        <span class="brand-wrap" data-tooltip="Token architecture: the system the components are built on"><button type="button" class="inline-brand company-brand brand-trigger" style="--brand-color:#6750a4" data-buzz="Google&rsquo;s rules, my problem."><span class="brand-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="#6750a4"/><path d="M12 4.2A7.8 7.8 0 0 0 12 19.8Z" fill="#d0bcff"/><path d="M12 7.1a4.9 4.9 0 0 1 0 9.8Z" fill="#eaddff"/></svg></span><span class="brand-name">Material&nbsp;3</span></button></span>,
+        <span class="brand-wrap" data-tooltip="Component library: what engineering actually ships against"><button type="button" class="inline-brand company-brand brand-trigger" style="--brand-color:#dd0031" data-buzz="The handoff lingua franca."><span class="brand-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.2 2.4 4.6l1.5 12.6L12 22.8l8.1-5.6 1.5-12.6L12 1.2Z" fill="#dd0031"/><path d="M12 1.2v21.6l8.1-5.6 1.5-12.6L12 1.2Z" fill="#c3002f"/><path d="M12 4.6 6 17.4h2.2l1.2-3h5.2l1.2 3H18L12 4.6Zm1.8 8.1h-3.6L12 8.3l1.8 4.4Z" fill="#fff"/></svg></span><span class="brand-name">Angular&nbsp;Material</span></button></span>
+        and
+        <span class="brand-wrap" data-tooltip="Building: taking the design all the way into the codebase"><button type="button" class="inline-brand company-brand brand-trigger" style="--brand-color:#c96442" data-buzz="My noisiest collaborator."><span class="brand-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6c.4 0 .7.3.8.6l1 4.3 3.2-3a.8.8 0 0 1 1.2 1.1l-3 3.2 4.3 1a.8.8 0 0 1 0 1.5l-4.3 1 3 3.2a.8.8 0 0 1-1.2 1.1l-3.2-3-1 4.3a.8.8 0 0 1-1.6 0l-1-4.3-3.2 3a.8.8 0 0 1-1.2-1.1l3-3.2-4.3-1a.8.8 0 0 1 0-1.5l4.3-1-3-3.2a.8.8 0 1 1 1.2-1.1l3.2 3 1-4.3c.1-.3.4-.6.8-.6Z" fill="#c96442"/></svg></span><span class="brand-name">Claude&nbsp;Code</span></button></span>.
+        I work closely with engineering and founders, turning loose briefs into patterns that ship.
+      </p>
+
+          <div class="home-contact-actions">
+        <a data-buzz="The evidence, this way." class="home-contact-button" href="#work">Explore my work</a>
+        <span class="resume-hint">
+          <a data-buzz="One page. I promise." class="home-resume-button" href="Nitansh-Anand-Resume.pdf" download>Download resume</a>
+          <!-- Page 1 rendered from the PDF. Regenerate with tools/build-resume-preview.md
+               if the resume changes. Decorative: the link itself is the content. -->
+          <span class="resume-peek" aria-hidden="true">
+            <img data-src="assets/resume-preview.webp" alt="" width="720" height="932" decoding="async" />
+            <span class="resume-peek-foot">1 page &middot; PDF</span>
+          </span>
+        </span>
+
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button" class="ask-launcher" id="ask">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><path d="m20 20-3.6-3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span class="ask-launcher-copy">
+          <span>Ask me anything.</span>
+          <span class="ask-hint">Design systems, accessibility, enterprise UX, or shipping with AI</span>
+        </span>
+        <span class="ask-go" aria-hidden="true">&#8594;</span>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ──────────────────────  CLAUDE CODE TOKENS  ────────────────────── -->
+
+  <!-- ─────────────────────────  PROOF  ─────────────────────────
+       The hero makes claims; this is where they get their receipts. Every
+       number here is already asserted elsewhere on the page or in a linked
+       case study. Nothing is stated only in this band. -->
+  <section class="section gutter" id="proof">
+    <div class="col-wide">
+      <div class="proof-head">
+        <div class="proof-title">
+          <p class="eyebrow">What the work moved</p>
+          <h2 class="t-section">Claims are cheap.<br />These aren&rsquo;t.</h2>
+        </div>
+        <p class="proof-note">
+          Four outcomes from shipped work: the company site, a section library,
+          an AI assistant, and DigiLawyer&rsquo;s service pages. Each one is what
+          the work produced, not a description of what I did.
+        </p>
+      </div>
+
+      <ol class="proof-grid">
+        <li data-buzz="Testing, not taste.">
+          <b>40%</b>
+          <span>Conversion lift on the company site I designed and launched</span>
+        </li>
+        <li data-buzz="Three months of work, deleted.">
+          <b>3 &rarr; 1 month</b>
+          <span>Launch time for a new product site, on one section library</span>
+        </li>
+        <li data-buzz="Under a minute to &ldquo;oh, I get it&rdquo;.">
+          <b>58s</b>
+          <span>To a first useful action in the Costimizer assistant, over 35 sessions</span>
+        </li>
+        <li data-buzz="Built once. Used three ways.">
+          <b>3 page types</b>
+          <span>Assembled from one set of DigiLawyer sections, by the wider team</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ─────────────────────  SELECTED WORK  ─────────────────────
+       Three projects: one lead, two beside it. Text-led for now, because the
+       repository has no product screenshots and inventing interface imagery
+       would be worse than going without. Each card reserves a .work-visual
+       slot that takes over the moment a real image lands, so adding one will
+       not move the layout. -->
+  <section class="section gutter" id="work">
+    <div class="col-wide">
+      <h2 class="t-section">Selected work</h2>
+
+      <ol class="work-grid">
+
+        <li class="work-item work-item--lead">
+          <article class="work-card" data-buzz="Built once. Shipped three times.">
+            <div class="work-meta">
+              <span class="work-kind">Design systems</span>
+              <span class="project-card-status project-card-status--live">Live</span>
+            </div>
+            <h3 class="work-headline">One section library now assembles <mark class="highlight">three live SaaS products</mark></h3>
+            <span class="work-visual work-visual--lib" aria-hidden="true">
+              <svg viewBox="0 0 400 130" preserveAspectRatio="xMidYMid meet" role="img">
+                <title>Five named section types, each with variants, assembling into three different pages</title>
+                <rect class="wv-panel" x="2" y="6" width="182" height="118" rx="6"/>
+                <text class="wv-t" x="12" y="28">Hero</text><rect class="wv-chip is-on" x="96" y="19" width="22" height="10" rx="3"/><rect class="wv-chip" x="122" y="19" width="22" height="10" rx="3"/><rect class="wv-chip" x="148" y="19" width="22" height="10" rx="3"/>
+                <text class="wv-t" x="12" y="49">Features</text><rect class="wv-chip" x="96" y="40" width="22" height="10" rx="3"/><rect class="wv-chip" x="122" y="40" width="22" height="10" rx="3"/><rect class="wv-chip" x="148" y="40" width="22" height="10" rx="3"/>
+                <text class="wv-t" x="12" y="70">Quotes</text><rect class="wv-chip" x="96" y="61" width="22" height="10" rx="3"/><rect class="wv-chip" x="122" y="61" width="22" height="10" rx="3"/><rect class="wv-chip" x="148" y="61" width="22" height="10" rx="3"/>
+                <text class="wv-t" x="12" y="91">Timeline</text><rect class="wv-chip" x="96" y="82" width="22" height="10" rx="3"/><rect class="wv-chip" x="122" y="82" width="22" height="10" rx="3"/><rect class="wv-chip" x="148" y="82" width="22" height="10" rx="3"/>
+                <text class="wv-t" x="12" y="112">Pricing</text><rect class="wv-chip" x="96" y="103" width="22" height="10" rx="3"/><rect class="wv-chip" x="122" y="103" width="22" height="10" rx="3"/><rect class="wv-chip" x="148" y="103" width="22" height="10" rx="3"/>
+                <path class="wv-arrow" d="M198 65h22"/>
+                <path class="wv-arrow" d="M214 60l6 5-6 5"/>
+                <rect class="wv-page" x="236" y="16" width="48" height="98" rx="4"/><rect class="wv-block" x="242" y="28" width="36" height="14" rx="2"/><rect class="wv-block" x="242" y="48" width="36" height="14" rx="2"/><rect class="wv-block" x="242" y="68" width="36" height="14" rx="2"/><rect class="wv-block" x="242" y="88" width="36" height="14" rx="2"/>
+                <rect class="wv-page" x="290" y="16" width="48" height="98" rx="4"/><rect class="wv-block" x="296" y="28" width="36" height="14" rx="2"/><rect class="wv-block" x="296" y="48" width="36" height="14" rx="2"/><rect class="wv-block" x="296" y="68" width="36" height="14" rx="2"/>
+                <rect class="wv-page" x="344" y="16" width="48" height="98" rx="4"/><rect class="wv-block" x="350" y="28" width="36" height="14" rx="2"/><rect class="wv-block" x="350" y="48" width="36" height="14" rx="2"/><rect class="wv-block" x="350" y="68" width="36" height="14" rx="2"/><rect class="wv-block" x="350" y="88" width="36" height="14" rx="2"/>
+              </svg>
+            </span>
+            <p class="work-role"><b>My part:</b> audited the repeat website work, defined the section taxonomy, and built the library of heroes, features, testimonials, timelines and pricing, each with its own variants, plus the specs engineering builds against.</p>
+            <p class="work-result">Launch time fell from 3 months to under 1 month.</p>
+
+            <div class="work-actions">
+              <button type="button" class="think-toggle" aria-expanded="false" aria-controls="think-library">
+                <span class="think-dot" aria-hidden="true"></span> See my thinking
+              </button>
+              <button type="button" class="work-link ask-about" data-question="What did Nitansh contribute to the section library?">
+                Ask about this project <span class="arrow" aria-hidden="true">&#8594;</span>
+              </button>
+            </div>
+
+            <div class="think-panel" id="think-library">
+              <ol class="think-list">
+                <li><strong>The constraint</strong><span>Every new site was redesigned from scratch, so the same hero and pricing patterns were rebuilt each time at full cost.</span></li>
+                <li><strong>The decision</strong><span>Design the variants up front rather than per project. A section gets chosen and configured, not drawn again.</span></li>
+                <li><strong>The evidence</strong><span>Three products now ship from the same library, and launch fell from three months to under one.</span></li>
+              </ol>
+            </div>
+          </article>
+        </li>
+
+        <li class="work-item">
+          <article class="work-card" data-buzz="58 seconds to &ldquo;oh, I get it&rdquo;.">
+            <div class="work-meta"><span class="work-kind">AI product</span></div>
+            <h3 class="work-headline"><mark class="highlight">58 seconds</mark> to first useful action</h3>
+            <span class="work-visual" aria-hidden="true">
+              <svg viewBox="0 0 344 130" preserveAspectRatio="xMidYMid meet" role="img">
+                <title>First useful action landing at 58 seconds on a three minute scale</title>
+                <rect class="wv-tick" x="24.0" y="96" width="3" height="8" rx="1.5"/><rect class="wv-tick" x="32.3" y="85" width="3" height="19" rx="1.5"/><rect class="wv-tick" x="40.6" y="74" width="3" height="30" rx="1.5"/><rect class="wv-tick" x="48.9" y="89" width="3" height="15" rx="1.5"/><rect class="wv-tick" x="57.2" y="78" width="3" height="26" rx="1.5"/><rect class="wv-tick" x="65.5" y="93" width="3" height="11" rx="1.5"/><rect class="wv-tick" x="73.8" y="82" width="3" height="22" rx="1.5"/><rect class="wv-tick" x="82.1" y="71" width="3" height="33" rx="1.5"/><rect class="wv-tick" x="90.4" y="86" width="3" height="18" rx="1.5"/><rect class="wv-tick" x="98.7" y="75" width="3" height="29" rx="1.5"/><rect class="wv-tick" x="107.0" y="90" width="3" height="14" rx="1.5"/><rect class="wv-tick" x="115.3" y="79" width="3" height="25" rx="1.5"/><rect class="wv-tick" x="123.6" y="94" width="3" height="10" rx="1.5"/><rect class="wv-tick" x="131.9" y="83" width="3" height="21" rx="1.5"/><rect class="wv-tick" x="140.2" y="72" width="3" height="32" rx="1.5"/><rect class="wv-tick" x="148.5" y="87" width="3" height="17" rx="1.5"/><rect class="wv-tick" x="156.8" y="76" width="3" height="28" rx="1.5"/><rect class="wv-tick" x="165.1" y="91" width="3" height="13" rx="1.5"/><rect class="wv-tick" x="173.4" y="80" width="3" height="24" rx="1.5"/><rect class="wv-tick" x="181.7" y="95" width="3" height="9" rx="1.5"/><rect class="wv-tick" x="190.0" y="84" width="3" height="20" rx="1.5"/><rect class="wv-tick" x="198.3" y="73" width="3" height="31" rx="1.5"/><rect class="wv-tick" x="206.6" y="88" width="3" height="16" rx="1.5"/><rect class="wv-tick" x="214.9" y="77" width="3" height="27" rx="1.5"/><rect class="wv-tick" x="223.2" y="92" width="3" height="12" rx="1.5"/><rect class="wv-tick" x="231.5" y="81" width="3" height="23" rx="1.5"/><rect class="wv-tick" x="239.8" y="96" width="3" height="8" rx="1.5"/><rect class="wv-tick" x="248.1" y="85" width="3" height="19" rx="1.5"/><rect class="wv-tick" x="256.4" y="74" width="3" height="30" rx="1.5"/><rect class="wv-tick" x="264.7" y="89" width="3" height="15" rx="1.5"/><rect class="wv-tick" x="273.0" y="78" width="3" height="26" rx="1.5"/><rect class="wv-tick" x="281.3" y="93" width="3" height="11" rx="1.5"/><rect class="wv-tick" x="289.6" y="82" width="3" height="22" rx="1.5"/><rect class="wv-tick" x="297.9" y="71" width="3" height="33" rx="1.5"/><rect class="wv-tick" x="306.2" y="86" width="3" height="18" rx="1.5"/>
+                <path class="wv-axis" d="M24 108h296"/>
+                <path class="wv-axis-fill" d="M24 108H119.4"/>
+                <path class="wv-stem" d="M119.4 102V66"/>
+                <circle class="wv-dot" cx="119.4" cy="108" r="5"/>
+                <text class="wv-big" x="119.4" y="58">58s</text>
+                <text class="wv-t" x="24" y="124">0</text>
+                <text class="wv-t wv-t--mid" x="172" y="124">90s</text>
+                <text class="wv-t wv-t--end" x="320" y="124">3 min</text>
+              </svg>
+            </span>
+            <p class="work-role"><b>My part:</b> designed and tested the assistant layer on a cloud-cost dashboard: the empty state, the wording, and what happens when the model is wrong.</p>
+            <p class="work-result">35+ user sessions &middot; 4-minute average session.</p>
+
+            <div class="work-actions">
+              <button type="button" class="think-toggle" aria-expanded="false" aria-controls="think-costimizer">
+                <span class="think-dot" aria-hidden="true"></span> See my thinking
+              </button>
+              <a class="work-link" href="https://medium.com/@nitansh07/i-was-a-fresher-designer-asked-to-build-an-ai-nobody-fully-understood-heres-what-happened-155939ac0f88" target="_blank" rel="noopener">Case study <span class="arrow" aria-hidden="true">&#8599;</span></a>
+            </div>
+
+            <div class="think-panel" id="think-costimizer">
+              <ol class="think-list">
+                <li><strong>The constraint</strong><span>The brief arrived before the product did. Nobody could yet say what the model would reliably do.</span></li>
+                <li><strong>The decision</strong><span>Design the empty state and the failure state first, so the interface stayed honest whatever the model returned.</span></li>
+                <li><strong>The evidence</strong><span>Across 35+ sessions, first useful action landed at 58 seconds.</span></li>
+              </ol>
+            </div>
+          </article>
+        </li>
+
+        <li class="work-item">
+          <article class="work-card" data-buzz="Delhi Metro said yes.">
+            <div class="work-meta">
+              <span class="work-kind">Public sector</span>
+              <span class="project-card-status project-card-status--live">Approved</span>
+            </div>
+            <h3 class="work-headline">Feedback rethought for <mark class="highlight">3.3 million daily riders</mark></h3>
+            <span class="work-visual" aria-hidden="true">
+              <svg viewBox="0 0 344 130" preserveAspectRatio="xMidYMid meet" role="img">
+                <title>Feedback collected at the station and in transit rather than in a yearly survey</title>
+                <path class="wv-route" d="M40 78h264"/>
+                <rect class="wv-bubble" x="112" y="24" width="120" height="28" rx="14"/>
+                <path class="wv-bubble-tail" d="M167 52l5 9 5-9z"/>
+                <text class="wv-t wv-t--mid wv-t--on" x="172" y="42">How was the ride?</text>
+                <circle class="wv-stop" cx="40" cy="78" r="7"/>
+                <circle class="wv-stop is-on" cx="172" cy="78" r="7"/>
+                <circle class="wv-stop" cx="304" cy="78" r="7"/>
+                <text class="wv-t" x="40" y="102">Station</text>
+                <text class="wv-t wv-t--mid" x="172" y="102">In transit</text>
+                <text class="wv-t wv-t--end" x="304" y="102">Exit</text>
+              </svg>
+            </span>
+            <p class="work-role"><b>My part:</b> as System Design Intern, designed the station and in-transit feedback system and worked it through DMRC&rsquo;s operational constraints to handoff.</p>
+            <p class="work-result">Approved by DMRC for full production rollout.</p>
+
+            <div class="work-actions">
+              <button type="button" class="think-toggle" aria-expanded="false" aria-controls="think-metro">
+                <span class="think-dot" aria-hidden="true"></span> See my thinking
+              </button>
+              <a class="work-link" href="https://metrodost-case-study.vercel.app/" target="_blank" rel="noopener">Case study <span class="arrow" aria-hidden="true">&#8599;</span></a>
+            </div>
+
+            <div class="think-panel" id="think-metro">
+              <ol class="think-list">
+                <li><strong>The constraint</strong><span>The only channel was a once-a-year survey buried on a government site, in two languages, in a city that speaks dozens.</span></li>
+                <li><strong>The decision</strong><span>Move feedback into the journey and make it a conversation: voice or text, categorised up front so every answer arrives routable.</span></li>
+                <li><strong>The evidence</strong><span>DMRC approved it for full production rollout.</span></li>
+              </ol>
+            </div>
+          </article>
+        </li>
+
+
+        <li class="work-item work-item--wide">
+          <article class="work-card" data-buzz="Four fields became one.">
+            <div class="work-meta">
+              <span class="work-kind">Service pages</span>
+              <span class="project-card-status project-card-status--live">Live</span>
+            </div>
+            <h3 class="work-headline">One page redesign became <mark class="highlight">three page types</mark></h3>
+            <span class="work-visual work-visual--lib" aria-hidden="true">
+              <svg viewBox="0 0 400 130" preserveAspectRatio="xMidYMid meet" role="img">
+                <title>Four enquiry fields replaced by a single vehicle-number field</title>
+                <rect class="wv-panel" x="2" y="6" width="172" height="118" rx="6"/>
+                <rect class="wv-chip" x="54" y="22" width="104" height="15" rx="3.5"/><text class="wv-t" x="14" y="33">Name</text><rect class="wv-chip" x="54" y="46" width="104" height="15" rx="3.5"/><text class="wv-t" x="14" y="57">Problem</text><rect class="wv-chip" x="54" y="70" width="104" height="15" rx="3.5"/><text class="wv-t" x="14" y="81">Phone</text><rect class="wv-chip" x="54" y="94" width="104" height="15" rx="3.5"/><text class="wv-t" x="14" y="105">Time slot</text>
+                <path class="wv-arrow" d="M190 65h24"/>
+                <path class="wv-arrow" d="M208 60l6 5-6 5"/>
+                <rect class="wv-panel" x="226" y="6" width="172" height="118" rx="6"/>
+                <rect class="wv-chip is-on" x="266" y="56" width="116" height="20" rx="4"/>
+                <text class="wv-t" x="238" y="70">Vehicle</text>
+              </svg>
+            </span>
+            <p class="work-role"><b>My part:</b> audited DigiLawyer&rsquo;s service pages, rebuilt the challan page around its actual task, then turned that structure into master Figma components engineering built against.</p>
+            <p class="work-result">The opening ask went from four fields to one.</p>
+
+            <div class="work-actions">
+              <button type="button" class="think-toggle" aria-expanded="false" aria-controls="think-digilawyer">
+                <span class="think-dot" aria-hidden="true"></span> See my thinking
+              </button>
+              <a class="work-link" href="digilawyer.html">Case study <span class="arrow" aria-hidden="true">&#8594;</span></a>
+            </div>
+
+            <div class="think-panel" id="think-digilawyer">
+              <ol class="think-list">
+                <li><strong>The constraint</strong><span>The long explanations were load-bearing for search, so the content team could not simply lose them.</span></li>
+                <li><strong>The decision</strong><span>Ask for the vehicle number first and move the depth behind a control, rather than choosing between the visitor and the SEO strategy.</span></li>
+                <li><strong>The evidence</strong><span>Three page types now assemble from the same sections, and product owners build pages without a designer.</span></li>
+              </ol>
+            </div>
+          </article>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  
+
+  <!-- ─────────────────────────  CAREER  ───────────────────────── -->
+  <section class="section gutter" id="career">
+    <div class="col-wide">
+      <div class="career-head">
+        <p class="eyebrow">Career journey</p>
+        <h2 class="t-section">From intern briefs to owning the system.</h2>
+        <p class="t-lede career-lede">
+          A design degree, two internships that shipped, and the job where I
+          stopped drawing screens one at a time and started building the thing
+          that makes them.
+        </p>
+      </div>
+
+      <ol class="timeline">
+        <li>
+          <p class="timeline-period">Oct 2024 &ndash; Present</p>
+          <div class="timeline-role">
+            <span class="career-logo"><img src="assets/logos/bigohtech.webp" alt="BigOhTech" loading="lazy" decoding="async" width="80" height="100" /></span>
+            <div>
+              <h3>Associate Product Designer</h3>
+              <p class="timeline-org">BigOhTech</p>
+            </div>
+          </div>
+          <p class="timeline-note">Own the system side end to end: tokens, master components, accessibility and developer handoff. The section library built here now assembles three live SaaS products.</p>
+        </li>
+        <li>
+          <p class="timeline-period">Jan 2024 &ndash; Jul 2024</p>
+          <div class="timeline-role">
+            <span class="career-logo"><img src="assets/logos/maxlence.webp" alt="Maxlence" loading="lazy" decoding="async" width="64" height="64" /></span>
+            <div>
+              <h3>UX Design Intern</h3>
+              <p class="timeline-org">Maxlence &middot; Gurugram, India</p>
+            </div>
+          </div>
+          <p class="timeline-note">Rebuilt the marketing site through iterative user testing rather than a single redesign. Conversion rate up 33%.</p>
+        </li>
+        <li>
+          <p class="timeline-period">Sep 2023 &ndash; Nov 2023</p>
+          <div class="timeline-role">
+            <span class="career-logo"><img src="assets/logos/dmrc.webp" alt="Delhi Metro Rail Corporation" loading="lazy" decoding="async" width="64" height="64" /></span>
+            <div>
+              <h3>System Design Intern</h3>
+              <p class="timeline-org">Delhi Metro &middot; DMRC, Delhi, India</p>
+            </div>
+          </div>
+          <p class="timeline-note">Designed the station and in-transit passenger feedback system, and worked it through DMRC&rsquo;s operational constraints to handoff.</p>
+        </li>
+        <li>
+          <p class="timeline-period">2020 &ndash; 2024</p>
+          <div class="timeline-role">
+            <span class="career-logo"><img src="assets/logos/jklu.png" alt="JK Lakshmipat University" loading="lazy" decoding="async" width="220" height="246" /></span>
+            <div>
+              <h3>Bachelor of Design, Interaction Design</h3>
+              <p class="timeline-org">JK Lakshmipat University &middot; Jaipur, India</p>
+            </div>
+          </div>
+          <p class="timeline-note">Where the interest in systems started: four years of interaction design, ending in the Delhi Metro project.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ──────────────────────  HOW I BUILD  ────────────────────── -->
+  <section class="section gutter" id="process">
+    <div class="col-wide">
+      <div class="build-grid">
+        <div class="build-intro">
+          <h2 class="t-section">How I build products</h2>
+          <p class="t-lede build-lede">
+            From early ambiguity to scale-stage complexity, the same five moves: find the real
+            friction, tie it to a number, and build something the next project can reuse.
+          </p>
+        </div>
+
+        <ol class="build-steps">
+          <li>
+            <h3 data-buzz="Never where the brief says.">Diagnose the gap</h3>
+            <p>Find where friction actually sits, in user behaviour, product logic or the tooling around the work. It is rarely where the brief says it is.</p>
+          </li>
+          <li>
+            <h3 data-buzz="If you can&rsquo;t measure it, it&rsquo;s a mood.">Define the outcome</h3>
+            <p>Tie every design decision to something measurable: conversion, time to first action, support load, hours saved.</p>
+          </li>
+          <li>
+            <h3 data-buzz="Engineers are not a later problem.">Partner early</h3>
+            <p>Work with engineering and founders from the start, so feasibility shapes the design rather than arriving after it.</p>
+          </li>
+          <li>
+            <h3 data-buzz="Screens die. Patterns don&rsquo;t.">Build the system</h3>
+            <p>Ship reusable patterns, not isolated screens. Tokens, master components and specs that outlive the project they came from.</p>
+          </li>
+          <li>
+            <h3 data-buzz="Watching someone fail teaches more.">Validate fast</h3>
+            <p>Put it in front of real users and watch. 35+ sessions on the Costimizer assistant said more than any round of reviews.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────  TOOLKIT  ────────────────────────
+       Every tool here is one the rest of this repo already documents: the
+       hero's four brand chips, Adobe from the Ask panel's tools entry, Framer
+       from the footer link, and the two measurement tools the DigiLawyer case
+       study names. Do not add a tool that is not claimed somewhere else.
+
+       The second .tk-track is a pixel duplicate that exists only so the loop
+       has no seam, so it is aria-hidden and each tool is announced once.
+       ────────────────────────────────────────────────── -->
+  <section class="section gutter" id="toolkit">
+    <div class="col-wide">
+      <p class="eyebrow">Toolkit</p>
+      <h2 class="t-section tk-title">The stack that has my back</h2>
+      <p class="t-lede tk-lede">
+        A design system is only as good as its handoff, so what matters is less
+        the tools than how well they talk to each other. These are the ones that do.
+      </p>
+    </div>
+
+    <div class="tk-marquee">
+      <div class="tk-row">
+        <ul class="tk-track">
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 24a3.5 3.5 0 0 0 3.5-3.5V17H8.5a3.5 3.5 0 0 0 0 7Z" fill="#0acf83"/><path d="M5 13.5A3.5 3.5 0 0 1 8.5 10H12v7H8.5A3.5 3.5 0 0 1 5 13.5Z" fill="#a259ff"/><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3H12v7H8.5A3.5 3.5 0 0 1 5 6.5Z" fill="#f24e1e"/><path d="M12 3h3.5a3.5 3.5 0 1 1 0 7H12V3Z" fill="#ff7262"/><path d="M19 13.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" fill="#1abcfe"/></svg></span><span class="tk-name">Figma</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="#6750a4"/><path d="M12 4.2A7.8 7.8 0 0 0 12 19.8Z" fill="#d0bcff"/><path d="M12 7.1a4.9 4.9 0 0 1 0 9.8Z" fill="#eaddff"/></svg></span><span class="tk-name">Material&nbsp;3</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.2 2.4 4.6l1.5 12.6L12 22.8l8.1-5.6 1.5-12.6L12 1.2Z" fill="#dd0031"/><path d="M12 1.2v21.6l8.1-5.6 1.5-12.6L12 1.2Z" fill="#c3002f"/><path d="M12 4.6 6 17.4h2.2l1.2-3h5.2l1.2 3H18L12 4.6Zm1.8 8.1h-3.6L12 8.3l1.8 4.4Z" fill="#fff"/></svg></span><span class="tk-name">Angular&nbsp;Material</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6c.4 0 .7.3.8.6l1 4.3 3.2-3a.8.8 0 0 1 1.2 1.1l-3 3.2 4.3 1a.8.8 0 0 1 0 1.5l-4.3 1 3 3.2a.8.8 0 0 1-1.2 1.1l-3.2-3-1 4.3a.8.8 0 0 1-1.6 0l-1-4.3-3.2 3a.8.8 0 0 1-1.2-1.1l3-3.2-4.3-1a.8.8 0 0 1 0-1.5l4.3-1-3-3.2a.8.8 0 1 1 1.2-1.1l3.2 3 1-4.3c.1-.3.4-.6.8-.6Z" fill="#c96442"/></svg></span><span class="tk-name">Claude&nbsp;Code</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.54 2.4H1v19.27Z" fill="#fa0f00"/><path d="M14.46 2.4H23v19.27Z" fill="#fa0f00"/><path d="M12 9.51l5.43 12.16h-3.56l-1.63-4.09H8.26Z" fill="#fa0f00"/></svg></span><span class="tk-name">Adobe&nbsp;Suite</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 0h16v8h-8zM4 8h8l8 8H4zm0 8h8v8z" fill="#0055ff"/></svg></span><span class="tk-name">Framer</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V3l18.5 18.5H17Z" fill="#f54e00"/><path d="M3 14.5V10l11.5 11.5H10Z" fill="#f9bd2b"/><path d="M3 21.5V17l4.5 4.5Z" fill="#1d4aff"/></svg></span><span class="tk-name">PostHog</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="14.5" y="2.5" width="6.5" height="19" rx="3.25" fill="#f9ab00"/><rect x="3" y="10.5" width="6.5" height="11" rx="3.25" fill="#e37400"/></svg></span><span class="tk-name">GA4</span></li>
+        </ul>
+        <ul class="tk-track" aria-hidden="true">
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 24a3.5 3.5 0 0 0 3.5-3.5V17H8.5a3.5 3.5 0 0 0 0 7Z" fill="#0acf83"/><path d="M5 13.5A3.5 3.5 0 0 1 8.5 10H12v7H8.5A3.5 3.5 0 0 1 5 13.5Z" fill="#a259ff"/><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3H12v7H8.5A3.5 3.5 0 0 1 5 6.5Z" fill="#f24e1e"/><path d="M12 3h3.5a3.5 3.5 0 1 1 0 7H12V3Z" fill="#ff7262"/><path d="M19 13.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" fill="#1abcfe"/></svg></span><span class="tk-name">Figma</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="#6750a4"/><path d="M12 4.2A7.8 7.8 0 0 0 12 19.8Z" fill="#d0bcff"/><path d="M12 7.1a4.9 4.9 0 0 1 0 9.8Z" fill="#eaddff"/></svg></span><span class="tk-name">Material&nbsp;3</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.2 2.4 4.6l1.5 12.6L12 22.8l8.1-5.6 1.5-12.6L12 1.2Z" fill="#dd0031"/><path d="M12 1.2v21.6l8.1-5.6 1.5-12.6L12 1.2Z" fill="#c3002f"/><path d="M12 4.6 6 17.4h2.2l1.2-3h5.2l1.2 3H18L12 4.6Zm1.8 8.1h-3.6L12 8.3l1.8 4.4Z" fill="#fff"/></svg></span><span class="tk-name">Angular&nbsp;Material</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6c.4 0 .7.3.8.6l1 4.3 3.2-3a.8.8 0 0 1 1.2 1.1l-3 3.2 4.3 1a.8.8 0 0 1 0 1.5l-4.3 1 3 3.2a.8.8 0 0 1-1.2 1.1l-3.2-3-1 4.3a.8.8 0 0 1-1.6 0l-1-4.3-3.2 3a.8.8 0 0 1-1.2-1.1l3-3.2-4.3-1a.8.8 0 0 1 0-1.5l4.3-1-3-3.2a.8.8 0 1 1 1.2-1.1l3.2 3 1-4.3c.1-.3.4-.6.8-.6Z" fill="#c96442"/></svg></span><span class="tk-name">Claude&nbsp;Code</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.54 2.4H1v19.27Z" fill="#fa0f00"/><path d="M14.46 2.4H23v19.27Z" fill="#fa0f00"/><path d="M12 9.51l5.43 12.16h-3.56l-1.63-4.09H8.26Z" fill="#fa0f00"/></svg></span><span class="tk-name">Adobe&nbsp;Suite</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 0h16v8h-8zM4 8h8l8 8H4zm0 8h8v8z" fill="#0055ff"/></svg></span><span class="tk-name">Framer</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5V3l18.5 18.5H17Z" fill="#f54e00"/><path d="M3 14.5V10l11.5 11.5H10Z" fill="#f9bd2b"/><path d="M3 21.5V17l4.5 4.5Z" fill="#1d4aff"/></svg></span><span class="tk-name">PostHog</span></li>
+            <li class="tk-item"><span class="tk-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="14.5" y="2.5" width="6.5" height="19" rx="3.25" fill="#f9ab00"/><rect x="3" y="10.5" width="6.5" height="11" rx="3.25" fill="#e37400"/></svg></span><span class="tk-name">GA4</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────  WRITINGS  ─────────────────────────
+       Real articles from medium.com/@nitansh07. Titles, blurbs, dates and
+       read times are Medium's own; cover art is mirrored into assets/writing
+       rather than hotlinked off Medium's CDN. Add a card by copying a <li>. -->
+  <section class="section gutter" id="writings">
+    <div class="col-wide">
+      <div class="writing-head">
+        <h2 class="t-section">Writings</h2>
+        <a data-buzz="There are two. So far." class="writing-all" href="https://medium.com/@nitansh07" target="_blank" rel="noopener">View all <span class="arrow" aria-hidden="true">&#8599;</span></a>
+      </div>
+
+      <ul class="writing-grid">
+        <li>
+          <a class="writing-card" href="https://medium.com/@nitansh07/i-built-one-design-system-that-replaced-five-developer-workflows-abb937c73b00" target="_blank" rel="noopener">
+            <span class="writing-top">
+              <span class="writing-lede">
+                <span class="writing-read">5 min read</span>
+                <span class="writing-title">I built one design system that replaced five developer workflows</span>
+              </span>
+            </span>
+            <span class="writing-excerpt">On master component libraries, the politics of &ldquo;good enough,&rdquo; and why the most valuable design work is the work that scales invisibly.</span>
+            <span class="writing-foot">
+              <span class="writing-date">Apr 2026</span>
+              <span class="writing-action">Read on Medium <span class="arrow" aria-hidden="true">&#8599;</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="writing-card" href="https://medium.com/@nitansh07/i-was-a-fresher-designer-asked-to-build-an-ai-nobody-fully-understood-heres-what-happened-155939ac0f88" target="_blank" rel="noopener">
+            <span class="writing-top">
+              <span class="writing-lede">
+                <span class="writing-read">9 min read</span>
+                <span class="writing-title">I was a fresher designer asked to build an AI nobody fully understood</span>
+              </span>
+            </span>
+            <span class="writing-excerpt">A behind-the-scenes look at designing the AI Co-Pilot, an AI chatbot for cloud cost optimization, built from scratch, under pressure, with no blueprint to follow.</span>
+            <span class="writing-foot">
+              <span class="writing-date">Mar 2026</span>
+              <span class="writing-action">Read on Medium <span class="arrow" aria-hidden="true">&#8599;</span></span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────  LINKEDIN  ───────────────────────── -->
+<section class="section gutter" id="labs">
+    <div class="col-wide">
+      <h2 class="t-section">On Claude Code</h2>
+
+      <div class="activity-cal">
+        <div class="activity-summary">
+          <p>Shipping, one session at a time.</p>
+          <a href="agent-mode.html">Explore what I built with Claude <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </div>
+
+        <!-- Real usage, summed from local transcripts. Refresh with
+             `node tools/build-usage.js`. -->
+        <p data-buzz="That is a lot of tokens." class="activity-count" id="activity-count"></p>
+
+        <div data-buzz="Every square is a late night." class="activity-scroll" tabindex="0" aria-label="Token usage calendar, scroll horizontally for the full year">
+          <div class="activity-canvas">
+            <div class="activity-months" id="activity-months" aria-hidden="true"></div>
+            <div class="activity-days" id="activity-grid"></div>
+          </div>
+        </div>
+
+        <div class="activity-key">
+          <span id="activity-status" aria-live="polite">Select a day to explore</span>
+          <span class="activity-legend">
+            Less
+            <i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i>
+            More
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gutter" id="writing">
+    <div class="col-wide">
+      <h2 class="t-section">On LinkedIn</h2>
+
+      <div class="linkedin-feed">
+        <div class="linkedin-summary">
+          <p id="li-summary">Latest original posts</p>
+          <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener">View LinkedIn <span class="arrow" aria-hidden="true">&#8599;</span></a>
+        </div>
+
+        <div data-buzz="Yes, I did post that." class="li-track" id="li-track" tabindex="0" aria-label="Recent posts, scrollable">
+          <!-- Rendered from linkedin-posts.js -->
+        </div>
+
+        <div class="linkedin-key">
+          <span class="linkedin-dots" id="li-dots"></span>
+          <span class="linkedin-arrows">
+            <button type="button" id="li-prev" aria-label="Previous post">&#8592;</button>
+            <button type="button" id="li-next" aria-label="Next post">&#8594;</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────────────────────  CONTACT  ─────────────────────── -->
+  <section class="section gutter" id="contact">
+    <div class="col-wide">
+      <h2 class="t-section">Let&rsquo;s talk</h2>
+      <p class="t-lede contact-lede">
+        I am open to product design roles and happy to walk through any of the
+        work above. The fastest way to reach me is email.
+      </p>
+
+      <div class="contact-actions">
+        <a class="home-contact-button" href="mailto:nitansh07@gmail.com" data-buzz="Go on, then.">Email me</a>
+        <button data-buzz="Saves you the typing." type="button" class="contact-copy" id="copy-email" data-email="nitansh07@gmail.com">
+          <span class="contact-copy-label">Copy address</span>
+        </button>
+        <a class="contact-link" href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener">LinkedIn <span class="arrow" aria-hidden="true">&#8599;</span></a>
+        <a class="contact-link" href="Nitansh-Anand-Resume.pdf" download>R&eacute;sum&eacute; <span class="arrow" aria-hidden="true">&#8595;</span></a>
+      </div>
+      <p class="contact-status" id="copy-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="gutter home-footer">
+  <div class="col-wide">
+    <a href="mailto:nitansh07@gmail.com">nitansh07@gmail.com</a> <span aria-hidden="true">&middot;</span>
+    <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener">LinkedIn</a> <span aria-hidden="true">&middot;</span>
+    <a href="Nitansh-Anand-Resume.pdf" download>Resume</a>
+  </div>
+</footer>
+
+<!-- Energy packets that travel the column and section rules. -->
+<!-- A second cursor that trails the real one with a line about whatever
+     section you are in. Decorative and pointer-only: aria-hidden, and the
+     script never builds it on touch. -->
+<!-- Caption only. The pointer glyph itself is built by script.js, so the
+     other pages get one too without repeating this markup. -->
+<div class="buzz" id="buzz" aria-hidden="true">
+  <span class="buzz-label" id="buzz-label"></span>
+</div>
+
+<div class="grid-energy" id="grid-energy" aria-hidden="true"></div>
+
+<!-- Preview card that follows the cursor over a project. -->
+<!-- Appears once the inline launcher scrolls past the header. -->
+<button type="button" class="ask-docked" id="ask-docked" aria-haspopup="dialog" tabindex="-1" aria-hidden="true">
+  <span class="ask-docked-face" aria-hidden="true"></span>
+  Ask me anything
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- Ask widget: a floating card, deliberately non-modal so the page stays
+     visible and usable behind it. -->
+<div class="ask-widget" id="ask-widget" hidden>
+  <div class="ask-scrim" id="ask-scrim" aria-hidden="true"></div>
+
+  <section class="ask-card" role="dialog" aria-modal="false" aria-labelledby="ask-title">
+    <header class="ask-head">
+      <span class="ask-head-id">
+        <span class="ask-avatar" aria-hidden="true"></span>
+        <span class="ask-head-text">
+          <strong id="ask-title">Ask Nitansh</strong>
+        </span>
+      </span>
+      <span class="ask-head-actions">
+        <button type="button" class="ask-close" id="ask-reset" hidden aria-label="Clear conversation" title="Clear conversation">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14M10 7V5.4a.9.9 0 0 1 .9-.9h2.2a.9.9 0 0 1 .9.9V7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M6.6 7l.7 11a1.6 1.6 0 0 0 1.6 1.5h6.2a1.6 1.6 0 0 0 1.6-1.5l.7-11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="ask-close" id="ask-close" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </span>
+    </header>
+
+    <div class="ask-conversation" id="ask-conversation" role="log" aria-live="polite" aria-label="Conversation">
+      <div class="ask-intro" id="ask-intro">
+        <span class="ask-orb" aria-hidden="true"></span>
+        <p class="ask-greeting">Hi, I answer for Nitansh.</p>
+        <p class="ask-sub">
+          Ask about the work, the systems behind it, or how to get in touch.
+          Everything I say is written somewhere on this site.
+        </p>
+        <div class="ask-starters" id="ask-starters">
+          <button type="button" data-ask="Show me the best project"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h11A2.5 2.5 0 0 1 20 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-9Z" stroke="currentColor" stroke-width="1.6"/><path d="M9 6V4.8A.8.8 0 0 1 9.8 4h4.4a.8.8 0 0 1 .8.8V6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>The work</button>
+          <button type="button" data-ask="How does he think about design systems?"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.8" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.8" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.8" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.8" stroke="currentColor" stroke-width="1.6"/></svg>Design systems</button>
+          <button type="button" data-ask="How does he handle accessibility?"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="8.4" r="1.3" fill="currentColor"/><path d="M8 11.2h8M12 11.6v4M12 15.6l-2 2.4M12 15.6l2 2.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Accessibility</button>
+          <button type="button" data-ask="How does he work with engineers?"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8.5 9-3.6 3 3.6 3M15.5 9l3.6 3-3.6 3M13.6 6.2l-3.2 11.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Engineering</button>
+          <button type="button" data-ask="What results has the work had?"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18.5 9.2 13l3.4 3.2L20 8.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.4 8h4.8v4.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Results</button>
+          <button type="button" data-ask="How do I reach him?"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.6" y="5.6" width="16.8" height="12.8" rx="2.4" stroke="currentColor" stroke-width="1.6"/><path d="m4.6 7.6 7.4 5.4 7.4-5.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Get in touch</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ask-foot">
+      <form class="ask-composer" id="ask-composer">
+        <textarea id="ask-input" rows="1" placeholder="Ask about the work&hellip;" aria-label="Your question" data-clarity-mask="true"></textarea>
+        <button type="submit" id="ask-send" disabled aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<script src="claude-usage.js"></script>
+<script src="ask-knowledge.js"></script>
+<script src="linkedin-posts.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

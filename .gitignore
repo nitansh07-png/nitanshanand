@@ -1,0 +1,21 @@
+# OS and editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Nothing here needs npm, but keep it out if that ever changes
+node_modules/
+npm-debug.log*
+*.log
+
+# Never commit secrets. Analytics IDs live in analytics.js and are public by
+# design; anything genuinely secret belongs in Netlify's env vars, not here.
+.env
+.env.*
+!.env.example
+
+# Netlify's local CLI state
+.netlify/

@@ -1,0 +1,1586 @@
+/* =========================================================================
+   Case study — bridged system.
+   Layout and card blocking follow the reference screenshots; headings use the
+   site display settings and links use the site accent, so clicking through
+   from the home page feels continuous.
+
+   Everything here is driven by the --cs-* tokens below: re-skin in one place.
+   ========================================================================= */
+
+.case-study {
+  --cs-ink:        #121212;   /* filled dark cards */
+  --cs-on-ink:     #f7f6f3;
+  /* The site accent, so the case study and the home page share one colour.
+     Blue is dark on paper and light on ink, the reverse of the yellow this
+     replaced, so --cs-on-accent carries the text colour rather than every
+     filled rule hard-coding one. */
+  --cs-accent:     #1e40af;   /* a surface to fill, text goes on top */
+  --cs-on-accent:  #ffffff;
+  /* Accent used as ink: figures, borders and tints drawn on the page
+     rather than filled behind text. The same value here, a lighter one in
+     dark mode, where the fill has to darken for white text and ink has to
+     lighten to stay visible on near-black. */
+  --cs-accent-ink: #1e40af;
+  --cs-paper:      #ffffff;   /* plain cards */
+  --cs-bg:         #faf9f7;   /* page ground */
+  --cs-line:       rgba(18, 18, 18, 0.1);
+
+  --cs-label:      var(--cs-accent-ink);
+  /* The same labels on dark cards. Deep blue on near-black is 1.9:1, so
+     these take the lighter blue in both themes: the card under them is
+     dark either way. */
+  --cs-label-dark: #6d9bf6;
+
+  --cs-radius:     18px;
+  --cs-radius-sm:  12px;
+  --cs-measure:    1200px;
+  --cs-gap:        22px;
+
+  background: var(--cs-bg);
+}
+
+/* Dark theme: the filled-card language survives, the neutrals invert. */
+.theme-dark.case-study,
+.case-study.theme-dark {
+  --cs-ink:    #0d0d0d;
+  --cs-paper:  #1c1a18;
+  --cs-bg:     #121110;
+  --cs-line:   rgba(236, 233, 228, 0.12);
+  /* The fill darkens so white sits on it at 6.7:1; the ink lightens so it
+     still reads against a near-black card. */
+  --cs-accent:     #1d4ed8;
+  --cs-on-accent:  #ffffff;
+  --cs-accent-ink: #6d9bf6;
+  --cs-label:      #6d9bf6;
+}
+.theme-dark .case-study,
+html.theme-dark body.case-study {
+  --cs-ink:    #0d0d0d;
+  --cs-paper:  #1c1a18;
+  --cs-bg:     #121110;
+  --cs-line:   rgba(236, 233, 228, 0.12);
+  /* The fill darkens so white sits on it at 6.7:1; the ink lightens so it
+     still reads against a near-black card. */
+  --cs-accent:     #1d4ed8;
+  --cs-on-accent:  #ffffff;
+  --cs-accent-ink: #6d9bf6;
+  --cs-label:      #6d9bf6;
+  background: var(--cs-bg);
+}
+
+/* The home page's column rules would cut through the wider case study grid. */
+body.case-study::before { display: none; }
+
+/* Header and footer are the site's own, widened to this page's measure so they
+   line up with the content. Drop these two rules to keep them at 720px. */
+.case-study .site-header .col-wide,
+.case-study .home-footer .col-wide { max-width: var(--cs-measure); }
+
+.case-study .home-footer { border-top-color: var(--cs-line); }
+
+/* =========================================================================
+   Shell and rhythm
+   ========================================================================= */
+
+.cs-shell {
+  width: 100%;
+  max-width: var(--cs-measure);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* Was clamp(3.5rem, 7vw, 6rem): 96px of air each side put 192px between
+   sections on a desktop, which read as unfinished rather than generous. */
+.cs-section { padding-block: clamp(2.5rem, 4.6vw, 4.25rem); }
+
+.cs-hero {
+  padding-block: clamp(2rem, 3.6vw, 3.25rem) clamp(2.25rem, 4.2vw, 3.5rem);
+  /* Dotted ground behind the hero, as in the reference. */
+  background-image: radial-gradient(var(--cs-line) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* =========================================================================
+   Type
+   ========================================================================= */
+
+.cs-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  color: var(--cs-label);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.cs-eyebrow--tags { letter-spacing: 0.14em; }
+
+.cs-card--ink .cs-eyebrow { color: var(--cs-label-dark); }
+
+.cs-title {
+  margin-top: 22px;
+  /* Full shell width. A capped measure protects reading, but a display
+     headline is scanned, not read, and a narrow rag left it visually
+     detached from the full-width content beneath it. */
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-optical-sizing: auto;
+  font-size: clamp(2.4rem, 5.4vw, 4.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.034em;
+  text-wrap: balance;
+}
+
+.cs-h2 {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-optical-sizing: auto;
+  /* 23px at 375 rising to 44px at 1440. The old 1.75rem floor was 28px,
+     which put two of the section headings onto a third line on a phone. */
+  font-size: clamp(1.44rem, 0.98rem + 1.97vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.cs-h3 {
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.cs-lede {
+  /* Full column: the section intros were sitting at 62ch beside cards that
+     run the whole width, which read as an accident rather than a measure. */
+  max-width: none;
+  margin-top: 22px;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.7;
+}
+.cs-lede--tight { margin-top: 14px; }
+
+/* Capped in ch so the measure holds at any font size. 86 characters was
+   well past the 60-75 reading range. */
+.cs-body {
+  max-width: 68ch;
+  margin-top: 26px;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.7;
+}
+
+.cs-num {
+  color: var(--cs-label);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.cs-card--ink .cs-num { color: var(--cs-label-dark); }
+
+.cs-meta-label,
+.cs-metric-label {
+  color: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+/* Running prose links inherit the site's accent so the two pages feel
+   related. The exclusions are links shaped like controls: a card, a button,
+   a jump pill. They carry their own affordance and an underline reads as a
+   stray mark inside the shape. */
+.cs-page a:not(.cs-card):not(.cs-cta):not(.dl-pill) {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 4px;
+}
+
+/* =========================================================================
+   Card system — four fills, one shape
+   ========================================================================= */
+
+.cs-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2vw, 30px);
+  border: 1px solid transparent;
+  border-radius: var(--cs-radius);
+  color: var(--cs-ink);
+}
+
+.cs-card--ink    { background: var(--cs-ink);   color: var(--cs-on-ink); }
+.cs-card--accent { background: var(--cs-accent); color: var(--cs-on-accent); }
+.cs-card--paper  { background: var(--cs-paper); border-color: var(--cs-line); }
+
+.theme-dark .cs-card--paper { color: var(--color-ink); }
+
+/* On dark the ink cards sit almost on top of the ground, so they get an edge. */
+.theme-dark .cs-card--ink { border-color: rgba(236, 233, 228, 0.14); }
+
+/* The reference rings one card per group in yellow. */
+.cs-card.is-featured { border-color: var(--cs-accent-ink); }
+
+a.cs-card { text-decoration: none; transition: transform 0.4s var(--ease-calm), box-shadow 0.4s var(--ease-calm); }
+a.cs-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -18px rgba(18, 18, 18, 0.5); }
+a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+/* =========================================================================
+   Hero
+   ========================================================================= */
+
+.cs-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--cs-gap);
+  margin-top: clamp(28px, 4vw, 48px);
+}
+.cs-overview { grid-row: span 2; }
+
+.cs-overview-name {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-size: clamp(1.7rem, 2.3vw, 2.15rem);
+  line-height: 1.15;
+  letter-spacing: -0.028em;
+}
+.cs-overview-sub { margin-top: 8px; font-size: 16px; font-weight: 600; line-height: 1.35; }
+.cs-overview-body { margin-top: 14px; font-size: 14.5px; line-height: 1.65; opacity: 0.82; }
+
+.cs-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 26px;
+}
+.cs-cta::before { content: ""; }
+.cs-cta {
+  margin-top: 26px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: var(--cs-accent);
+  color: var(--cs-on-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: transform 0.3s var(--ease-calm);
+}
+.cs-cta:hover { transform: translateY(-2px); }
+
+.cs-metric { justify-content: space-between; min-height: 150px; }
+.cs-metric-value {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-size: clamp(2.2rem, 3.6vw, 3.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.034em;
+  white-space: nowrap;
+}
+.cs-metric-value--accent { color: var(--cs-accent-ink); }
+
+
+.cs-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--cs-gap);
+  margin-top: var(--cs-gap);
+}
+.cs-meta p + p { margin-top: 10px; font-size: 14.5px; line-height: 1.55; }
+
+/* =========================================================================
+   01 Project context
+   ========================================================================= */
+
+.cs-context-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  gap: var(--cs-gap);
+  margin-top: clamp(24px, 3vw, 38px);
+}
+
+.cs-challenge { justify-content: center; }
+/* The statement and the explanation under it had no gap, so a short card
+   still read as a wall. */
+.cs-challenge-text + p { margin-top: 14px; }
+.cs-challenge-text {
+  margin-top: 20px;
+  font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+/* The grid stretches this card to match the challenge card beside it, and
+   the content only fills 160 of 223px, so 37px pooled below the caption.
+   Centred, the leftover splits evenly and the pair reads as a set: the card
+   next to it is centred too. */
+.cs-consolidation { justify-content: center; }
+.cs-consolidation .cs-metric-value { margin-top: 24px; }
+.cs-consolidation-caption { margin-top: 10px; font-size: 12px; line-height: 1.45; opacity: 0.75; }
+
+/* =========================================================================
+   02 Problem
+   ========================================================================= */
+
+.cs-problem-grid {
+  display: grid;
+  /* Tracks follow the item count: the copy has carried three and four
+     problems at different times, and a fixed four left a hole at three. */
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: clamp(18px, 2.4vw, 38px);
+  margin-top: clamp(26px, 3vw, 40px);
+}
+/* Inside a card now, so it needs no rule to separate it from the text:
+   the card edge does that. */
+.cs-problem-title {
+  margin-top: 16px;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.cs-problem-text {
+  margin-top: 10px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  opacity: 0.82;
+}
+.cs-ticks { margin: 18px 0 0; padding: 0; list-style: none; }
+.cs-ticks li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.cs-ticks li + li { margin-top: 16px; }
+.cs-ticks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 13px;
+  height: 8px;
+  border-left: 2px solid var(--cs-label);
+  border-bottom: 2px solid var(--cs-label);
+  transform: rotate(-45deg);
+}
+
+/* =========================================================================
+   03 Users
+   ========================================================================= */
+
+.cs-users {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+}
+.cs-user { overflow: hidden; }
+
+/* The card carries its own padding now that nothing sits flush to its
+   edge. */
+.cs-user { padding: clamp(20px, 2vw, 28px); }
+.cs-user-task {
+  font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+}
+/* The turn from the visitor's task to the page's answer: an arrow and a
+   rule running to the card edge, in place of the sentence that used to
+   say the same thing in all four cards. */
+.cs-turn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  color: var(--cs-accent-ink);
+}
+.cs-turn svg { flex: none; width: 17px; height: 17px; }
+.cs-turn::after { content: ""; flex: 1; height: 1px; background: var(--cs-line); }
+.cs-answer { margin-top: 13px; font-size: 14.5px; line-height: 1.6; opacity: 0.82; }
+
+/* Hidden from the page, read aloud. The site had no such utility. */
+.cs-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* =========================================================================
+   04 Pain points
+   ========================================================================= */
+
+/* Five fixed columns put a 14px paragraph in a 150px measure, about 21
+   characters a line. Auto-fit lets the row break to three-and-two, which
+   costs a ragged edge and buys a readable line. */
+.cs-pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+}
+/* Same shape as a visitor-task card in 03, so it takes the same type. */
+.cs-pain-finding {
+  font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+}
+
+
+/* =========================================================================
+   05 Design goals
+   ========================================================================= */
+
+.cs-goals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+}
+.cs-goal .cs-h3 { margin-top: 14px; }
+.cs-goal p:last-child { margin-top: 12px; font-size: 14.5px; line-height: 1.6; opacity: 0.86; }
+/* The decorative card is gone, so the four goals simply share the row. */
+
+@media (min-width: 900px) {
+  .cs-goals { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* =========================================================================
+   06 Solution
+   ========================================================================= */
+
+/* auto-fit, not repeat(5): the grid was cut for exactly five modules, so a
+   section with three left two empty columns and squeezed 18px copy into a
+   203px measure. Now the row fills whatever it is given. */
+.cs-modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+}
+.cs-module .cs-h3 { margin-top: 18px; }
+.cs-module p:last-child { margin-top: 12px; font-size: 14px; line-height: 1.6; opacity: 0.86; }
+
+/* =========================================================================
+   07 Components
+   ========================================================================= */
+
+.cs-chips {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
+  margin: clamp(26px, 3vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.cs-chips li {
+  display: grid;
+  place-items: center;
+  min-height: 54px;
+  padding: 12px 14px;
+  border: 1px solid var(--cs-line);
+  border-radius: 999px;
+  background: var(--cs-paper);
+  font-size: 14px;
+  text-align: center;
+}
+.cs-chips li.is-featured { border-color: var(--cs-accent-ink); }
+
+/* =========================================================================
+   08 Decisions
+   ========================================================================= */
+
+.cs-decisions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+  /* Cards fill their row. They used to hug their content instead, because the
+     comparison panel shared this grid and stretching left one card a 671px box
+     holding 335px of text. The panel is full width now, so the grid is four
+     comparable cards and a shared bottom edge reads as a set. */
+}
+.cs-decision .cs-h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid currentColor;
+  border-bottom-color: color-mix(in srgb, currentColor 18%, transparent);
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+}
+/* A structural marker, not a sentence. At 14px bold these read as body
+   copy and competed with the text they were introducing. */
+.cs-decision-label {
+  margin-top: 18px;
+  color: var(--cs-accent-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.cs-decision-label:first-of-type { margin-top: 0; }
+.cs-decision-label + p { margin-top: 6px; font-size: 14.5px; line-height: 1.6; opacity: 0.84; }
+
+/* =========================================================================
+   09 Process
+   ========================================================================= */
+
+.cs-artifacts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+  /* No fixed row height. The old grid-auto-rows: 150px with a span of 2
+     pinned each tile at 322px, and image plus caption needs 328, so every
+     description was clipped. Rows stretch, so the one tile with a shorter
+     caption squares off with the rest rather than leaving the row ragged by
+     21px: worth absorbing here, unlike the 336px gap in section 06. */
+}
+.cs-artifact { padding: 0; overflow: hidden; }
+.cs-artifact img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* One page-shaped frame for all four, cropped from the top. These are
+     1:7 exports; at any width that fits a row they are unreadable, so the
+     tile shows the shape of the page and the lightbox carries the rest. */
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  border: 0;
+  border-bottom: 1px solid var(--cs-line);
+  border-radius: 0;
+}
+.cs-artifact figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px 16px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.cs-artifact-desc { opacity: 0.78; }
+/* Off the caption, onto the one corner of the image with nothing in it. */
+.cs-artifact .dl-zoom { top: 10px; right: 10px; bottom: auto; }
+
+
+/* =========================================================================
+   10 Outcomes
+   ========================================================================= */
+
+.cs-outcomes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+}
+.cs-outcome p:last-child { margin-top: 20px; font-size: 14px; line-height: 1.6; }
+
+/* =========================================================================
+   11 Reflection
+   ========================================================================= */
+
+.cs-reflection {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  gap: var(--cs-gap);
+  margin-top: clamp(26px, 3vw, 40px);
+}
+.cs-quote { justify-content: center; }
+.cs-quote-text {
+  margin-top: 22px;
+  font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.cs-insight p { margin-top: 14px; font-size: 14.5px; line-height: 1.7; }
+.cs-closing { grid-column: 1 / -1; }
+.cs-closing p { max-width: 68ch; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; }
+
+/* =========================================================================
+   Section rail
+   ========================================================================= */
+
+.cs-rail {
+  position: fixed;
+  top: 50%;
+  right: clamp(10px, 1.6vw, 26px);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  transform: translateY(-50%);
+}
+.cs-rail button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.cs-rail-label {
+  padding: 4px 10px;
+  border: 1px solid var(--cs-line);
+  border-radius: 999px;
+  background: var(--cs-paper);
+  color: var(--color-ink);
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.24s, transform 0.24s var(--ease-calm);
+}
+.cs-rail-tick {
+  width: 16px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--color-ink);
+  opacity: 0.28;
+  transition: width 0.28s var(--ease-calm), opacity 0.28s;
+}
+.cs-rail button:hover .cs-rail-label,
+.cs-rail button:focus-visible .cs-rail-label,
+.cs-rail button[aria-current="true"] .cs-rail-label { opacity: 1; transform: none; }
+.cs-rail button:hover .cs-rail-tick { opacity: 0.6; }
+.cs-rail button[aria-current="true"] .cs-rail-tick { width: 28px; opacity: 1; }
+.cs-rail button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; border-radius: 4px; }
+
+@media (max-width: 1100px) { .cs-rail { display: none; } }
+
+/* =========================================================================
+   Responsive
+   ========================================================================= */
+
+@media (max-width: 1100px) {
+  .cs-hero-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-overview { grid-column: 1 / -1; grid-row: auto; }
+  .cs-modules { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Two, not three: these headings are sentences, and a third of this
+     shell is 242px, which breaks the longest onto a third line. */
+  .cs-pain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-problem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-chips { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cs-outcomes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-artifacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
+  .cs-meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-context-grid,
+  .cs-reflection { grid-template-columns: minmax(0, 1fr); }
+  /* Two, not one: the template card had a tall illustration band to fill a
+     full row. These hold a task and a short answer, so a 676px card is
+     mostly empty. The 600px block below takes them to one. */
+  .cs-users { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-decisions { grid-template-columns: minmax(0, 1fr); }
+  .cs-goals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .case-study { --cs-gap: 14px; --cs-radius: 14px; }
+  .cs-hero-grid,
+  .cs-meta-grid,
+  .cs-problem-grid,
+  .cs-users,
+  .cs-pain-grid,
+  .cs-modules,
+  .cs-outcomes,
+  .cs-goals,
+  .cs-artifacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.cs-card:hover { transform: none; }
+  .cs-cta:hover { transform: none; }
+}
+
+/* =========================================================================
+   Additions for the DigiLawyer case study
+
+   Two things the shared case-study template never needed: real screenshots, and a way
+   for the page to state the limits of its own evidence. The second one is
+   not decoration. That case study is careful about what it can and cannot
+   claim, and the design has to give those caveats somewhere to live rather
+   than burying them in a paragraph.
+   ========================================================================= */
+
+/* A note the page uses to mark the edge of what it knows. */
+.cs-draft-note {
+  /* A callout is scanned, not read at length, so it takes the full column
+     rather than the 68ch measure .cs-body sets for running prose. */
+  max-width: none;
+  margin-top: 26px;
+  padding: 14px 18px;
+  border: 1px solid var(--cs-line);
+  border-left: 3px solid var(--cs-accent-ink);
+  border-radius: var(--cs-radius-sm);
+  background: color-mix(in srgb, var(--cs-accent-ink) 9%, transparent);
+  font-size: 14.5px;
+  line-height: 1.62;
+}
+.cs-draft-note strong { font-weight: 650; }
+
+/* ---- screenshots ---- */
+.cs-shot {
+  margin: clamp(26px, 3vw, 38px) 0 0;
+}
+.cs-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--cs-line);
+  border-radius: var(--cs-radius-sm);
+  background: #fff;
+}
+/* The tall page exports are 1:7 or worse. Shown whole they would run for
+   thousands of pixels, so they are framed and scrolled instead: the shape of
+   the page stays readable without swallowing the article. */
+.cs-shot:not(.cs-shot--wide) img {
+  max-height: 520px;
+  object-fit: cover;
+  object-position: top center;
+}
+.cs-shot figcaption {
+  margin-top: 12px;
+  color: var(--cs-label);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.cs-shot--wide img { max-height: none; }
+
+/* An artifact tile that carries an image rather than a title and an arrow. */
+.cs-artifact { overflow: hidden; }
+.cs-artifact img {
+  display: block;
+  width: 100%;
+  height: 268px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--cs-radius-sm);
+  background: #fff;
+}
+.cs-artifact figcaption {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.cs-artifact figcaption .cs-meta-label { display: block; margin-bottom: 3px; }
+
+@media (max-width: 720px) {
+  .cs-shot:not(.cs-shot--wide) img { max-height: 380px; }
+  .cs-artifact img { height: 210px; }
+}
+
+/* A metric slot holding a word rather than a number. The display size is set
+   for two or three characters, so a phrase at that scale shouts. */
+.cs-metric-value--text {
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  line-height: 1.2;
+  white-space: normal;
+  /* Inherits the card colour rather than forcing the accent, which is a gold
+     and vanishes on the yellow cards. */
+  color: inherit;
+}
+
+/* =========================================================================
+   DigiLawyer: the two interactions
+   ========================================================================= */
+
+/* ---- the entry point, before and after ----
+   The page's central claim is that four fields became one. Reading that is
+   weaker than operating it, so the comparison is a tablist and the count in
+   the corner changes with it. */
+
+/* The grid supplies the gap when this sits inside .cs-decisions. */
+.cs-decisions > .dl-compare { margin-top: 0; }
+
+.dl-compare {
+  margin-top: clamp(24px, 3vw, 34px);
+  /* As a grid sibling of a decision card the top margin pushed it 34px below
+     its neighbour, so the two sat on visibly different baselines. */
+  align-self: start;
+  padding: clamp(20px, 2.4vw, 28px);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--cs-radius);
+  /* A real surface, not a wash: text needs a known background beneath it in
+     both themes. */
+  background: var(--color-raised);
+}
+
+.dl-compare-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dl-count { margin-top: 8px; display: flex; align-items: baseline; gap: 9px; }
+.dl-count-value {
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-size: clamp(2rem, 3.4vw, 2.9rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  /* The number is the whole point, so it gets the transition. */
+  transition: color 0.25s ease;
+}
+.dl-count-unit { color: var(--color-soft); font-size: 13.5px; }
+
+.dl-switch {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  background: var(--color-ground);
+}
+.dl-switch button {
+  padding: 7px 17px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--color-soft);
+  font: 600 12.5px/1.3 inherit;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.dl-switch button[aria-selected="true"] {
+  background: var(--color-ink);
+  color: var(--color-ground);
+}
+
+.dl-panel { margin-top: 22px; }
+.dl-panel[hidden] { display: none; }
+
+.dl-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dl-field {
+  padding: 13px 14px;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--cs-radius-sm);
+  background: var(--color-ground);
+  color: var(--color-soft);
+  font-size: 13.5px;
+  /* Each field arrives on its own beat, so the four read as four. */
+  animation: dl-field-in 0.3s var(--ease-calm, ease) both;
+}
+.dl-field.is-wide { grid-column: 1 / -1; }
+.dl-field:nth-child(2) { animation-delay: 0.05s; }
+.dl-field:nth-child(3) { animation-delay: 0.1s; }
+.dl-field:nth-child(4) { animation-delay: 0.15s; }
+@keyframes dl-field-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+.dl-cta {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 11px 20px;
+  border-radius: var(--cs-radius-sm);
+  background: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  color: var(--color-ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+.dl-cta.is-primary { background: var(--cs-accent); color: var(--cs-on-accent); }
+
+.dl-panel-note { margin-top: 14px; color: var(--color-soft); font-size: 14px; line-height: 1.6; }
+
+.dl-schematic {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-hairline);
+  color: var(--color-soft);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* ---- opening a cropped export ---- */
+
+[data-zoom] { position: relative; }
+
+.dl-zoom {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.88);
+  color: #fff;
+  font: 600 12px/1.2 inherit;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+.dl-zoom svg { width: 14px; height: 14px; }
+[data-zoom]:hover .dl-zoom,
+.dl-zoom:focus-visible { opacity: 1; transform: none; }
+.dl-zoom:hover { background: #121212; }
+/* Touch has no hover, so it stays put. */
+@media (hover: none) { .dl-zoom { opacity: 1; transform: none; } }
+
+/* The figcaption sits under the image, so the button anchors to the image. */
+[data-zoom] { display: block; }
+
+.dl-lightbox {
+  width: min(94vw, 1000px);
+  max-height: 92vh;
+  padding: 0;
+  border: 0;
+  border-radius: var(--cs-radius);
+  background: var(--cs-paper, #fff);
+  overflow: hidden;
+}
+.dl-lightbox::backdrop { background: rgba(12, 12, 12, 0.72); backdrop-filter: blur(3px); }
+
+.dl-lightbox-figure {
+  margin: 0;
+  max-height: 92vh;
+  /* The exports are 1:7. Here they get their full height and a scrollbar,
+     which is the only way to actually read one. */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.dl-lightbox-figure img { display: block; width: 100%; height: auto; }
+.dl-lightbox-figure figcaption {
+  position: sticky;
+  bottom: 0;
+  padding: 14px 18px;
+  border-top: 1px solid var(--cs-line);
+  background: var(--cs-paper, #fff);
+  color: var(--cs-label);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.dl-lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(18, 18, 18, 0.88);
+  color: #fff;
+  cursor: pointer;
+}
+.dl-lightbox-close svg { width: 17px; height: 17px; }
+
+@media (max-width: 720px) {
+  .dl-fields { grid-template-columns: minmax(0, 1fr); }
+  .dl-field.is-wide { grid-column: auto; }
+  .dl-compare-head { align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dl-field { animation: none; }
+  .dl-zoom { transition: none; }
+}
+
+/* ---- jump to a section ----
+   The dot rail is a position indicator; this is a menu. It tells you what the
+   page holds before you commit to scrolling all of it. */
+
+.dl-jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  max-width: var(--cs-shell, 1180px);
+  margin: 0 auto;
+  padding: 22px var(--gutter, 24px);
+  border-top: 1px solid var(--cs-line);
+  border-bottom: 1px solid var(--cs-line);
+}
+.dl-jump[hidden] { display: none; }
+
+.dl-jump-label {
+  color: var(--color-soft);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.dl-jump-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dl-jump-list a {
+  display: inline-block;
+  padding: 7px 14px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  color: var(--color-ink);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.dl-jump-list a:hover {
+  border-color: color-mix(in srgb, var(--color-ink) 35%, var(--color-hairline));
+  background: color-mix(in srgb, var(--color-ink) 6%, transparent);
+}
+.dl-jump-list a.is-current {
+  border-color: transparent;
+  background: var(--color-ink);
+  color: var(--color-ground);
+}
+
+/* ---- the design question ----
+   It was set as body copy, which buried the one sentence the rest of the page
+   exists to answer. */
+
+.dl-question {
+  display: flex;
+  gap: clamp(14px, 2vw, 22px);
+  margin-top: clamp(26px, 3vw, 38px);
+  padding: clamp(20px, 2.4vw, 28px);
+  border: 1px solid color-mix(in srgb, var(--cs-accent-ink) 55%, var(--color-hairline));
+  border-radius: var(--cs-radius);
+  /* Mixed into the raised surface rather than into transparency, so the tint
+     sits on something solid in both themes. */
+  background: color-mix(in srgb, var(--cs-accent-ink) 12%, var(--color-raised));
+}
+
+.dl-question-mark {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--cs-accent);
+  color: var(--cs-on-accent);
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-size: 21px;
+  line-height: 1;
+}
+
+.dl-question-body { min-width: 0; }
+.dl-question-label {
+  color: color-mix(in srgb, var(--color-soft) 55%, var(--color-ink));
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.dl-question-text {
+  margin-top: 10px;
+  max-width: 54ch;
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  line-height: 1.32;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+.dl-question-note {
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--color-soft) 55%, var(--color-ink));
+  font-size: 13.5px;
+}
+
+@media (max-width: 720px) {
+  /* Twelve pills wrap to four rows and eat 235px of a phone screen before
+     the article starts. One scrolling row keeps it to about fifty. */
+  .dl-jump {
+    display: block;
+    padding-block: 14px;
+  }
+  .dl-jump-label { display: block; margin-bottom: 10px; }
+  .dl-jump-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* The gutter is on the nav, so the row needs its own runway to let the
+       last pill clear the edge rather than butting against it. */
+    margin-inline: calc(var(--gutter, 24px) * -1);
+    padding-inline: var(--gutter, 24px);
+    scroll-padding-inline: var(--gutter, 24px);
+  }
+  .dl-jump-list::-webkit-scrollbar { display: none; }
+  .dl-question { flex-direction: column; gap: 14px; }
+}
+
+/* =========================================================================
+   DigiLawyer: patterns the case study copy needs
+   ========================================================================= */
+
+/* The hero gains a one-line summary between the title and the cards. It is
+   a subtitle, so it sits closer to the headline than a section lede does
+   and holds a reading measure rather than running the full 1200px. */
+.cs-hero-lede {
+  max-width: 62ch;
+  margin-top: 18px;
+  font-size: clamp(16px, 1.35vw, 19px);
+  color: color-mix(in srgb, var(--color-soft) 45%, var(--color-ink));
+}
+
+
+/* A heading that introduces the grid directly beneath it, rather than
+   opening a section. Smaller gap below than above, so it binds downward. */
+.cs-subhead {
+  margin-top: clamp(30px, 3.4vw, 46px);
+  margin-bottom: -6px;
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+}
+
+/* The two content layers of decision 03, side by side, because the point is
+   the split: what stayed visible against what moved behind Read more. */
+.dl-layers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px 26px;
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--cs-radius-sm);
+  background: color-mix(in srgb, var(--color-ink) 4%, transparent);
+}
+.dl-layer .cs-decision-label { margin-top: 0; }
+.dl-layer .cs-ticks { margin-top: 10px; }
+
+/* Outcome and metric rows whose item count differs from the four-up default. */
+.cs-outcomes--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* Seven project details across three columns leaves one orphan on the last
+   row. The final entry takes the whole row rather than a third of it. */
+.cs-meta-grid:has(> :nth-child(7)) > :last-child { grid-column: 1 / -1; }
+
+@media (max-width: 720px) {
+  .cs-outcomes--three { grid-template-columns: minmax(0, 1fr); }
+  .dl-layers { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Five findings across three columns leave a gap at the end of row two. Six
+   half-tracks let the first three take two each and the last two take three,
+   so both rows fill.
+
+   Guarded twice. To exactly five children, because the spans are wrong for
+   any other count. And to 1000px, because a sixth of the shell below that
+   is a 169px card whose heading runs to three lines: under 1000 the grid
+   falls back to its own auto-fit, which is already correct there. */
+@media (min-width: 1000px) {
+  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) > * { grid-column: span 2; }
+  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) > :nth-child(4),
+  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) > :nth-child(5) { grid-column: span 3; }
+}
+
+/* Dimming by opacity was calibrated against the old yellow fill: dark text
+   faded toward pale yellow stays dark. White faded toward a saturated blue
+   loses contrast fast, and these dropped to 3.33:1 (label) and 4.29:1 (note)
+   on the accent cards. They keep their hierarchy, with less of it spent. */
+.cs-card--accent :is(.cs-metric-label, .cs-meta-label) { opacity: 0.85; }
+.cs-card--accent .cs-consolidation-caption { opacity: 0.92; }
+
+/* Below 375px the ramp above still lands on 23px, and two of the section
+   headings need 19px to hold two lines in a 280px column. A steeper ramp
+   would drag every phone down with it, so the smallest screens take the
+   smaller size on their own and 375 upward keeps its hierarchy. */
+@media (max-width: 374px) {
+  .cs-h2 { font-size: 1.19rem; }
+}
+
+/* The mark that labels each card: a tinted chip above the title, rather
+   than a glyph floating at text size beside it. The tint is mixed into the
+   card surface, not into transparency, so it holds in both themes. */
+.cs-problem-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--cs-accent-ink) 14%, var(--cs-paper));
+  color: var(--cs-accent-ink);
+}
+.cs-problem-icon svg { width: 22px; height: 22px; }
+
+.cs-card--ink .cs-decision-label { color: var(--cs-label-dark); }
+
+/* =========================================================================
+   07 The shared-section comparison
+   Three rows against two pages. As cards it repeated both page names three
+   times each; as a table each is said once and the rows line up, which is
+   the comparison the section exists to make.
+   ========================================================================= */
+
+.cs-compare-wrap {
+  margin-top: clamp(26px, 3vw, 40px);
+  border: 1px solid var(--cs-line);
+  border-radius: var(--cs-radius);
+  background: var(--cs-paper);
+  overflow: hidden;
+}
+.cs-compare {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.cs-compare th,
+.cs-compare td {
+  padding: 16px clamp(16px, 1.8vw, 24px);
+  vertical-align: top;
+}
+.cs-compare thead th {
+  color: var(--cs-accent-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.cs-compare tbody tr { border-top: 1px solid var(--cs-line); }
+.cs-compare tbody th {
+  width: 24%;
+  font-size: 15px;
+  font-weight: 600;
+}
+.cs-compare tbody td {
+  font-size: 14.5px;
+  line-height: 1.6;
+  opacity: 0.84;
+}
+
+@media (max-width: 700px) {
+  /* A three-column table in 335px is a horizontal scrollbar. Each row
+     becomes its own block, and the column headers move into the cells,
+     where repeating them is now the only way to label anything. */
+  .cs-compare thead { display: none; }
+  .cs-compare tbody tr,
+  .cs-compare tbody th,
+  .cs-compare tbody td { display: block; width: auto; }
+  .cs-compare tbody th { padding-bottom: 4px; font-size: 16px; }
+  .cs-compare tbody td { padding-top: 0; padding-bottom: 14px; }
+  .cs-compare tbody td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 4px;
+    color: var(--cs-accent-ink);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+/* =========================================================================
+   09 Ownership
+   Four equal cards said the four contributions were equal. The section says
+   the opposite, so the one I owned takes the whole first row.
+   ========================================================================= */
+
+@media (min-width: 760px) {
+  .cs-ownership { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cs-ownership > :first-child { grid-column: 1 / -1; }
+}
+
+/* =========================================================================
+   06 Two columns: the four decisions on the left, the panel on the right.
+   The panel is what each decision is talking about, so it stays put while
+   they scroll past it rather than sitting in the flow and leaving whichever
+   card it is beside a half-empty box.
+   ========================================================================= */
+
+/* The panel is full width now, so the decision cards below it simply share
+   the two columns again. Nothing needs pinning to a row. */
+
+/* =========================================================================
+   10 The measurement panel
+   One source, one window, three figures. As three matching cards the bounce
+   rate read as a third achievement beside the two good numbers; here the
+   accent is reserved for figures in my favour and the one that went the
+   wrong way carries its caveat at the number.
+   ========================================================================= */
+
+.dl-stats {
+  margin-top: clamp(22px, 2.6vw, 32px);
+  border: 1px solid var(--cs-line);
+  border-radius: var(--cs-radius);
+  background: var(--cs-paper);
+  overflow: hidden;
+}
+.dl-stats-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  padding: 14px clamp(18px, 2vw, 26px);
+  border-bottom: 1px solid var(--cs-line);
+}
+.dl-stats-source {
+  color: var(--cs-accent-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.dl-stats-period { font-size: 13px; opacity: 0.74; }
+
+.dl-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+.dl-stat { padding: clamp(18px, 2vw, 26px); }
+.dl-stat + .dl-stat { border-left: 1px solid var(--cs-line); }
+.dl-stat dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+.dl-stat dd {
+  margin: 12px 0 0;
+  color: var(--cs-accent-ink);
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.034em;
+}
+/* Not an achievement, so not in the achievement colour. */
+.dl-stat--flat dd { color: inherit; opacity: 0.8; }
+.dl-stat-note { margin-top: 10px; font-size: 12.5px; line-height: 1.5; opacity: 0.72; }
+
+@media (max-width: 700px) {
+  .dl-stats-row { grid-template-columns: minmax(0, 1fr); }
+  .dl-stat + .dl-stat { border-left: 0; border-top: 1px solid var(--cs-line); }
+}
+
+/* =========================================================================
+   Image placeholders
+   A slot that says what belongs in it and how to swap it. Deliberately not
+   pretty: it must never be mistaken for content. One switch hides every
+   unfilled one, so the page cannot ship with them showing by accident:
+
+       <body class="case-study" data-slots="show">   visible
+       <body class="case-study">                     hidden
+   ========================================================================= */
+
+body:not([data-slots="show"]) .cs-slot { display: none; }
+
+.cs-slot { margin: clamp(26px, 3vw, 38px) 0 0; }
+.cs-slot-frame {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 4px;
+  padding: clamp(28px, 4vw, 52px) 24px;
+  aspect-ratio: 16 / 7;
+  border: 1.5px dashed color-mix(in srgb, var(--cs-accent-ink) 46%, transparent);
+  border-radius: var(--cs-radius-sm);
+  background: color-mix(in srgb, var(--cs-accent-ink) 5%, transparent);
+  text-align: center;
+}
+
+.cs-slot-icon { display: block; width: 30px; height: 30px; color: var(--cs-accent-ink); }
+.cs-slot-icon svg { width: 100%; height: 100%; }
+
+.cs-slot-tag {
+  margin-top: 8px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--cs-accent-ink) 16%, transparent);
+  color: var(--cs-accent-ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.cs-slot-what {
+  max-width: 44ch;
+  margin-top: 10px;
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.cs-slot-how {
+  max-width: 56ch;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  opacity: 0.72;
+}
+.cs-slot figcaption {
+  margin-top: 12px;
+  color: var(--cs-label);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  /* A 16:7 box on a phone is a letterbox with text crammed in it. */
+  .cs-slot-frame { aspect-ratio: auto; min-height: 210px; }
+}
+
+@media (max-width: 600px) {
+  /* Touch keeps the zoom button permanently visible, and at a 181px tile the
+     pill with its label covers most of the image. The icon alone still
+     announces itself: the button carries an aria-label. */
+  .cs-artifact .dl-zoom {
+    /* Icon only, but still a 44px touch target rather than a 30px one. */
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+  }
+  .cs-artifact .dl-zoom span { display: none; }
+}
+
+/* A pair of end-of-read actions: see the work, or start a conversation. */
+.cs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+}
+.cs-actions .cs-cta { margin-top: 0; }
+.cs-cta--live svg { width: 15px; height: 15px; }
+/* Secondary: same shape, no fill, so the live link leads. */
+.cs-cta--quiet {
+  background: none;
+  border: 1px solid var(--cs-line);
+  color: inherit;
+}
+.cs-cta--quiet:hover { border-color: var(--cs-accent-ink); }
+
+/* Stands in for the live link until its URL exists. Carries data-slot, so
+   the same switch that hides the image placeholders hides this too. */
+.cs-cta-pending {
+  margin-top: 0;
+  padding: 11px 15px;
+  border: 1.5px dashed color-mix(in srgb, var(--cs-accent-ink) 46%, transparent);
+  border-radius: var(--cs-radius-sm);
+  background: color-mix(in srgb, var(--cs-accent-ink) 5%, transparent);
+  color: var(--cs-accent-ink);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+body:not([data-slots="show"]) .cs-cta-pending { display: none; }
+
+
+/* =========================================================================
+   The opening ask: three shipped versions
+   Each panel pairs the form with what it earned, side by side, because the
+   percentage only means something next to the fields that produced it.
+   ========================================================================= */
+
+.dl-compare-hint {
+  max-width: 44ch;
+  margin-top: 8px;
+  color: var(--color-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.dl-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 44px);
+  align-items: start;
+}
+.dl-form-title {
+  margin-bottom: 14px;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+/* The free-text box was a textarea, so it reads taller than a single input. */
+.dl-field.is-tall { min-height: 62px; align-items: flex-start; }
+
+.dl-result-head {
+  color: var(--cs-accent-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.dl-result-value {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-weight: var(--display-wght);
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.038em;
+}
+.dl-result-label { margin-top: 10px; font-size: 13.5px; line-height: 1.5; opacity: 0.82; }
+.dl-result-note { margin-top: 16px; font-size: 13.5px; line-height: 1.6; opacity: 0.72; }
+
+@media (max-width: 700px) {
+  .dl-panel { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The field list keeps the tallest version's height in every version.
+   Two reasons, and the second is the better one: switching tabs no longer
+   shoves the rest of the page down by 94px, and the space the removed
+   fields used to occupy stays visible, so you watch the form empty out
+   rather than just seeing a shorter box. */
+.dl-fields { min-height: 182px; align-content: start; }
+
+@media (max-width: 700px) {
+  /* Fields stack on a phone, so the reserved height would be dead space. */
+  .dl-fields { min-height: 0; }
+}
+
+/* The IND plate tag that sits inside the vehicle-number field on the real
+   form: the blue band from an Indian number plate. Decorative, so it is
+   aria-hidden and the label beside it carries the meaning. */
+.dl-field { display: flex; align-items: center; gap: 9px; }
+.dl-plate {
+  flex: none;
+  padding: 3px 5px;
+  border-radius: 3px;
+  background: #1c3faa;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}

@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>DigiLawyer, a case study</title>
+<meta name="description" content="A challan page redesign and the reusable section system it became: matching the first input to the visitor's task, then turning that structure into Figma and code components three page formats are built from." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://nitanshanand.com/digilawyer.html" />
+
+<!-- Social preview. og:image is intentionally omitted until there are real
+     1200x630 cards; a badly cropped one reads worse than a text preview. -->
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nitanshanand.com/digilawyer.html" />
+<meta property="og:title" content="DigiLawyer, a case study" />
+<meta property="og:description" content="A challan page redesign and the reusable section system it became: matching the first input to the visitor's task, then turning that structure into Figma and code components three page formats are built from." />
+<meta property="og:site_name" content="Nitansh Anand" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="DigiLawyer, a case study" />
+<meta name="twitter:description" content="A challan page redesign and the reusable section system it became: matching the first input to the visitor's task, then turning that structure into Figma and code components three page formats are built from." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="case-study.css" />
+<script src="analytics.js" defer></script>
+<script>
+  /* Set theme before first paint so there is no flash. */
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("theme"); } catch (e) {}
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    var dark = t === "dark" || (t !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("theme-dark", dark);
+  })();
+</script>
+</head>
+<!-- data-slots="show" reveals the image placeholders. Remove the attribute
+     to hide every one that is still unfilled. -->
+<body class="case-study">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="gutter">
+    <div class="col-wide header-bar">
+      <a class="site-signature" href="index.html" aria-label="Nitansh Anand, home">
+        <span class="site-signature-mark" aria-hidden="true">Nitansh&nbsp;Anand</span>
+        <span class="site-signature-name" aria-hidden="true">
+          <span class="site-signature-photo"></span>
+          Nitansh Anand
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#labs">Labs</a>
+        <a href="index.html#ask" class="nav-ask">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="nav-label">Ask me anything</span>
+        </a>
+        <a href="agent-mode.html" class="agent-mode-link">
+          <span class="agent-launcher-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="nav-label">Playground</span>
+        </a>
+        <button type="button" class="theme-toggle" aria-label="Switch colour theme" title="Switch colour theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.5"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="cs-page" id="main">
+
+  <!-- ═════════════════════════  HERO  ═════════════════════════ -->
+  <section class="cs-hero" id="overview" data-rail="Overview">
+    <div class="cs-shell">
+      <p class="cs-eyebrow cs-eyebrow--tags"><span>Legal tech &middot; Product design &middot; Information architecture &middot; Reusable components</span></p>
+
+      <h1 class="cs-title">
+        A challan page redesign.
+        A <mark class="highlight">reusable system</mark> for legal services.
+      </h1>
+
+      <p class="cs-lede cs-hero-lede">
+        I redesigned the first step, reorganised the content, and built the Figma
+        components the team could reuse.
+      </p>
+
+      <div class="cs-hero-grid">
+        <article class="cs-card cs-card--ink cs-overview">
+          <p class="cs-eyebrow"><span>Project overview</span></p>
+          <h2 class="cs-overview-name">DigiLawyer</h2>
+          <p class="cs-overview-sub">I owned the concept. The team extended it.</p>
+          <p class="cs-overview-body">
+            I was brought in to investigate friction and weak lead generation across
+            DigiLawyer&rsquo;s service pages. Starting with the challan page, I redesigned
+            the experience around the visitor&rsquo;s immediate task: checking a
+            vehicle&rsquo;s pending challans.
+          </p>
+          <p class="cs-overview-body">
+            The work expanded into reusable Figma components that developers implemented
+            in code. Product owners then used those shared sections to assemble
+            additional pages with the content and SEO teams.
+          </p>
+        </article>
+
+        <article class="cs-card cs-card--accent cs-metric">
+          <p class="cs-metric-label">Monthly active users</p>
+          <p class="cs-metric-value">50K+</p>
+        </article>
+
+        <article class="cs-card cs-card--paper cs-metric">
+          <p class="cs-metric-label">Paid transactions</p>
+          <p class="cs-metric-value cs-metric-value--accent">3,200+</p>
+        </article>
+
+        <article class="cs-card cs-card--accent cs-metric">
+          <p class="cs-metric-label">Leads generated monthly</p>
+          <p class="cs-metric-value">3,000+</p>
+        </article>
+
+        <article class="cs-card cs-card--paper cs-metric">
+          <p class="cs-metric-label">Month-over-month lead growth</p>
+          <p class="cs-metric-value cs-metric-value--accent">20%</p>
+        </article>
+      </div>
+
+      <div class="cs-meta-grid">
+        <div class="cs-card cs-card--paper cs-meta"><p class="cs-meta-label">My role</p><p>Product Designer</p></div>
+        <div class="cs-card cs-card--paper cs-meta"><p class="cs-meta-label">Company</p><p>DigiLawyer / BigOhTech</p></div>
+        <div class="cs-card cs-card--paper cs-meta"><p class="cs-meta-label">Timeline</p><p>1 month</p></div>
+        <div class="cs-card cs-card--paper cs-meta"><p class="cs-meta-label">My ownership</p><p>Concept, information hierarchy, page layouts, and master Figma components</p></div>
+        <div class="cs-card cs-card--paper cs-meta"><p class="cs-meta-label">Collaborators</p><p>Content, SEO, product owners, developers, and the CEO</p></div>
+        <div class="cs-card cs-card--paper cs-meta"><p class="cs-meta-label">Research</p><p>Page audits, PostHog recordings, interaction analysis, and competitor review</p></div>
+        <div class="cs-card cs-card--paper cs-meta"><p class="cs-meta-label">Scope</p><p>Challan redesign and reusable PDP, PLP, and use-case sections</p></div>
+      </div>
+
+      <p class="cs-body cs-draft-note">
+        <strong>What these figures cover.</strong> The four above are DigiLawyer
+        product figures. The GA4 snapshot in Outcomes covers the challan page alone,
+        over one reporting window, and the reports do not isolate this
+        redesign&rsquo;s contribution to either set.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Filled by digilawyer.js from the sections' own data-rail labels. -->
+  <nav class="dl-jump" id="dl-jump" aria-label="Jump to a section" hidden>
+    <span class="dl-jump-label">Jump to</span>
+    <ul class="dl-jump-list"></ul>
+  </nav>
+
+  <!-- ═════════════════════  01 · PROJECT CONTEXT  ═════════════════════ -->
+  <section class="cs-section" id="context" data-rail="Context">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>01 &middot; Context</span></p>
+      <h2 class="cs-h2">Keep the content. <mark class="highlight">Change what comes first.</mark></h2>
+
+      <p class="cs-lede">
+        DigiLawyer&rsquo;s product detail and listing pages contained extensive
+        information about its legal services. During my initial audit, they often felt
+        like articles: long explanations competed with the information visitors needed to
+        evaluate the service and take action.
+      </p>
+
+      <div class="cs-context-grid">
+        <article class="cs-card cs-card--ink cs-context cs-challenge">
+          <p class="cs-eyebrow"><span>Core challenge</span></p>
+          <p class="cs-challenge-text">
+            Make the service easy to start and the supporting information easy to find.
+          </p>
+          <p>
+            Content and SEO needed those sections and keywords for search. So the
+            constraint was hierarchy, not deletion.
+          </p>
+        </article>
+
+        <article class="cs-card cs-card--accent cs-consolidation">
+          <p class="cs-meta-label">Where it started</p>
+          <p class="cs-metric-value">1 page</p>
+          <p class="cs-consolidation-caption">
+            I started with the challan page because it offered a specific task around
+            which to organise the experience.
+          </p>
+        </article>
+      </div>
+
+      <figure class="cs-slot" data-slot>
+        <div class="cs-slot-frame">
+          <span class="cs-slot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="M3 16.2l4.8-4.2a2 2 0 0 1 2.7 0L15 16m2-3.2a2 2 0 0 1 2.6.1L21 14.2"/></svg></span>
+          <p class="cs-slot-tag">Placeholder</p>
+          <p class="cs-slot-what">The old service page at full length</p>
+          <p class="cs-slot-how">A long scroll capture showing how much explanation ran before the first action. This is the evidence for the word &ldquo;articles&rdquo; above.</p>
+        </div>
+        <figcaption>The page as it was: explanation first, action somewhere below the fold.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════  02 · PROBLEM  ═════════════════════════ -->
+  <section class="cs-section" id="problem" data-rail="Problem">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>02 &middot; Problem</span></p>
+      <h2 class="cs-h2">The page explained the service. The form started <mark class="highlight">a consultation.</mark></h2>
+
+      <p class="cs-lede">
+        Visitors arriving to check their challans met a form asking for name, problem
+        statement, phone number, and preferred time slot. The vehicle number was not the
+        starting point, and violation examples, benefits and badges competed around it.
+      </p>
+
+      <figure class="cs-shot cs-shot--wide" data-zoom>
+        <img src="assets/digilawyer/old-hero.webp" alt="The previous DigiLawyer challan hero. A four-field enquiry form asks for name, problem statement, phone number and preferred time slot, with a Proceed button." loading="lazy" decoding="async" width="1147" height="667" />
+        <figcaption>
+          The entry point before the redesign: four fields, none of them the vehicle
+          number. Annotated design-stage capture, not a live screenshot.
+        </figcaption>
+      </figure>
+
+      <h3 class="cs-h3 cs-subhead">Three problems to address</h3>
+
+      <div class="cs-problem-grid">
+        <article class="cs-card cs-card--paper cs-problem">
+          <span class="cs-problem-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.75" y="3" width="16.5" height="18" rx="2.5"></rect><path d="M7.5 8.25h9M7.5 12h9M7.5 15.75h9"></path></svg></span>
+          <h3 class="cs-problem-title">No clear priority</h3>
+          <p class="cs-problem-text">Essential service information competed with lengthy explanations and multiple messages.</p>
+        </article>
+
+        <article class="cs-card cs-card--paper cs-problem">
+          <span class="cs-problem-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-6.5"></path><path d="M12 14.5 5.5 8"></path><path d="M12 14.5 18.5 8"></path><path d="M5.5 12.5V8h4.5"></path><path d="M18.5 12.5V8h-4.5"></path></svg></span>
+          <h3 class="cs-problem-title">A mismatch in the first step</h3>
+          <p class="cs-problem-text">Visitors needed to check a vehicle, while the form collected consultation details.</p>
+        </article>
+
+        <article class="cs-card cs-card--paper cs-problem">
+          <span class="cs-problem-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4.2v12.4l3.1-2.9 2.3 5.2 2.3-1-2.2-5 4.2-.4z"></path><path d="M16.2 3.4 17.8 1.8M18.4 7.2h2.3M13.8 1.6l.6 2.2"></path></svg></span>
+          <h3 class="cs-problem-title">Interaction friction</h3>
+          <p class="cs-problem-text">Session recordings revealed responsiveness issues in the form, alongside repeated clicks and drop-offs.</p>
+        </article>
+      </div>
+
+      <aside class="dl-question">
+        <span class="dl-question-mark" aria-hidden="true">?</span>
+        <div class="dl-question-body">
+          <p class="dl-question-label">Design question</p>
+          <p class="dl-question-text">
+            How could someone begin checking their challans while still finding enough
+            information to evaluate DigiLawyer&rsquo;s service?
+          </p>
+          <p class="dl-question-note">Everything below is an answer to this.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════  03 · USERS  ══════════════════════════ -->
+  <section class="cs-section" id="users" data-rail="Users">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>03 &middot; Users</span></p>
+      <h2 class="cs-h2">Design for the task the visitor <mark class="highlight">arrives with.</mark></h2>
+      <p class="cs-lede cs-lede--tight">
+        I used the visitor&rsquo;s task to guide each page format. These groups describe
+        the needs addressed by the designs, rather than interview-based personas.
+      </p>
+
+      <div class="cs-users">
+        <article class="cs-card cs-card--paper cs-user">
+          <h3 class="cs-user-task">Check pending challans</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">What the page needed to provide: </span>A prominent vehicle-number entry point.
+          </p>
+        </article>
+        <article class="cs-card cs-card--paper cs-user">
+          <h3 class="cs-user-task">Find the right legal notice</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">What the page needed to provide: </span>Search, categories, and relevant service options.
+          </p>
+        </article>
+        <article class="cs-card cs-card--paper cs-user">
+          <h3 class="cs-user-task">Evaluate money recovery help</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">What the page needed to provide: </span>Service details and situations where it could apply.
+          </p>
+        </article>
+        <article class="cs-card cs-card--paper cs-user">
+          <h3 class="cs-user-task">Address an unpaid loan to a friend</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">What the page needed to provide: </span>Contextual information and a relevant enquiry form.
+          </p>
+        </article>
+      </div>
+
+      <p class="cs-body">
+        The shared structure needed to accommodate these different starting points.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════  04 · PAIN POINTS  ════════════════════════ -->
+  <section class="cs-section" id="pain" data-rail="Pain points">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>04 &middot; Pain points</span></p>
+      <h2 class="cs-h2">The audit found one problem. <mark class="highlight">The recordings found another.</mark></h2>
+
+      <p class="cs-lede">
+        I reviewed individual pages, watched PostHog recordings, examined interaction
+        patterns, and compared competitor structures. Discussions with content and SEO
+        established what the redesign needed to retain.
+      </p>
+
+      <div class="cs-pain-grid">
+        <article class="cs-card cs-card--paper cs-pain">
+          <h3 class="cs-pain-finding">Dense explanations and competing messages</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">How it shaped my decisions: </span>Prioritise the primary action and group supporting information into distinct sections.
+          </p>
+        </article>
+        <article class="cs-card cs-card--paper cs-pain">
+          <h3 class="cs-pain-finding">Visitors moving around the hero before leaving</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">How it shaped my decisions: </span>Investigate whether the offering and entry point were clear enough.
+          </p>
+        </article>
+        <article class="cs-card cs-card--paper cs-pain">
+          <h3 class="cs-pain-finding">Rage clicks and form responsiveness issues</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">How it shaped my decisions: </span>Treat interaction reliability as a separate implementation problem.
+          </p>
+        </article>
+        <article class="cs-card cs-card--paper cs-pain">
+          <h3 class="cs-pain-finding">Fewer clicks farther down the page</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">How it shaped my decisions: </span>Review where important information appeared.
+          </p>
+        </article>
+        <article class="cs-card cs-card--paper cs-pain">
+          <h3 class="cs-pain-finding">Scannable, action-focused competitor pages</h3>
+          <span class="cs-turn" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></svg></span>
+          <p class="cs-answer">
+            <span class="cs-sr">How it shaped my decisions: </span>Explore a clearer first action and more explicit next steps.
+          </p>
+        </article>
+      </div>
+
+      <p class="cs-body">
+        The recordings established friction, but did not reveal every visitor&rsquo;s
+        intent. Lack of clarity and reassurance remained hypotheses; the form
+        responsiveness issues were directly observable.
+      </p>
+
+      <figure class="cs-slot" data-slot>
+        <div class="cs-slot-frame">
+          <span class="cs-slot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="M3 16.2l4.8-4.2a2 2 0 0 1 2.7 0L15 16m2-3.2a2 2 0 0 1 2.6.1L21 14.2"/></svg></span>
+          <p class="cs-slot-tag">Placeholder</p>
+          <p class="cs-slot-what">PostHog evidence: heatmap or a session recording still</p>
+          <p class="cs-slot-how">The rage clicks and the drop-off point. Blur or crop anything identifying before you export.</p>
+        </div>
+        <figcaption>Where the old form lost people. Recording evidence, not a design mock.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════  05 · DESIGN GOALS  ═══════════════════════ -->
+  <section class="cs-section" id="goals" data-rail="Design goals">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>05 &middot; Design goals</span></p>
+      <h2 class="cs-h2">Make it easy to start. <mark class="highlight">Keep the detail within reach.</mark></h2>
+
+      <div class="cs-goals">
+        <article class="cs-card cs-card--ink cs-goal">
+          <p class="cs-eyebrow"><span>01</span></p>
+          <h3 class="cs-h3">Start</h3>
+          <p>Make the first interaction relevant to the service.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-goal">
+          <p class="cs-eyebrow"><span>02</span></p>
+          <h3 class="cs-h3">Evaluate</h3>
+          <p>Make benefits, reassurance, and next steps easy to locate.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-goal">
+          <p class="cs-eyebrow"><span>03</span></p>
+          <h3 class="cs-h3">Explore</h3>
+          <p>Keep detailed explanations accessible on demand.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-goal">
+          <p class="cs-eyebrow"><span>04</span></p>
+          <h3 class="cs-h3">Extend</h3>
+          <p>Create sections the team could adapt to other services.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════  06 · SOLUTION  ════════════════════════ -->
+  <section class="cs-section" id="solution" data-rail="Solution">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>06 &middot; Solution</span></p>
+      <h2 class="cs-h2">Four decisions, each with <mark class="highlight">a cost.</mark></h2>
+
+      <!-- The same form, three times. Each panel pairs what the page asked
+           for with the share of visits that acted on it, because the second
+           number only means something next to the first. The field names and
+           the percentages are the shipped ones. -->
+      <div class="dl-compare" id="dl-compare">
+        <div class="dl-compare-head">
+          <div>
+            <p class="cs-eyebrow"><span>The opening ask</span></p>
+            <p class="dl-count"><span class="dl-count-value">4</span> <span class="dl-count-unit">fields before you can begin</span></p>
+          </div>
+          <div class="dl-switch" role="tablist" aria-label="Compare the entry point">
+            <button type="button" role="tab" id="dl-tab-before" aria-controls="dl-before" aria-selected="true" data-panel="dl-before" data-fields="4">Before</button>
+            <button type="button" role="tab" id="dl-tab-after" aria-controls="dl-after" aria-selected="false" data-panel="dl-after" data-fields="1">After</button>
+          </div>
+        </div>
+
+        <div class="dl-panel" id="dl-before" role="tabpanel" aria-labelledby="dl-tab-before">
+          <div class="dl-form">
+            <p class="dl-form-title">Clear Your Challan in Minutes!</p>
+            <ul class="dl-fields">
+              <li class="dl-field is-wide"><span>Name</span></li>
+              <li class="dl-field is-wide is-tall"><span>Problem statement</span></li>
+              <li class="dl-field"><span>Phone number</span></li>
+              <li class="dl-field"><span>Preferred time slot</span></li>
+            </ul>
+            <!-- Quoted from the old page, not written. Do not "fix" this to a
+                 verb-object CTA: its weakness is the point being made. -->
+            <p class="dl-cta">Proceed</p>
+          </div>
+          <div class="dl-result">
+            <p class="dl-result-note">Describe an issue and request contact. Nothing here is the vehicle number the lookup runs on.</p>
+          </div>
+        </div>
+
+        <div class="dl-panel" id="dl-after" role="tabpanel" aria-labelledby="dl-tab-after" hidden>
+          <div class="dl-form">
+            <p class="dl-form-title">Check &amp; Pay Your Challan</p>
+            <ul class="dl-fields">
+              <li class="dl-field is-wide"><span class="dl-plate" aria-hidden="true">IND</span><span>Vehicle number</span></li>
+            </ul>
+            <p class="dl-cta is-primary">Check challans</p>
+          </div>
+          <div class="dl-result">
+            <p class="dl-result-note">Begin with the identifier relevant to the lookup. Everything else moves to a later step.</p>
+          </div>
+        </div>
+
+        <p class="dl-schematic">Schematic. An explanation of the field structure, not a screenshot of the product.</p>
+      </div>
+
+
+      <div class="cs-decisions">
+        <article class="cs-card cs-card--ink cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">01</span> Match the first input to the task</h3>
+          <p class="cs-decision-label">Decision</p>
+          <p>
+            I replaced the consultation-style entry form with a vehicle-number field. The
+            first input now supplied information relevant to checking challans, without
+            asking visitors to explain their problem or select a consultation slot first.
+          </p>
+          <p class="cs-decision-label">What the reduction covers</p>
+          <p>
+            The four-to-one reduction applies to the <strong>initial screen</strong>.
+            Further information and resolution belong to subsequent steps.
+          </p>
+        </article>
+
+        <article class="cs-card cs-card--paper cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">02</span> Make the page scannable by purpose</h3>
+          <p class="cs-decision-label">Decision</p>
+          <p>
+            I gave the offer, reassurance, process, and reviews their own sections. Each
+            section had a clearer job: explain the service, support confidence, describe
+            the process, or answer a question.
+          </p>
+          <p class="cs-decision-label">What was actually new</p>
+          <p>
+            The older template already contained some of this information. My decision
+            was to change its hierarchy so visitors could locate it without reading the
+            page as an article.
+          </p>
+        </article>
+
+        <article class="cs-card cs-card--paper cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">03</span> Keep decisions visible. Expand the detail.</h3>
+          <p class="cs-decision-label">Decision</p>
+          <p>
+            I kept the primary action, benefits, reassurance, and process on the main
+            page. A concise introduction with &ldquo;Read more&rdquo; opened the longer
+            explanations requested by content and SEO.
+          </p>
+
+          <div class="dl-layers">
+            <div class="dl-layer">
+              <p class="cs-decision-label">Visible on the main page</p>
+              <ul class="cs-ticks">
+                <li>Primary action</li>
+                <li>Benefits and reassurance</li>
+                <li>Process and reviews</li>
+              </ul>
+            </div>
+            <div class="dl-layer">
+              <p class="cs-decision-label">Available on expansion</p>
+              <ul class="cs-ticks">
+                <li>Longer service descriptions</li>
+                <li>Detailed explanatory sections</li>
+                <li>Supporting tables and reference information</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="cs-decision-label">Trade-off</p>
+          <p>
+            The key decision was what belonged in each layer. Hiding essential
+            information would have recreated the earlier problem. The expanded view still
+            contained substantial content; this approach changed <em>when</em> visitors
+            encountered that depth. Its effect on search rankings was not separately
+            measured.
+          </p>
+        </article>
+
+        <article class="cs-card cs-card--ink cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">04</span> Reuse the structure. Adapt the request.</h3>
+          <p class="cs-decision-label">Decision</p>
+          <p>
+            A vehicle number can start a challan lookup. A notice request needs context.
+            For friendly loan recovery, the form included the amount lent and a problem
+            statement: inputs relevant to that service.
+          </p>
+          <p class="cs-decision-label">Why one field was the wrong rule</p>
+          <p>
+            The principle was a relevant first interaction. It did not require every page
+            to use a one-field form.
+          </p>
+        </article>
+      </div>
+
+      <figure class="cs-shot" data-zoom>
+        <img src="assets/digilawyer/challan.webp" alt="Full-page export of the redesigned challan page, showing the vehicle-number entry point followed by benefits, process steps, reviews and expandable detail." loading="lazy" decoding="async" width="286" height="2048" />
+        <figcaption>
+          The redesigned challan page end to end. Design-stage export, shown at page
+          scale to make the section order legible rather than the copy.
+        </figcaption>
+      </figure>
+
+      <figure class="cs-slot" data-slot>
+        <div class="cs-slot-frame">
+          <span class="cs-slot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="M3 16.2l4.8-4.2a2 2 0 0 1 2.7 0L15 16m2-3.2a2 2 0 0 1 2.6.1L21 14.2"/></svg></span>
+          <p class="cs-slot-tag">Placeholder</p>
+          <p class="cs-slot-what">The redesigned hero, close up</p>
+          <p class="cs-slot-how">Crop tight to the vehicle-number field and its button, at real size. The panel above is schematic; this is the thing itself.</p>
+        </div>
+        <figcaption>The rebuilt entry point at the top of the challan page.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════  07 · COMPONENTS  ═══════════════════════ -->
+  <section class="cs-section" id="components" data-rail="Components">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>07 &middot; Components</span></p>
+      <h2 class="cs-h2">Turn page decisions into <mark class="highlight">reusable sections.</mark></h2>
+      <p class="cs-lede cs-lede--tight">
+        After the challan redesign, I created a master collection of reusable Figma
+        components. Developers built corresponding reusable components for
+        implementation.
+      </p>
+
+      <ul class="cs-chips">
+        <li class="is-featured">Service cards</li>
+        <li>Process steps</li>
+        <li>Testimonials</li>
+        <li>FAQs</li>
+        <li>Comparison sections</li>
+        <li>Location grids</li>
+        <li>Banners</li>
+        <li>Tables</li>
+      </ul>
+
+      <h3 class="cs-h3 cs-subhead">Consistent structure, service-specific content</h3>
+
+      <div class="cs-compare-wrap">
+        <table class="cs-compare">
+          <caption class="cs-sr">How three shared sections differ between two pages</caption>
+          <thead>
+            <tr>
+              <th scope="col">Shared section</th>
+              <th scope="col">Challan page</th>
+              <th scope="col">Friendly loan recovery page</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Process cards</th>
+              <td data-label="Challan page">Three steps explaining the process.</td>
+              <td data-label="Friendly loan recovery page">Four steps explaining what happens next.</td>
+            </tr>
+            <tr>
+              <th scope="row">Testimonials</th>
+              <td data-label="Challan page">Reviews on the challan page.</td>
+              <td data-label="Friendly loan recovery page">Reviews on the notice use-case page.</td>
+            </tr>
+            <tr>
+              <th scope="row">FAQs</th>
+              <td data-label="Challan page">Challan-related questions.</td>
+              <td data-label="Friendly loan recovery page">Questions about notices, delivery, and next steps.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="cs-body">
+        The component structure stayed consistent while the content, number of items, and
+        section selection changed.
+      </p>
+
+      <div class="cs-artifacts">
+        <figure class="cs-card cs-card--paper cs-artifact" data-zoom>
+          <img src="assets/digilawyer/listing.webp" alt="Full-page export of the product listing page, showing search, categories and situation-based choices." loading="lazy" decoding="async" width="303" height="2048" />
+          <figcaption>
+            <span class="cs-meta-label">Listing</span>
+            <span class="cs-artifact-desc">Search, categories and relevant service options</span>
+          </figcaption>
+        </figure>
+        <figure class="cs-card cs-card--paper cs-artifact" data-zoom>
+          <img src="assets/digilawyer/product.webp" alt="Full-page export of a product detail page for a legal service." loading="lazy" decoding="async" width="249" height="2048" />
+          <figcaption>
+            <span class="cs-meta-label">Product detail</span>
+            <span class="cs-artifact-desc">Service details and the situations they apply to</span>
+          </figcaption>
+        </figure>
+        <figure class="cs-card cs-card--paper cs-artifact" data-zoom>
+          <img src="assets/digilawyer/use-case.webp" alt="Full-page export of the friendly loan recovery use-case page, including a contextual form." loading="lazy" decoding="async" width="725" height="2047" />
+          <figcaption>
+            <span class="cs-meta-label">Use case</span>
+            <span class="cs-artifact-desc">Friendly loan recovery, with a form matched to the situation</span>
+          </figcaption>
+        </figure>
+        <figure class="cs-card cs-card--paper cs-artifact" data-zoom>
+          <img src="assets/digilawyer/detail.webp" alt="Full-page export of a detail page assembled from the shared sections." loading="lazy" decoding="async" width="492" height="2048" />
+          <figcaption>
+            <span class="cs-meta-label">Assembled</span>
+            <span class="cs-artifact-desc">Built from the same shared sections</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="cs-body">
+        Product owners sometimes assembled page structures from these components, then
+        worked with content and SEO colleagues on the copy. The system supported page
+        creation beyond my own design work.
+      </p>
+      <p class="cs-body cs-draft-note">
+        <strong>About these images.</strong> All four are supplied design exports at page
+        scale. Some carry placeholder copy and none is presented as a live screenshot.
+        They are here to show section order and reuse, not to be read.
+      </p>
+
+      <figure class="cs-slot" data-slot>
+        <div class="cs-slot-frame">
+          <span class="cs-slot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="M3 16.2l4.8-4.2a2 2 0 0 1 2.7 0L15 16m2-3.2a2 2 0 0 1 2.6.1L21 14.2"/></svg></span>
+          <p class="cs-slot-tag">Placeholder</p>
+          <p class="cs-slot-what">The Figma master component set</p>
+          <p class="cs-slot-how">The library panel or the component page, with variants visible. For a systems role this is the single most useful image on the page.</p>
+        </div>
+        <figcaption>The master components the three page types are assembled from.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ════════════════════════  08 · DECISIONS  ════════════════════════ -->
+  <section class="cs-section" id="decisions" data-rail="Decisions">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>08 &middot; Decisions</span></p>
+      <h2 class="cs-h2">What each decision gained, <mark class="highlight">and what it cost.</mark></h2>
+
+      <div class="cs-decisions">
+        <article class="cs-card cs-card--paper cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">01</span> Vehicle number first</h3>
+          <p class="cs-decision-label">Benefit</p>
+          <p>A smaller, task-relevant initial ask.</p>
+          <p class="cs-decision-label">Trade-off</p>
+          <p>Collect further information at the appropriate later step.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">02</span> Expandable detail</h3>
+          <p class="cs-decision-label">Benefit</p>
+          <p>Less information displayed upfront.</p>
+          <p class="cs-decision-label">Trade-off</p>
+          <p>Keep essential information visible and the expansion control discoverable.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">03</span> Reusable sections</h3>
+          <p class="cs-decision-label">Benefit</p>
+          <p>Consistency across services.</p>
+          <p class="cs-decision-label">Trade-off</p>
+          <p>Adapt forms, copy, and section selection to each task.</p>
+        </article>
+        <article class="cs-card cs-card--ink cs-decision">
+          <h3 class="cs-h3"><span class="cs-num">04</span> A stable structure with visual iterations</h3>
+          <p class="cs-decision-label">Benefit</p>
+          <p>Move a clear concept toward implementation.</p>
+          <p class="cs-decision-label">Trade-off</p>
+          <p>Further testing would be needed to compare alternative structures.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════  09 · PROCESS  ═════════════════════════ -->
+  <section class="cs-section" id="process" data-rail="Process">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>09 &middot; Process</span></p>
+      <h2 class="cs-h2">I owned the structure. <mark class="highlight">Implementation was shared.</mark></h2>
+
+      <p class="cs-lede">
+        I presented the concept to the CEO and received support to proceed. The direction
+        came from the audit, recordings, competitor review, and discussions with content
+        and SEO. The structure then held through the visual explorations.
+      </p>
+
+      <div class="cs-modules cs-ownership">
+        <article class="cs-card cs-card--ink cs-module">
+          <h3 class="cs-h3">My responsibility</h3>
+          <p>Concept, hierarchy, page layouts, and Figma components.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-module">
+          <h3 class="cs-h3">Developers</h3>
+          <p>Reusable implementation.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-module">
+          <h3 class="cs-h3">Content and SEO teams</h3>
+          <p>Copy and search-related requirements.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-module">
+          <h3 class="cs-h3">Product owners</h3>
+          <p>Assembly of some subsequent pages, working with content and SEO.</p>
+        </article>
+      </div>
+
+      <p class="cs-body">
+        This collaboration carried the approach from one redesigned page into a shared
+        way of creating service pages.
+      </p>
+
+      <figure class="cs-slot" data-slot>
+        <div class="cs-slot-frame">
+          <span class="cs-slot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="M3 16.2l4.8-4.2a2 2 0 0 1 2.7 0L15 16m2-3.2a2 2 0 0 1 2.6.1L21 14.2"/></svg></span>
+          <p class="cs-slot-tag">Placeholder</p>
+          <p class="cs-slot-what">The handoff: specs, or the Figma file structure</p>
+          <p class="cs-slot-how">Whatever engineering actually built against. Page organisation, naming, annotations.</p>
+        </div>
+        <figcaption>What the developers built from.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ════════════════════════  10 · OUTCOMES  ════════════════════════ -->
+  <section class="cs-section" id="outcomes" data-rail="Outcomes">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>10 &middot; Outcomes</span></p>
+      <h2 class="cs-h2">The work extended <mark class="highlight">beyond my own pages.</mark></h2>
+
+      <div class="cs-outcomes cs-outcomes--three">
+        <article class="cs-card cs-card--accent cs-outcome">
+          <p class="cs-metric-label">Page formats</p>
+          <p class="cs-metric-value">3</p>
+          <p>The approach supported listing, product detail, and use-case pages.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-outcome">
+          <p class="cs-metric-label">Reusable design and implementation</p>
+          <p class="cs-metric-value cs-metric-value--text">Figma + code</p>
+          <p>The Figma sections had corresponding components built by developers.</p>
+        </article>
+        <article class="cs-card cs-card--paper cs-outcome">
+          <p class="cs-metric-label">Team adoption</p>
+          <p class="cs-metric-value cs-metric-value--text">Product owners</p>
+          <p>They used shared sections to structure additional pages with content and SEO teams.</p>
+        </article>
+      </div>
+
+      <h3 class="cs-h3 cs-subhead">What I could measure</h3>
+      <div class="dl-stats">
+        <p class="dl-stats-head">
+          <span class="dl-stats-source">Challan page, GA4</span>
+          <span class="dl-stats-period">29 June to 26 September 2026</span>
+        </p>
+        <dl class="dl-stats-row">
+          <div class="dl-stat">
+            <dt>Page views</dt>
+            <dd>11K</dd>
+          </div>
+          <div class="dl-stat">
+            <dt>Active users</dt>
+            <dd>9.3K</dd>
+          </div>
+          <div class="dl-stat dl-stat--flat">
+            <dt>Bounce rate</dt>
+            <dd>60.3%</dd>
+            <p class="dl-stat-note">Higher than the earlier report, and not yet explained.</p>
+          </div>
+        </dl>
+      </div>
+
+      <p class="cs-body cs-draft-note">
+        <strong>Measurement context.</strong> The earlier report contains a differently
+        titled challan row. Page paths and tracking consistency need verification before
+        making a like-for-like comparison. SEO, campaigns, seasonal demand and
+        tracking changes may also influence the figures. <strong>The available reports do not establish a
+        conversion improvement or isolate the redesign&rsquo;s contribution.</strong>
+      </p>
+
+      <figure class="cs-slot" data-slot>
+        <div class="cs-slot-frame">
+          <span class="cs-slot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.6" cy="9.8" r="1.6"/><path d="M3 16.2l4.8-4.2a2 2 0 0 1 2.7 0L15 16m2-3.2a2 2 0 0 1 2.6.1L21 14.2"/></svg></span>
+          <p class="cs-slot-tag">Placeholder</p>
+          <p class="cs-slot-what">The GA4 report the figures above come from</p>
+          <p class="cs-slot-how">Crop to the challan row so the page path and the date range are both legible. This is what lets a reader check the numbers.</p>
+        </div>
+        <figcaption>The source for the figures above, shown so they can be checked.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════  11 · REFLECTION  ═══════════════════════ -->
+  <section class="cs-section" id="reflection" data-rail="Reflection">
+    <div class="cs-shell">
+      <p class="cs-eyebrow"><span>11 &middot; Reflection</span></p>
+      <h2 class="cs-h2">Give every piece of information <mark class="highlight">a clear job.</mark></h2>
+
+      <div class="cs-reflection">
+        <article class="cs-card cs-card--ink cs-quote">
+          <p class="cs-eyebrow"><span>Reflection</span></p>
+          <p class="cs-quote-text">
+            I learned to separate information that helps someone start, decide, or
+            explore.
+          </p>
+        </article>
+
+        <article class="cs-card cs-card--accent cs-insight">
+          <h3 class="cs-h3">Hierarchy and reuse are the same problem</h3>
+          <p>
+            Working with content and SEO made that hierarchy practical. Reusable
+            components then allowed the team to apply those decisions to other services,
+            with forms and content adapted to each task.
+          </p>
+        </article>
+
+        <article class="cs-card cs-card--paper cs-closing">
+          <p class="cs-decision-label">What I would measure next time</p>
+          <p>
+            I would define the funnel before rollout: consistent page paths, a recorded
+            release date, and separate events for lookup starts, enquiries, and payments.
+            I would also verify the form across devices and measure use of the expanded
+            content. That would connect the design decisions more clearly to completed
+            customer tasks.
+          </p>
+          <div class="cs-actions">
+            <!-- Swap SET_LIVE_URL for the live address. Until then this renders
+                 as a marked note instead of a link. -->
+            <a class="cs-cta cs-cta--live" href="SET_LIVE_URL" target="_blank" rel="noopener" data-live-link>
+              See it live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16 16 8"/><path d="M9.5 8H16v6.5"/></svg>
+            </a>
+            <a class="cs-cta cs-cta--quiet" href="index.html#contact">Get in touch</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Section rail, built by case-study.js from [data-rail]. -->
+<nav class="cs-rail" id="cs-rail" aria-label="Case study sections"></nav>
+
+<footer class="gutter home-footer">
+  <div class="col-wide">
+    <a href="mailto:nitansh07@gmail.com">nitansh07@gmail.com</a> <span aria-hidden="true">&middot;</span>
+    <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener">LinkedIn</a> <span aria-hidden="true">&middot;</span>
+    <a href="https://nitanshanand10.framer.website" target="_blank" rel="noopener">Framer portfolio</a> <span aria-hidden="true">&middot;</span>
+    <a href="Nitansh-Anand-Resume.pdf" download>Resume</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script src="case-study.js"></script>
+<script src="digilawyer.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Normalise line endings so a file does not show as modified purely because it
+# was checked out on a different OS. LF in the repo, native in the working copy.
+* text=auto eol=lf
+
+# Binaries git must never try to normalise
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.gif  binary
+*.mp4  binary
+*.pdf  binary
+*.woff2 binary

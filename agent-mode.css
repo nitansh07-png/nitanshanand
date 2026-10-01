@@ -1,0 +1,1435 @@
+/* =========================================================================
+   Agent mode — hero.
+
+   Layered on top of styles.css,
+which supplies the shared header,
+tokens and
+   theme system. Everything here is scoped to .agent-page so it cannot leak
+   back into the portfolio.
+
+   The hero backdrop is light in both themes,
+so the header is forced to ink
+   over it rather than following --color-ink.
+   ========================================================================= */
+
+.agent-page {
+  --sky: #dbe6ee;
+  --hero-ink: #0b0b0c;
+  /* styles.css sets --header-h:auto below 600px, and calc(auto + …) is
+     invalid, which silently collapsed the headline's top padding onto the
+     nav. Keep a concrete height of our own for the offset. */
+  --hero-nav-h: 56px;
+  --ease-hero: cubic-bezier(0.22, 1, 0.36, 1);
+  --poster: url("https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&w=1920&q=85");
+  /* The hero carries the sky itself, so the page keeps the portfolio's own
+     ground — otherwise everything below the hero, footer included, sits on
+     a pale blue that belongs to the video. */
+  background: var(--color-ground);
+  overflow-x: hidden;
+}
+
+/* --- header over the hero ------------------------------------------------ */
+
+/* The header sits above a light video in both themes,
+so it drops its own
+   surface and takes the hero's ink. Without this the dark theme paints light
+   text onto a pale sky. */
+.agent-page .site-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: var(--hero-ink);
+}
+.agent-page .site-header a,
+.agent-page .site-header button { color: var(--hero-ink); }
+
+/* A transparent header only works while nothing moves under it. The moment
+   the page scrolls,
+the headline and then the record button pass through it,
+so it takes its real surface back — and with it the portfolio's ink,
+since
+   hero-ink would be invisible against the dark theme below. */
+.agent-page.is-scrolled .site-header {
+  border-bottom: 1px solid var(--color-hairline);
+  background: var(--color-header-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-ink);
+  transition: background 0.3s var(--ease-hero), color 0.3s var(--ease-hero),
+              border-color 0.3s var(--ease-hero);
+}
+.agent-page.is-scrolled .site-header a,
+.agent-page.is-scrolled .site-header button { color: var(--color-ink); }
+.agent-page.is-scrolled .agent-launcher-mark { color: var(--color-accent); }
+.agent-page.is-scrolled .agent-mode-link.is-agent { text-decoration-color: var(--color-ink); }
+.agent-page.is-scrolled .site-nav > a:hover,
+.agent-page.is-scrolled .site-nav > a:focus-visible,
+.agent-page.is-scrolled .site-nav > button:hover,
+.agent-page.is-scrolled .site-nav > button:focus-visible { text-decoration-color: var(--color-accent); }
+.agent-page.is-scrolled .site-signature-photo { box-shadow: none; }
+
+/* The record button belongs to the hero,
+so it leaves with it rather than
+   riding up into the header. */
+.hero__foot { transition: opacity 0.3s var(--ease-hero); }
+.agent-page.is-past-hero .hero__foot { opacity: 0; pointer-events: none; }
+.agent-page .site-signature-photo { box-shadow: 0 0 0 1px rgba(11, 11, 12, 0.18); }
+.agent-page .site-nav > a:hover,
+.agent-page .site-nav > a:focus-visible,
+.agent-page .site-nav > button:hover,
+.agent-page .site-nav > button:focus-visible { text-decoration-color: var(--hero-ink); }
+
+/* The dots already animate via .agent-launcher-mark; on this page they just
+   need the hero's ink instead of the accent. */
+.agent-page .agent-launcher-mark { color: var(--hero-ink); }
+
+/* The switch is lit while you are in agent mode. */
+.agent-page .agent-mode-link.is-agent {
+  text-decoration: underline;
+  text-decoration-color: var(--hero-ink);
+}
+
+/* --- hero ---------------------------------------------------------------- */
+
+.agent-page .hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--sky);
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: scale(1.08);
+  filter: blur(14px);
+  opacity: 0;
+  animation: mediaIn 1.9s var(--ease-hero) 0.1s forwards;
+}
+@keyframes mediaIn { to { transform: scale(1); filter: blur(0); opacity: 1; } }
+
+.hero__media img,
+.hero__media video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 62%;
+}
+.hero__media img { z-index: 1; }
+/* The poster carries first paint; the video cross-fades in once it has
+   frames,
+so there is no flash of empty black. */
+.hero__media video { z-index: 2; opacity: 0; transition: opacity 1.2s ease; }
+.hero__media video.is-ready { opacity: 1; }
+
+/* Blurred backdrop for portrait phones,
+off everywhere else. */
+.hero__media::before {
+  content: "";
+  display: none;
+  position: absolute;
+  inset: -8%;
+  z-index: 0;
+  background: var(--poster) center 22% / cover no-repeat;
+  filter: blur(30px) saturate(104%);
+  transform: scale(1.05);
+}
+
+/* Keeps the black type crisp against the sky without dimming the footage. */
+.hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(226, 236, 243, 0.55) 0%, rgba(226, 236, 243, 0.18) 34%, rgba(226, 236, 243, 0) 58%),
+    radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 60%);
+}
+
+/* --- headline ------------------------------------------------------------ */
+
+/* Top-anchored on purpose: align-items stays at its default so the h1 box
+   spans the column and its text renders at the top,
+leaving the deck below
+   the type rather than behind it. Do not add align-items:center here. */
+.hero__inner {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: calc(var(--hero-nav-h) + clamp(1.5rem, 5vh, 4.5rem)) var(--gutter) 0;
+  pointer-events: none;
+}
+
+.agent-page .headline {
+  margin: 0;
+  color: var(--hero-ink);
+  font-family: "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.7rem, 6.3vw, 6.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.005em;
+  text-align: center;
+}
+
+.line {
+  display: block;
+  overflow: hidden;      /* the mask the inner span slides out of */
+  white-space: nowrap;   /* the two-line break is design, not wrapping */
+  /* Padding plus an equal negative margin lets descenders clear the mask
+     without adding layout height. */
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.line > span {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+  animation: lineUp 1.25s var(--ease-hero) forwards;
+}
+.line:nth-child(1) > span { animation-delay: 0.55s; }
+.line:nth-child(2) > span { animation-delay: 0.68s; }
+@keyframes lineUp { to { transform: translateY(0); opacity: 1; } }
+
+/* --- credit -------------------------------------------------------------- */
+
+/* The bottom of the frame is meadow,
+not sky,
+so anything down here needs
+   its own surface to stay legible over whatever the footage is doing. */
+.hero__foot {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 var(--gutter) clamp(1.5rem, 4vh, 2.75rem);
+}
+
+/* A record button should look like a record. The disc is drawn in CSS —
+   vinyl grooves as a repeating gradient,
+a coloured centre label — and it
+   only turns while something is actually playing. */
+.record-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 7px 18px 7px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 10px 28px -16px rgba(11, 11, 12, 0.55);
+  color: var(--hero-ink);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+  transition: background 0.26s var(--ease-hero), transform 0.26s var(--ease-hero),
+              box-shadow 0.26s var(--ease-hero), border-color 0.26s;
+}
+.record-toggle:hover {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px -18px rgba(11, 11, 12, 0.6);
+}
+.record-toggle:active { transform: translateY(0); }
+.record-toggle:focus-visible { outline: 2px solid var(--hero-ink); outline-offset: 3px; }
+.record-toggle:disabled { cursor: default; transform: none; opacity: 0.6; }
+
+.record-disc {
+  position: relative;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background:
+    /* centre label */
+    radial-gradient(circle at 50% 50%, var(--color-accent) 0 22%, transparent 22.5%),
+    /* spindle hole */
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.9) 0 5%, transparent 5.5%),
+    /* grooves */
+    repeating-radial-gradient(circle at 50% 50%,
+      #1a1a1c 0 1.4px, #2a2a2d 1.4px 2.2px) ;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+/* A play triangle sits over the disc until it starts. */
+.record-disc::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 7px solid rgba(255, 255, 255, 0.95);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  transform: translate(-40%, -50%);
+  transition: opacity 0.22s;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+.record-toggle[aria-pressed="true"] .record-disc {
+  animation: record-spin 2.4s linear infinite;
+}
+.record-toggle[aria-pressed="true"] .record-disc::after { opacity: 0; }
+@keyframes record-spin { to { transform: rotate(360deg); } }
+
+.record-label { white-space: nowrap; }
+
+/* The Spotify embed itself. It only exists once someone presses play,
+and
+   it stays visible while it plays — the player is not something to hide. */
+.record-panel {
+  width: min(420px, 100%);
+  margin-top: 4px;
+  border-radius: 14px;
+  overflow: hidden;
+  /* Animating max-height rather than height, since the iframe sets its own. */
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s var(--ease-hero), opacity 0.35s ease;
+}
+.record-panel[hidden] { display: none; }
+.record-panel.is-open { max-height: 200px; opacity: 1; }
+.record-panel iframe { display: block; width: 100%; border: 0; border-radius: 12px; }
+
+/* Sits over meadow,
+so it needs the same treatment as the pills rather
+   than a bare text-shadow. */
+.record-note {
+  width: fit-content;
+  margin: 8px auto 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: color-mix(in srgb, var(--hero-ink) 72%, transparent);
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* The row stacks once the player is in it. */
+.hero__foot { flex-direction: column; }
+
+/* --- entrance stagger ---------------------------------------------------- */
+
+.rise {
+  opacity: 0;
+  transform: translateY(-14px);
+  animation: rise 0.95s var(--ease-hero) forwards;
+}
+@keyframes rise { to { opacity: 1; transform: translateY(0); } }
+.d1 { animation-delay: 0.18s; }
+.d2 { animation-delay: 0.26s; }
+.d3 { animation-delay: 0.32s; }
+.d4 { animation-delay: 0.38s; }
+.d5 { animation-delay: 0.44s; }
+.d6 { animation-delay: 0.52s; }
+/* The bottom row rises from below,
+not above. */
+.hero__foot.rise { transform: translateY(14px); }
+
+/* =========================================================================
+   Responsive
+   ========================================================================= */
+
+@media (max-width: 900px) {
+  .hero__media img,
+.hero__media video { object-position: center 60%; }
+  .hero__inner { align-items: flex-start; }
+  .line { white-space: normal; }
+  .agent-page .headline { font-size: clamp(2.4rem, 6.4vw, 3.6rem); max-width: 15ch; }
+}
+
+/* A 16:9 clip stretched to cover a tall phone shows only a sliver of its
+   width: the deck fills the screen and the sky the headline needs is cropped
+   away. Bottom-anchor the footage at a sane scale and feather its top edge
+   into a blurred still of the same frame, so the seam is invisible. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .hero__media::before { display: block; }
+  .hero__media img,
+.hero__media video {
+    top: auto;
+    bottom: 0;
+    height: 64svh;
+    object-position: center 62%;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 9%, #000 20%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 9%, #000 20%);
+  }
+}
+
+/* The shared header grows a little once it stacks its own padding. */
+@media (max-width: 600px) {
+  .agent-page { --hero-nav-h: 64px; }
+}
+
+@media (max-width: 560px) {
+  .agent-page .headline { font-size: clamp(2.15rem, 9.4vw, 3.1rem); line-height: 1.12; max-width: 11ch; }
+  .hero__inner { padding-top: calc(var(--hero-nav-h) + clamp(1.75rem, 7vh, 3rem)); }
+  .hero__media img,
+.hero__media video { object-position: center 58%; }
+}
+
+@media (max-width: 380px) {
+  .agent-page .headline { font-size: 2rem; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .agent-page .headline { font-size: clamp(1.7rem, 5vw, 2.4rem); max-width: 22ch; }
+  .hero__inner { padding-top: calc(var(--hero-nav-h) + 0.75rem); }
+}
+
+/* =========================================================================
+   Motion preferences
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .agent-page *,
+.agent-page *::before,
+.agent-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Reset anything whose resting state is invisible,
+so nothing is
+     left hidden when the animation is skipped. */
+  .hero__media { opacity: 1; transform: none; filter: none; }
+  .line > span { transform: none; opacity: 1; }
+  .rise { opacity: 1; transform: none; }
+  .agent-page .agent-launcher-mark i { opacity: 1; }
+  .record-toggle[aria-pressed="true"] .record-disc { animation: none; }
+}
+
+/* =========================================================================
+   Below the hero
+
+   Ordinary portfolio surface again: the hero is the cinematic moment,
+the
+   content under it is a page you read.
+   ========================================================================= */
+
+.ag-section { background: var(--color-ground); }
+.ag-section + .ag-section { border-top: 1px solid var(--color-hairline); }
+
+.ag-stance { max-width: 62ch; color: var(--color-ink); }
+.ag-note-title + .ag-stance { margin-top: 10px; }
+
+/* Case cards: one per row, divided by rules.
+
+   The reference reads straight down — metadata, title, lede, tags, link, the
+   visual, then the note about what the decision actually was. Stacking full
+   width is what gives the visual room to be a visual rather than a thumbnail,
+   and it puts the note where it belongs: after you have seen the thing, not
+   before. */
+
+.ag-projects {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 36px 0 0;
+  padding: 0;
+  border: 1px solid var(--color-hairline);
+  list-style: none;
+  overflow: hidden;
+}
+
+.ag-project {
+  display: block;
+  padding: 34px clamp(20px, 3vw, 38px) 32px;
+  border-bottom: 1px solid var(--color-hairline);
+  transition: background var(--dur-ui) var(--ease-calm);
+}
+.ag-project:hover { background: color-mix(in srgb, var(--color-ink) 2.5%, transparent); }
+.ag-project:last-child { border-bottom: 0; }
+
+/* ---- the head ---- */
+
+.ag-meta {
+  color: var(--color-soft);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.ag-project .ag-title { margin-top: 12px; }
+
+.ag-lede {
+  margin-top: 10px;
+  max-width: none;
+  font-size: clamp(0.975rem, 1.35vw, 1.0625rem);
+  line-height: 1.6;
+}
+
+/* ---- tags ---- */
+
+.ag-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ag-tags li {
+  padding: 5px 11px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  color: var(--color-soft);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ag-project .ag-btn { margin-top: 18px; }
+
+/* ---- the visual ---- */
+
+.ag-stage {
+  display: grid;
+  place-items: center;
+  margin-top: 24px;
+  padding: 26px 20px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse 52% 62% at 50% 58%,
+      color-mix(in srgb, var(--color-ink) 5%, transparent), transparent 72%),
+    color-mix(in srgb, var(--color-ink) 2.5%, transparent);
+}
+.ag-stage .ag-art { display: block; margin: 0; padding: 0; background: none; }
+.ag-stage .ag-art svg {
+  display: block;
+  width: 100%;
+  /* Wide enough to read as the card's picture, capped so the drawing never
+     outgrows the line weight it was drawn at. */
+  max-width: 300px;
+  height: auto;
+  margin-inline: auto;
+}
+
+/* ---- the note under the visual ---- */
+
+.ag-note {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-hairline);
+  max-width: none;
+  color: var(--color-soft);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+@media (max-width: 720px) {
+  .ag-project { padding: 26px 20px 24px; }
+  .ag-stage { padding: 20px 14px; }
+  .ag-stage .ag-art svg { max-width: 220px; }
+}
+
+/* One cuboid, three faces, three values. Light on top, mid on the left,
+   dark on the right: that ordering is the whole reason a flat rhombus
+   starts reading as a solid. */
+.ag-art .ar-plate {
+  fill: var(--color-raised);
+  stroke: currentColor;
+  stroke-width: 1.3;
+  opacity: 0.75;
+}
+.ag-art .ar-shade { fill: color-mix(in srgb, var(--color-ink) 6%, transparent); }
+
+.ag-art .ar-top,
+.ag-art .ar-left,
+.ag-art .ar-right {
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+.ag-art .ar-top   { fill: var(--color-raised); }
+.ag-art .ar-left  { fill: color-mix(in srgb, var(--color-ink) 9%, var(--color-raised)); }
+.ag-art .ar-right { fill: color-mix(in srgb, var(--color-ink) 19%, var(--color-raised)); }
+
+/* The one block that is the point of each drawing. */
+.ag-art .ar-top.ar-accent   { fill: var(--color-accent); }
+.ag-art .ar-left.ar-accent  { fill: color-mix(in srgb, var(--color-accent) 78%, black); }
+.ag-art .ar-right.ar-accent { fill: color-mix(in srgb, var(--color-accent) 58%, black); }
+.ag-art .ar-accent { stroke: none; }
+
+.ag-art .ar-line {
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  opacity: 0.4;
+}
+.ag-art .ar-dot { fill: color-mix(in srgb, var(--color-ink) 26%, transparent); }
+.ag-art .ar-play { fill: var(--color-accent); }
+/* The tile the world is still missing. */
+.ag-art .ar-gap {
+  fill: var(--color-ground);
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-dasharray: 3 3;
+  opacity: 0.8;
+}
+.ag-project .ag-index { display: block; line-height: 1.4; }
+.ag-project .ag-title { margin-top: 6px; }
+.ag-project .ag-text { margin-top: 10px; max-width: 46ch; }
+.ag-project:first-child .ag-text { max-width: 62ch; }
+
+/* ---- the button ---- */
+
+.ag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-ground);
+  font-size: 13px;
+  font-weight: 560;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  transition: transform var(--dur-tap) var(--ease-calm), opacity var(--dur-tap);
+}
+/* margin-top:auto is what bottom-aligns the button across a row, so the gap
+   above it cannot be a margin on the button itself: that would beat the auto
+   and drop it back under the text. It belongs to whatever sits directly
+   above, whether that is the stat line or the paragraph. */
+.ag-project :has(+ .ag-btn) { margin-bottom: 18px; }
+.ag-btn .arrow { transition: transform var(--dur-ui) var(--ease-calm); }
+.ag-btn:hover { opacity: 0.88; }
+.ag-btn:hover .arrow { transform: translateX(3px); }
+
+@media (max-width: 720px) {
+  .ag-projects { grid-template-columns: minmax(0, 1fr); }
+  .ag-project,
+  .ag-project:first-child,
+  .ag-project:nth-child(even) { grid-column: auto; border-right: 0; }
+  .ag-project { padding: 24px 20px; }
+  .ag-project:last-child { border-bottom: 0; }
+  .ag-project:nth-last-child(2) { border-bottom: 1px solid var(--color-hairline); }
+}
+
+.ag-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  font-size: 14px;
+  text-decoration: underline;
+  text-decoration-color: var(--color-hairline);
+  text-underline-offset: 5px;
+}
+.ag-link:hover { text-decoration-color: var(--color-accent); }
+
+@media (max-width: 560px) {
+  .ag-projects { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .ag-project:first-child { grid-column: auto; }
+  .ag-project { padding: 22px; }
+  .ag-index { line-height: 1.4; }
+}
+
+/* =========================================================================
+   Footer — the glass pane,
+rebuilt from the Nexeus spec
+
+   The spec's artboard is 1600 x 780 with --u derived from the viewport. That
+   works for a fixed full-screen page; here the footer ends a page that
+   scrolls,
+so --u drops the height term and gains a floor — without one,
+a
+   1000px-wide window rendered 9px body copy.
+
+   Below 1100px the artboard stops making sense at all and the layout becomes
+   the spec's own stacked/clamp treatment.
+   ========================================================================= */
+
+/* The stage owns the unit system and the footage; the footer inherits both.
+   The spec's --u also divides by viewport height,
+which works for a fixed
+   full-screen page. Here the stage sits inside a document that scrolls,
+so
+   the height term is dropped and a floor added — without one,
+a 1000px-wide
+   window rendered 9px body copy. */
+.fx-stage {
+  --u: clamp(0.78px, calc(100vw / 1600), 1.12px);
+  --fw: calc(1600 * var(--u));
+  --hair: max(1px, calc(1 * var(--u)));
+  --fx-heading: rgba(255, 255, 255, 0.86);
+  --fx-muted: rgba(255, 255, 255, 0.68);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #1d8fb8;   /* the painting's sky, until the footage arrives */
+  color: #fff;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The footer is now just the glass pane at the bottom of the stage,
+so it
+   drops its own surface and lets the painting through. */
+.fx-footer {
+  position: relative;
+  background: transparent;
+  /* No overflow:hidden here. It was needed while the video lived inside the
+     footer; now that the media sits on the stage the footer clips nothing,
+     and clipping a backdrop-filtered element over a playing video makes the
+     pane flicker as the compositor re-samples it each frame. */
+}
+
+/* The footage sits at the back of the whole stage. */
+.fx-media { position: absolute; inset: 0; z-index: 0; }
+.fx-media img,
+.fx-media video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The spec anchors right-bottom against a 1600x780 artboard. This stage is
+     wider and shorter, which dragged the peak and the cloud bank left across
+     the type. Pushing the frame further right keeps the subject clear of the
+     copy instead of putting a scrim over it. */
+  /* The Y matters as much as the X: anchored to the bottom, the cloud bank
+     filled the frame and the copy sat on top of it. 30% puts the open sky
+     behind the type and drops the peak and the hiker to the right. */
+  object-position: 92% 30%;
+  /* The spec desaturates the painting slightly so the type stays dominant. */
+  filter: saturate(0.86);
+  /* Promote to its own layer: the footer's backdrop-filter samples this every
+     frame, and an unpromoted video makes that sampling unstable. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.fx-media video { opacity: 0; transition: opacity 0.9s ease; }
+.fx-media video.is-ready { opacity: 1; }
+
+/* The glass itself: the spec's three gradients,
+its blur,
+and its hairlines,
+now with the painting behind them to actually refract. */
+.fx-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.022) 0, rgba(255,255,255,0.072) calc(20 * var(--u)), rgba(255,255,255,0) calc(58 * var(--u))),
+    linear-gradient(270deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.05) calc(20 * var(--u)), rgba(255,255,255,0) calc(58 * var(--u))),
+    /* The spec's third layer warms to gold at the base. Swapped for a neutral
+       translucent tint so the pane reads as glass over the painting rather
+       than a coloured wash — still dark enough to keep white type legible. */
+    linear-gradient(180deg, rgba(10,14,20,0.30) 0%, rgba(10,14,20,0.36) 52%, rgba(10,14,20,0.44) 100%);
+  /* The spec's 50u lands at ~39px, which is a lot of blur to recompute over
+     live video. 30u reads the same at this size and costs far less. */
+  backdrop-filter: blur(calc(30 * var(--u))) saturate(0.85);
+  -webkit-backdrop-filter: blur(calc(30 * var(--u))) saturate(0.85);
+  box-shadow:
+    inset var(--hair) 0 0 rgba(255,255,255,0.145),
+    inset calc(-1 * var(--hair)) 0 0 rgba(255,255,255,0.125),
+    inset 0 calc(-1 * var(--hair)) 0 rgba(255,255,255,0.17),
+    inset 0 var(--hair) 0 rgba(255,255,255,0.03);
+}
+
+.fx-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: calc(26 * var(--u));
+  width: min(100%, var(--fw));
+  margin-inline: auto;
+  padding: calc(34 * var(--u)) calc(26.6 * var(--u)) calc(30 * var(--u));
+}
+
+.fx-rule { height: var(--hair); background: rgba(255, 255, 255, 0.42); }
+
+.fx-legal {
+  color: var(--fx-muted);
+  font-size: calc(14 * var(--u));
+  font-weight: 500;
+  letter-spacing: calc(-0.30422 * var(--u));
+}
+
+.fx-footer a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 2px; }
+
+/* Below the artboard the --u sizes get too small to read, so the spec's own
+   clamp treatment takes over. */
+@media (max-width: 1099px) {
+  .fx-inner {
+    gap: clamp(16px, 2.4vh, 26px);
+    padding: clamp(22px, 3.4vh, 40px) clamp(20px, 5.6vw, 56px) clamp(20px, 3vh, 34px);
+  }
+  .fx-legal { font-size: clamp(12px, 1.3vw, 14px); }
+}
+
+@media (max-width: 380px) {
+  .fx-legal { white-space: normal; }
+}
+
+/* =========================================================================
+   Stage hero — the Nexeus upper section
+
+   Absolute artboard positions from the spec,
+in --u,
+above roughly 1100px.
+   Below that it becomes the spec's own stacked/clamp treatment.
+   ========================================================================= */
+
+/* The spec's aspect-ratio scrims,
+so the type keeps its footing when the
+   frame gets wide and the sky thins out. */
+.fx-scrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+@media (min-aspect-ratio: 17/10) {
+  .fx-scrim {
+    height: calc(450 * var(--u));
+    background: linear-gradient(180deg, rgba(4,20,32,.48), rgba(4,20,32,.25) 52%, rgba(4,20,32,0));
+  }
+}
+@media (min-aspect-ratio: 19/10) {
+  .fx-scrim {
+    height: calc(470 * var(--u));
+    background: linear-gradient(180deg, rgba(4,20,32,.58), rgba(4,20,32,.31) 52%, rgba(4,20,32,0));
+  }
+}
+@media (min-aspect-ratio: 21/10) {
+  .fx-media img,
+.fx-media video { object-position: right 76%; }
+  .fx-scrim {
+    height: calc(480 * var(--u));
+    background: linear-gradient(180deg, rgba(4,20,32,.56), rgba(4,20,32,.30) 52%, rgba(4,20,32,0));
+  }
+}
+@media (min-aspect-ratio: 5/4) and (max-aspect-ratio: 31/20) {
+  .fx-scrim {
+    height: calc(410 * var(--u));
+    background: linear-gradient(180deg, rgba(4,22,34,.26), rgba(4,22,34,.13) 52%, rgba(4,22,34,0));
+  }
+}
+
+.fx-hero {
+  position: relative;
+  z-index: 2;
+  width: min(100%, var(--fw));
+  margin-inline: auto;
+  padding: calc(150 * var(--u)) calc(46 * var(--u)) calc(240 * var(--u));
+}
+
+.fx-eyebrow {
+  margin: 0;
+  font-size: calc(15 * var(--u));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: calc(0.2163 * var(--u));
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+}
+
+/* The mask the headline rises out of. */
+.fx-headline-mask {
+  margin-top: calc(20 * var(--u));
+  clip-path: inset(-45% -8% -6px -3%);
+}
+.fx-headline {
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: calc(71.2 * var(--u));
+  line-height: 1;
+  letter-spacing: calc(0.5696 * var(--u));
+  white-space: nowrap;
+  color: #fff;
+}
+
+.fx-lede {
+  margin-top: calc(22 * var(--u));
+  width: calc(432 * var(--u));
+  max-width: 100%;
+  font-size: calc(17 * var(--u));
+  font-weight: 500;
+  line-height: calc(22.9 * var(--u));
+  letter-spacing: calc(-0.15232 * var(--u));
+  color: #fff;
+}
+
+.fx-cta {
+  display: grid;
+  place-items: center;
+  width: calc(157 * var(--u));
+  height: calc(40.6 * var(--u));
+  margin-top: calc(34 * var(--u));
+  border-radius: calc(4.2 * var(--u));
+  background: #fff;
+  text-decoration: none;
+  transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.fx-cta span {
+  font-size: calc(15.8 * var(--u));
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: calc(0.057828 * var(--u));
+  color: #000;
+  white-space: nowrap;
+}
+.fx-cta:hover {
+  background: #eef2f3;
+  transform: translateY(calc(-1.5 * var(--u)));
+  box-shadow: 0 calc(8 * var(--u)) calc(22 * var(--u)) rgba(0,0,0,.20);
+}
+.fx-cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* --- entrance ------------------------------------------------------------ */
+
+/* The spec runs its timeline on load; this sits mid-document, so the same
+   order and easings fire when the stage scrolls into view instead. */
+@media (prefers-reduced-motion: no-preference) {
+  .fx-eyebrow,
+.fx-lede,
+.fx-cta { opacity: 0; transform: translateY(12px); }
+  .fx-headline { transform: translate3d(0, 118%, 0); }
+
+  .fx-stage.is-in .fx-eyebrow,
+.fx-stage.is-in .fx-lede,
+.fx-stage.is-in .fx-cta {
+    opacity: 1;
+    transform: none;
+    transition: opacity .62s cubic-bezier(.22,.65,.28,1), transform .62s cubic-bezier(.22,.65,.28,1);
+  }
+  .fx-stage.is-in .fx-headline {
+    transform: none;
+    transition: transform .95s cubic-bezier(.16,1,.3,1) .11s;
+  }
+  .fx-stage.is-in .fx-lede { transition-delay: .37s; }
+  .fx-stage.is-in .fx-cta { transition-delay: .56s; }
+}
+
+/* --- portrait / narrow --------------------------------------------------- */
+
+@media (max-width: 1100px), (max-aspect-ratio: 5/4) {
+  .fx-hero {
+    /* The bottom padding is what gives the copy its sky: the video fills the
+       stage, so a taller stage shows more of the band above the clouds. */
+    padding: clamp(46px, 9vh, 96px) clamp(20px, 5.6vw, 56px) clamp(120px, 26vh, 260px);
+  }
+  .fx-eyebrow { font-size: clamp(10.5px, 2.9vw, 15px); letter-spacing: .09em; }
+  .fx-headline-mask { margin-top: clamp(14px, 2.4vh, 22px); }
+  .fx-headline {
+    font-size: clamp(34px, 9.4vw, 72px);
+    line-height: 1.04;
+    white-space: normal;
+    max-width: 15ch;
+    text-wrap: balance;
+  }
+  .fx-lede {
+    margin-top: clamp(14px, 2.4vh, 22px);
+    width: auto;
+    max-width: 38ch;
+    font-size: clamp(14.5px, 3.9vw, 18px);
+    line-height: 1.42;
+  }
+  .fx-cta {
+    display: inline-grid;
+    width: auto;
+    min-width: clamp(140px, 40vw, 190px);
+    height: clamp(42px, 6vh, 52px);
+    padding-inline: clamp(20px, 6vw, 34px);
+    margin-top: clamp(22px, 3.4vh, 34px);
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 648px) {
+  .fx-headline { font-size: clamp(32px, 10.2vw, 56px); }
+  .fx-lede { max-width: 34ch; }
+}
+
+/* --- the trimmed link row ------------------------------------------------ */
+
+.fx-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(34 * var(--u)) calc(44 * var(--u));
+  margin: 0;
+}
+.fx-links a {
+  font-size: calc(15.55 * var(--u));
+  font-weight: 400;
+  letter-spacing: calc(-0.07775 * var(--u));
+  color: #fff;
+  text-decoration: none;
+  transition: opacity .2s;
+}
+.fx-links a:hover { opacity: .6; }
+.fx-links a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+
+@media (max-width: 1100px), (max-aspect-ratio: 5/4) {
+  .fx-links {
+    gap: clamp(16px, 4vw, 28px) clamp(20px, 6vw, 40px);
+  }
+  .fx-links a { font-size: clamp(14px, 3.6vw, 16px); padding-block: clamp(6px, 1vh, 10px); }
+}
+
+/* --- showcase cards ------------------------------------------------------
+   "Built with it" above is a list, because those are projects and a list is
+   how you read a sequence. These are mechanisms rather than a sequence, so
+   they sit in a grid: four things of equal weight, no first among them. */
+
+
+@media (max-width: 720px) {
+  .ag-cards { grid-template-columns: minmax(0, 1fr); }
+  .ag-card { padding: 24px 20px; border-right: 0; }
+  .ag-card:last-child { border-bottom: 0; }
+  .ag-card:nth-last-child(2) { border-bottom: 1px solid var(--color-hairline); }
+}
+
+
+/* =========================================================================
+   The preview
+
+   Four of these cards can only show a drawing of the thing. This one shows the
+   thing running. The clip is not fetched until the card is near the viewport
+   and it pauses again once it leaves, so a visitor who never scrolls this far
+   never pays for it. The drawing holds the frame until there is a real frame
+   to show, which is the same handover the hero makes.
+   ========================================================================= */
+
+.ag-stage--preview {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin-top: 0;
+  margin-bottom: 26px;
+  padding: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.ag-stage--preview .ag-art { padding: 0; }
+.ag-stage--preview .ag-art svg { max-width: 190px; }
+
+.ag-preview-video {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--dur-scene) var(--ease-calm);
+}
+.ag-preview-video.is-ready { opacity: 1; }
+
+@media (max-width: 720px) {
+  .ag-stage--preview .ag-art svg { max-width: 150px; }
+}
+
+/* =========================================================================
+   Where I draw the line, set as a note
+
+   Every other section on this page reports what was made. This one states a
+   boundary, so it is inset and a shade quieter: a note in the margin rather
+   than one more section shouting at the same volume. It borrows the stage's
+   panel and the cards' mark so it still reads as family.
+   ========================================================================= */
+
+.ag-note-block {
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid var(--color-hairline);
+  border-left: 3px solid color-mix(in srgb, var(--color-accent) 55%, var(--color-hairline));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color-ink) 2.5%, transparent);
+}
+
+.ag-note-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 9px;
+  color: var(--color-soft);
+}
+.ag-note-mark svg { width: 18px; height: 18px; }
+
+.ag-note-title {
+  margin-top: 16px;
+  font: var(--display-wght) clamp(1.05rem, 1.5vw, 1.3rem) / 1.28 var(--font-display);
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.ag-note-block .ag-stance {
+  font-size: clamp(0.975rem, 1.35vw, 1.0625rem);
+  line-height: 1.65;
+}
+
+
+/* =========================================================================
+   Capabilities
+
+   Liquid glass: a near-invisible fill, and the border drawn as a gradient
+   stroke rather than a flat 1px - a padding-box/border-box mask difference,
+   which is what stops it reading as a plain outlined box. The section keeps
+   its own black ground in both themes because the clip behind it needs one.
+   ========================================================================= */
+
+.cap {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+}
+
+.cap-video {
+  /* The band runs several screens, and cover would crop a 16:9 clip to a
+     vertical sliver and magnify it. Hold it to one viewport at the head of
+     the section and let the scrim resolve it into the black below. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity var(--dur-scene) var(--ease-calm);
+}
+.cap-video.is-ready { opacity: 1; }
+
+/* The clip is bright in places and the type over it is white, so a scrim
+   sits between them - weighted to the top, where the heading is, and lifted
+   again at the foot for the cards. Without it the heading washes out against
+   the lit part of the frame. */
+.cap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.40) 30%,
+    rgba(0, 0, 0, 0.55) 62%,
+    rgba(0, 0, 0, 0.88) 88%,
+    #000 100%);
+}
+
+.cap-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: clamp(72px, 10vw, 96px) clamp(20px, 5vw, 80px) 40px;
+}
+
+.cap-head { margin-bottom: auto; }
+
+.cap-label {
+  margin: 0 0 24px;
+  font-family: "Barlow", var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cap-lede {
+  margin: 18px 0 0;
+  max-width: 54ch;
+  font-family: "Barlow", var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cap-title {
+  margin: 0;
+  max-width: 18ch;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(3.25rem, 7.5vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: -3px;
+  color: #fff;
+}
+
+/* the word-by-word blur-in; the words are wrapped by script, so without it
+   the heading is simply a heading */
+.cap-title .w {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(50px);
+  transition: opacity 0.7s var(--ease-calm),
+              filter 0.7s var(--ease-calm),
+              transform 0.7s var(--ease-calm);
+  transition-delay: var(--w-delay, 0ms);
+}
+.cap-title.is-in .w {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+/* ---- liquid glass ---- */
+
+.glass {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.15) 80%,
+    rgba(255, 255, 255, 0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cap-title .w { opacity: 1; filter: none; transform: none; transition: none; }
+}
+
+
+/* ---- Smaller machines: the cards, restored ---- */
+
+.ag-cards-lede { margin-top: 18px; max-width: 58ch; }
+
+/* Same frame as the project cards above, so the page has one card idea
+   rather than two. Four of them divide into two columns cleanly, so none
+   needs to span. */
+.ag-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 36px 0 0;
+  padding: 0;
+  border: 1px solid var(--color-hairline);
+  list-style: none;
+  overflow: hidden;
+}
+
+.ag-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 28px;
+  border-right: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
+  transition: background var(--dur-ui) var(--ease-calm);
+}
+.ag-card:hover { background: color-mix(in srgb, var(--color-ink) 3.5%, transparent); }
+.ag-card:nth-child(even) { border-right: 0; }
+.ag-card:nth-last-child(-n + 2) { border-bottom: 0; }
+
+.ag-card-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 9px;
+  color: var(--color-soft);
+}
+.ag-card-mark svg { width: 18px; height: 18px; }
+
+.ag-card-kind {
+  margin-top: 16px;
+  color: var(--color-soft);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.ag-card-title {
+  margin-top: 7px;
+  font: var(--display-wght) clamp(1.05rem, 1.5vw, 1.25rem) / 1.28 var(--font-display);
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.ag-card-text {
+  margin-top: 10px;
+  color: var(--color-soft);
+  font-size: 14.5px;
+  line-height: 1.62;
+}
+
+/* The claim each card is prepared to be held to. */
+.ag-card-stat {
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--color-hairline);
+  align-self: stretch;
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* Pinned to the bottom so the links line up across a row whatever the text
+   above them does. */
+.ag-card-link { margin-top: auto; padding-top: 14px; }
+
+.ag-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  font-size: 14px;
+  text-decoration: underline;
+  text-decoration-color: var(--color-hairline);
+  text-underline-offset: 5px;
+}
+
+
+/* =========================================================================
+   Built with it, on the film band
+
+   The panels keep their structure; only their colour changes. Every value
+   here is one the tokens resolve against a light ground, so on black each
+   has to be restated. Scoped to #built so nothing else on the page moves.
+   ========================================================================= */
+
+#built .ag-projects {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+  margin: 48px 0 0;
+  padding: 0;
+  border: 0;
+  overflow: visible;
+  list-style: none;
+}
+
+#built .ag-project {
+  border: 0;
+  border-radius: 1.25rem;
+  padding: clamp(22px, 2.4vw, 32px);
+  background: rgba(255, 255, 255, 0.01);
+}
+#built .ag-project:hover { background: rgba(255, 255, 255, 0.035); }
+
+#built .ag-meta { color: rgba(255, 255, 255, 0.72); }
+
+#built .ag-title {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -1px;
+  color: #fff;
+}
+
+#built .ag-lede {
+  font-family: "Barlow", var(--font-body);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+#built .ag-tags li {
+  border: 0;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: "Barlow", var(--font-body);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+  background: transparent;
+}
+
+#built .ag-btn {
+  background: #fff;
+  color: #000;
+  border-color: transparent;
+}
+#built .ag-btn:hover { background: rgba(255, 255, 255, 0.88); }
+
+#built .ag-note {
+  border-top-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.75);
+  font-family: "Barlow", var(--font-body);
+  font-weight: 300;
+}
+
+#built .ag-stage,
+#built .ag-stage--preview {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+}
+#built .ag-art { color: rgba(255, 255, 255, 0.85); }
+
+#built .cap-inner { padding-bottom: 72px; }
+
+/* A still where the other preview stage takes a video. Same box, same cover
+   fit; it just has nothing to load, so it needs no ready state. */
+.ag-preview-img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The project rows run the full card. The reading measures that used to cap
+   them here (62ch on the lede, 78ch on the note) left the text filling half a
+   1217px card while the preview above it spanned all of it, which read as an
+   unfinished column rather than a deliberate one. */

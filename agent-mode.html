@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Agent mode, what Nitansh Anand builds with AI</title>
+<meta name="description" content="The work Nitansh Anand makes with AI in the loop: design systems, interfaces and tools shipped with agentic tooling." />
+<meta name="color-scheme" content="light dark" />
+<link rel="canonical" href="https://nitanshanand.com/agent-mode.html" />
+
+<!-- Social preview. og:image is intentionally omitted until there are real
+     1200x630 cards; a badly cropped one reads worse than a text preview. -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://nitanshanand.com/agent-mode.html" />
+<meta property="og:title" content="Agent mode, what Nitansh Anand builds with AI" />
+<meta property="og:description" content="The work Nitansh Anand makes with AI in the loop: design systems, interfaces and tools shipped with agentic tooling." />
+<meta property="og:site_name" content="Nitansh Anand" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Agent mode, what Nitansh Anand builds with AI" />
+<meta name="twitter:description" content="The work Nitansh Anand makes with AI in the loop: design systems, interfaces and tools shipped with agentic tooling." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="agent-mode.css" />
+<script src="analytics.js" defer></script>
+<script>
+  /* Set theme before first paint so there is no flash. */
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("theme"); } catch (e) {}
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    var dark = t === "dark" || (t !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("theme-dark", dark);
+  })();
+</script>
+</head>
+<body class="agent-page">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Same header as the rest of the portfolio. Over the hero it goes
+     transparent and forces ink-on-sky, because the backdrop is light in
+     both themes. -->
+<header class="site-header">
+  <div class="gutter">
+    <div class="col-wide header-bar">
+      <a class="site-signature" href="index.html" aria-label="Nitansh Anand, home">
+        <span class="site-signature-mark" aria-hidden="true">Nitansh&nbsp;Anand</span>
+        <span class="site-signature-name" aria-hidden="true">
+          <span class="site-signature-photo"></span>
+          Nitansh Anand
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html#career">Work</a>
+        <a href="index.html#labs">Labs</a>
+        <a href="index.html#ask" class="nav-ask">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="nav-label">Ask me anything</span>
+        </a>
+        <!-- Same control, flipped: on this page it switches back. -->
+        <a href="index.html" class="agent-mode-link is-agent">
+          <span class="agent-launcher-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="nav-label">Work mode</span>
+        </a>
+        <button type="button" class="theme-toggle" aria-label="Switch colour theme" title="Switch colour theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.5"/><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="hero__media">
+      <img
+        src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&amp;w=1920&amp;q=85"
+        alt="A vintage turntable resting on a mossy rock in an alpine meadow at golden hour"
+        decoding="async"
+      />
+      <video
+        id="heroVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+        poster="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&amp;w=1920&amp;q=85"
+      >
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260908_125738_eb584080-9f98-489e-adb2-014760aa34da.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="hero__inner">
+      <h1 class="headline">
+        <span class="line"><span>The work I make with AI</span></span>
+        <span class="line"><span>and still call my own</span></span>
+      </h1>
+    </div>
+
+    <div class="hero__foot rise d6">
+      <button type="button" class="record-toggle" id="recordToggle" aria-pressed="false" aria-controls="recordPanel">
+        <span class="record-disc" aria-hidden="true"></span>
+        <span class="record-label" id="recordLabel">Play the record</span>
+      </button>
+
+      <!-- Spotify carries the licence, so nothing here ships audio. The
+           iframe is built on first press, so the page makes no request to
+           Spotify and sets none of their cookies unless someone asks for
+           music. It lives inside this row so .hero's overflow cannot clip it. -->
+      <div class="record-panel" id="recordPanel" hidden>
+        <div id="recordMount"></div>
+        <p class="record-note">
+          Spotify plays a 30-second preview unless you are signed in.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+
+
+
+  <section class="section gutter ag-section" id="what">
+    <div class="col-wide">
+      <p class="t-lede ag-stance">
+        I use AI the way I use anything else in the stack. It absorbs the mechanical
+        work and gets out of the way where judgment matters. What follows is what
+        that actually produced, and, for each one, the part a model did not do.
+      </p>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       Built with it
+
+       The work sits on its own black band over a clip: liquid-glass panels,
+       Instrument Serif set italic and tight. It ignores the page's light/dark
+       ground on purpose - the footage needs a black room to sit in.
+       ===================================================================== -->
+  <section class="cap" id="built" aria-labelledby="built-h">
+    <video class="cap-video" muted loop playsinline preload="none"
+           data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_093722_ccfc7ebf-182f-419f-8a62-2dc02db7dd9d.mp4"
+           aria-hidden="true"></video>
+
+    <div class="cap-inner">
+      <header class="cap-head">
+        <p class="cap-label">// The work</p>
+        <h2 class="cap-title" id="built-h" data-blur>Built with it</h2>
+        <p class="cap-lede">Work projects, side projects, and one game you can walk around in.</p>
+      </header>
+
+      <ol class="ag-projects">
+        <li class="ag-project glass">
+<div class="ag-stage ag-stage--preview">
+            <span class="ag-art" aria-hidden="true"><svg viewBox="0 0 240 176" fill="none"><ellipse class="ar-shade" cx="120" cy="150" rx="84" ry="22"/><ellipse class="ar-plate" cx="120" cy="143" rx="74" ry="19"/><path class="ar-left" d="M52 108 L120 142 L120 153 L52 119Z"/><path class="ar-right" d="M188 108 L120 142 L120 153 L188 119Z"/><path class="ar-top" d="M120 74 L188 108 L120 142 L52 108Z"/><path class="ar-line" d="M86 91 154 125M154 91 86 125M120 74l68 34M120 74 52 108"/><path class="ar-gap" d="M120 108 137 116.5 120 125 103 116.5Z"/><path class="ar-line" d="M120 66V48"/><path class="ar-left ar-accent" d="M104 38 L120 46 L120 54 L104 46Z"/><path class="ar-right ar-accent" d="M136 38 L120 46 L120 54 L136 46Z"/><path class="ar-top ar-accent" d="M120 30 L136 38 L120 46 L104 38Z"/></svg></span>
+            <video class="ag-preview-video" muted loop playsinline preload="none"
+                   data-src="assets/unfinished-world-preview.mp4"
+                   aria-label="Third-person walkthrough of The Unfinished World: the player crosses the half-built platform and collects one of the three tools"></video>
+          </div>
+          <p class="ag-meta">Side exploration &middot; 3D &middot; Browser</p>
+          <h3 class="ag-title">The Unfinished World</h3>
+          <p class="ag-lede">A world you walk around in the first person rather than scroll.</p>
+          <ul class="ag-tags">
+            <li class="glass">3D</li>
+            <li class="glass">First-person</li>
+            <li class="glass">Interactive</li>
+          </ul>
+          <a class="ag-btn" href="https://nitansh-unfinished-world.hello017.chatgpt.site/" target="_blank" rel="noopener">Enter the world <span class="arrow" aria-hidden="true">&#8599;</span></a>
+          <p class="ag-note">It opens half-built: three tools are scattered across it, and the structure only comes back as you find each one and install it. The three are Figma, Claude and Aceternity, which is a fair description of how most of this page got made as well.</p>
+        </li>
+
+        <li class="ag-project glass">
+          <div class="ag-stage ag-stage--preview">
+            <span class="ag-art" aria-hidden="true"><svg viewBox="0 0 240 176" fill="none"><ellipse class="ar-shade" cx="120" cy="150" rx="84" ry="22"/><ellipse class="ar-plate" cx="120" cy="143" rx="74" ry="19"/><path class="ar-left" d="M58 112 L120 143 L120 155 L58 124Z"/><path class="ar-right" d="M182 112 L120 143 L120 155 L182 124Z"/><path class="ar-top" d="M120 81 L182 112 L120 143 L58 112Z"/><path class="ar-play" d="M110 118 130 112 110 102Z"/><path class="ar-line" d="M120 73V40"/><path class="ar-left ar-accent" d="M104 31 L120 39 L120 47 L104 39Z"/><path class="ar-right ar-accent" d="M136 31 L120 39 L120 47 L136 39Z"/><path class="ar-top ar-accent" d="M120 23 L136 31 L120 39 L104 31Z"/></svg></span>
+            <img class="ag-preview-img" src="assets/with-great-power-preview.jpg" alt="A frame from the film: Spider-Man swinging toward the camera against an open sky." loading="lazy" decoding="async" width="1200" height="630" />
+          </div>
+          <p class="ag-meta">Side exploration &middot; Scroll-driven film &middot; August 2026</p>
+          <h3 class="ag-title">With Great Power</h3>
+          <p class="ag-lede">Sixty seconds of film, scrubbed frame by frame by your scroll.</p>
+          <ul class="ag-tags">
+            <li class="glass">Scroll-driven</li>
+            <li class="glass">Frame sequence</li>
+            <li class="glass">GSAP</li>
+            <li class="glass">Performance</li>
+          </ul>
+          <a class="ag-btn" href="https://withgreatpower.netlify.app/" target="_blank" rel="noopener">Scrub the film <span class="arrow" aria-hidden="true">&#8599;</span></a>
+          <p class="ag-note">The footage is a Marvel trailer. The pacing is mine. It opens nearly still, one of the slowest stretches in the piece, so the first scroll reads as moving time rather than moving a page. By the velocity chapter the same gesture covers 3.6&times; more film.</p>
+        </li>
+
+        <li class="ag-project glass">
+          <p class="ag-meta">Self-initiated &middot; Claude Code &middot; Web</p>
+          <h3 class="ag-title">This portfolio</h3>
+          <p class="ag-lede">Hand-built with Claude Code. No template, no page builder.</p>
+          <ul class="ag-tags">
+            <li class="glass">Claude Code</li>
+            <li class="glass">Design tokens</li>
+            <li class="glass">Accessibility</li>
+            <li class="glass">Dark mode</li>
+          </ul>
+          <a class="ag-btn" href="index.html">See the work <span class="arrow" aria-hidden="true">&#8594;</span></a>
+          <div class="ag-stage">
+            <span class="ag-art" aria-hidden="true"><svg viewBox="0 0 240 176" fill="none"><ellipse class="ar-shade" cx="120" cy="150" rx="84" ry="22"/><ellipse class="ar-plate" cx="120" cy="143" rx="74" ry="19"/><path class="ar-left" d="M66 101 L120 128 L120 141 L66 114Z"/><path class="ar-right" d="M174 101 L120 128 L120 141 L174 114Z"/><path class="ar-top" d="M120 74 L174 101 L120 128 L66 101Z"/><path class="ar-left" d="M66 83 L120 110 L120 123 L66 96Z"/><path class="ar-right" d="M174 83 L120 110 L120 123 L174 96Z"/><path class="ar-top" d="M120 56 L174 83 L120 110 L66 83Z"/><path class="ar-left" d="M66 65 L120 92 L120 105 L66 78Z"/><path class="ar-right" d="M174 65 L120 92 L120 105 L174 78Z"/><path class="ar-top" d="M120 38 L174 65 L120 92 L66 65Z"/><path class="ar-line" d="M120 30V16"/><path class="ar-left ar-accent" d="M105 9.5 L120 17 L120 24 L105 16.5Z"/><path class="ar-right ar-accent" d="M135 9.5 L120 17 L120 24 L135 16.5Z"/><path class="ar-top ar-accent" d="M120 2 L135 9.5 L120 17 L105 9.5Z"/></svg></span>
+          </div>
+          <p class="ag-note">I specified the token system, the dark theme, the accessibility pass and every interaction; the agent wrote against that spec and I reviewed each change.</p>
+        </li>
+
+        <li class="ag-project glass">
+          <p class="ag-meta">BigOhTech &middot; AI assistant &middot; Cloud cost dashboard</p>
+          <h3 class="ag-title">Costimizer AI assistant</h3>
+          <p class="ag-lede">The assistant layer for a cloud cost dashboard at BigOhTech.</p>
+          <ul class="ag-tags">
+            <li class="glass">AI</li>
+            <li class="glass">Enterprise UX</li>
+            <li class="glass">Research</li>
+            <li class="glass">Empty states</li>
+          </ul>
+          <a class="ag-btn" href="https://medium.com/@nitansh07/i-was-a-fresher-designer-asked-to-build-an-ai-nobody-fully-understood-heres-what-happened-155939ac0f88" target="_blank" rel="noopener">Read the case study <span class="arrow" aria-hidden="true">&#8599;</span></a>
+          <div class="ag-stage">
+            <span class="ag-art" aria-hidden="true"><svg viewBox="0 0 240 176" fill="none"><ellipse class="ar-shade" cx="120" cy="150" rx="84" ry="22"/><ellipse class="ar-plate" cx="120" cy="143" rx="74" ry="19"/><path class="ar-left" d="M54 109 L120 142 L120 154 L54 121Z"/><path class="ar-right" d="M186 109 L120 142 L120 154 L186 121Z"/><path class="ar-top" d="M120 76 L186 109 L120 142 L54 109Z"/><path class="ar-line" d="M120 74V52"/><path class="ar-left" d="M80 52 L96 60 L96 69 L80 61Z"/><path class="ar-right" d="M112 52 L96 60 L96 69 L112 61Z"/><path class="ar-top" d="M96 44 L112 52 L96 60 L80 52Z"/><path class="ar-left" d="M128 52 L144 60 L144 69 L128 61Z"/><path class="ar-right" d="M160 52 L144 60 L144 69 L160 61Z"/><path class="ar-top" d="M144 44 L160 52 L144 60 L128 52Z"/><path class="ar-left ar-accent" d="M104 36 L120 44 L120 53 L104 45Z"/><path class="ar-right ar-accent" d="M136 36 L120 44 L120 53 L136 45Z"/><path class="ar-top ar-accent" d="M120 28 L136 36 L120 44 L104 36Z"/></svg></span>
+          </div>
+          <p class="ag-note">The design problem was making an opaque model legible, not making it look clever, so the work went into the empty state, the wording, and what happens when the answer is wrong.</p>
+        </li>
+
+        <li class="ag-project glass">
+          <p class="ag-meta">This site &middot; Retrieval &middot; Widget</p>
+          <h3 class="ag-title">Ask Nitansh</h3>
+          <p class="ag-lede">The question widget on the portfolio.</p>
+          <ul class="ag-tags">
+            <li class="glass">Retrieval</li>
+            <li class="glass">Knowledge base</li>
+            <li class="glass">No model</li>
+          </ul>
+          <a class="ag-btn" href="index.html#ask">Try it <span class="arrow" aria-hidden="true">&#8594;</span></a>
+          <div class="ag-stage">
+            <span class="ag-art" aria-hidden="true"><svg viewBox="0 0 240 176" fill="none"><ellipse class="ar-shade" cx="120" cy="150" rx="84" ry="22"/><ellipse class="ar-plate" cx="120" cy="143" rx="74" ry="19"/><path class="ar-left" d="M70 95 L120 120 L120 154 L70 129Z"/><path class="ar-right" d="M170 95 L120 120 L120 154 L170 129Z"/><path class="ar-top" d="M120 70 L170 95 L120 120 L70 95Z"/><circle class="ar-dot" cx="100" cy="112" r="4.5"/><circle class="ar-dot" cx="112" cy="118" r="4.5"/><circle class="ar-dot" cx="124" cy="124" r="4.5"/><path class="ar-line" d="M120 62V44"/><path class="ar-left ar-accent" d="M102 35 L120 44 L120 52 L102 43Z"/><path class="ar-right ar-accent" d="M138 35 L120 44 L120 52 L138 43Z"/><path class="ar-top ar-accent" d="M120 26 L138 35 L120 44 L102 35Z"/></svg></span>
+          </div>
+          <p class="ag-note">It retrieves from a knowledge base I wrote by hand rather than generating answers, so it can only ever say things I have actually said. Deliberately the boring choice.</p>
+        </li>
+
+        <li class="ag-project glass">
+          <p class="ag-meta">Concept &middot; Generated footage &middot; Web</p>
+          <h3 class="ag-title">Cinematic concept pages</h3>
+          <p class="ag-lede">Landing pages built around generated footage, the one at the top of this page included.</p>
+          <ul class="ag-tags">
+            <li class="glass">Motion</li>
+            <li class="glass">Generated video</li>
+            <li class="glass">Layout</li>
+          </ul>
+          <div class="ag-stage">
+            <span class="ag-art" aria-hidden="true"><svg viewBox="0 0 240 176" fill="none"><ellipse class="ar-shade" cx="120" cy="150" rx="84" ry="22"/><ellipse class="ar-plate" cx="120" cy="143" rx="74" ry="19"/><path class="ar-left" d="M62 121 L120 150 L120 160 L62 131Z"/><path class="ar-right" d="M178 121 L120 150 L120 160 L178 131Z"/><path class="ar-top" d="M120 92 L178 121 L120 150 L62 121Z"/><path class="ar-left" d="M80 46 L120 66 L120 122 L80 102Z"/><path class="ar-right" d="M160 46 L120 66 L120 122 L160 102Z"/><path class="ar-top" d="M120 26 L160 46 L120 66 L80 46Z"/><path class="ar-play" d="M108 74 128 68 108 58Z"/></svg></span>
+          </div>
+          <p class="ag-note">The video is a model&rsquo;s output. The composition, the masking that keeps type off the subject, and the behaviour on a phone are not.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- The craft underneath the projects above: four mechanisms that took
+       real work and that nobody notices unless you point at them. -->
+
+
+  <section class="section gutter ag-section" id="details">
+    <div class="col-wide">
+      <h2 class="t-section">Smaller machines</h2>
+      <p class="t-lede ag-cards-lede">
+        The parts nobody is meant to notice. Each one is running on this site
+        right now, so none of it has to be taken on trust.
+      </p>
+
+      <ul class="ag-cards">
+        <li class="ag-card">
+          <span class="ag-card-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 3 19.5 10.6 12.6 12.3 9.7 18.7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="ag-card-kind">Interaction</span>
+          <h3 class="ag-card-title">A pointer with eleven states</h3>
+          <p class="ag-card-text">The site draws its own cursor. Every state the browser used to express has a glyph in one family, each stamped twice so a multi-part shape like the hand gets a single clean outline. It hands the real cursor back on touch, over an iframe, and whenever reduced motion is set.</p>
+          <p class="ag-card-stat">11 glyphs &middot; 3 modifiers &middot; 1 family</p>
+          <a class="ag-link ag-card-link" href="index.html">Move your mouse over it <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </li>
+        <li class="ag-card">
+          <span class="ag-card-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <span class="ag-card-kind">Data</span>
+          <h3 class="ag-card-title">A heatmap that is not decoration</h3>
+          <p class="ag-card-text">The activity grid on the portfolio is read from the Claude Code transcripts on my own machine, summed per day by a build script. It is the only honest way to put a number on this page: if the work stops, the grid goes empty on its own.</p>
+          <p class="ag-card-stat" id="ag-stat-usage"></p>
+          <a class="ag-link ag-card-link" href="index.html#labs">See the grid <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </li>
+        <li class="ag-card">
+          <span class="ag-card-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.6" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </span>
+          <span class="ag-card-kind">Media</span>
+          <h3 class="ag-card-title">A record player that respects the licence</h3>
+          <p class="ag-card-text">The turntable at the top of this page plays a real track, which means no audio file is hosted here. The Spotify embed is built on the first press and not a moment earlier, so nothing loads for a visitor who never reaches for it.</p>
+          <p class="ag-card-stat">0 bytes of audio until you press play</p>
+          <a class="ag-link ag-card-link" href="#top">Back to the deck <span class="arrow" aria-hidden="true">&#8594;</span></a>
+        </li>
+        <li class="ag-card">
+          <span class="ag-card-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M13.4 3.5H7.6A2.1 2.1 0 0 0 5.5 5.6v12.8a2.1 2.1 0 0 0 2.1 2.1h8.8a2.1 2.1 0 0 0 2.1-2.1V8.6Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.4 3.5v5.1h5.1" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="ag-card-kind">Build</span>
+          <h3 class="ag-card-title">The whole site as one file</h3>
+          <p class="ag-card-text">A build step folds every stylesheet, script and image into a single HTML document with the assets as data URIs. It exists for the times a link will not do: an email attachment, a locked-down laptop, a reviewer with no internet.</p>
+          <p class="ag-card-stat">1 file &middot; 0 requests beyond the fonts</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section gutter ag-section" id="stance">
+    <div class="col-wide">
+      <aside class="ag-note-block">
+        <span class="ag-note-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4.6 19.4h4l9.3-9.3a2.1 2.1 0 0 0 0-3l-1-1a2.1 2.1 0 0 0-3 0L4.6 15.4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.9 6.6l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <h2 class="ag-note-title">Where I draw the line</h2>
+        <p class="ag-stance">
+        A model is fast at the things that have a right answer and unreliable at the
+        things that need taste. So it drafts, and I decide: what ships, what the
+        contrast ratio has to be, which number is honest enough to put on a page.
+        The judgment is the job. That part does not get delegated.
+        </p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<!-- One plate, per the spec: the painting runs behind both the hero and the
+     glass footer rather than each carrying its own copy of the footage.
+     Fetched and played only once the stage scrolls into view. -->
+<section class="fx-stage">
+  <div class="fx-media" aria-hidden="true">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/693205bf-8048-456a-879e-4e0a1b85a098.webp" alt="" decoding="async" width="1590" height="989" />
+    <video class="fx-video" muted loop playsinline preload="none" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_123836_11a3c5e0-713f-4bef-a8e9-7dd93bdea3b0.mp4"
+           aria-label="Painted alpine panorama: a lone hiker with a pink backpack faces a snow-capped peak above a sea of clouds"></video>
+  </div>
+  <div class="fx-scrim" aria-hidden="true"></div>
+
+  <div class="fx-hero">
+    <p class="fx-eyebrow">Open to new work</p>
+    <div class="fx-headline-mask"><h2 class="fx-headline">Let&rsquo;s build something</h2></div>
+    <p class="fx-lede">
+      From design systems and enterprise UX to shipping with AI, I am looking for
+      teams who care about the details. Say hello.
+    </p>
+    <a class="fx-cta" href="mailto:nitansh07@gmail.com"><span>Get in touch</span></a>
+  </div>
+
+<footer class="fx-footer">
+  <div class="fx-inner">
+    <nav class="fx-links" aria-label="Footer">
+      <a href="index.html#career">Projects</a>
+      <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="Nitansh-Anand-Resume.pdf" download>R&eacute;sum&eacute;</a>
+    </nav>
+
+    <div class="fx-rule" aria-hidden="true"></div>
+
+    <p class="fx-legal">&copy; 2026 Nitansh Anand. All rights reserved.</p>
+  </div>
+</footer>
+</section>
+
+<script src="claude-usage.js"></script>
+<script src="script.js"></script>
+<script src="agent-mode.js"></script>
+</body>
+</html>
