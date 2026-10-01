@@ -28,8 +28,10 @@ window.ASK_KB = [
   {
     id: "section-library",
     tags: ["section library", "component library", "reusable", "library", "sections", "assembled", "biggest project", "proudest"],
-    a: "I turned repeat website work into a section library of heroes, features, testimonials, timelines and pricing blocks, each with multiple variants, so new sites get assembled rather than redesigned.\n" +
-       "It now powers 3 live SaaS products, and cut launch time from 3 months to under 1 month.",
+    a: "A section library, so new sites get assembled rather than redesigned.\n" +
+       "- Heroes, features, testimonials, timelines and pricing blocks, each with **multiple variants**.\n" +
+       "- Now powers **3 live SaaS products**.\n" +
+       "- Cut launch time from **3 months to under 1 month**.",
   },
   {
     id: "company-website",
@@ -70,6 +72,17 @@ window.ASK_KB = [
     },
   },
   {
+    id: "process",
+    tags: ["process", "design process", "how do you work", "how you work", "approach", "method", "methodology", "workflow", "steps", "how do you start"],
+    a: "Five moves, in order, and the first one is usually the surprise.\n" +
+       "- **Diagnose the gap.** Friction is rarely where the brief says it is.\n" +
+       "- **Define the outcome.** Tie each decision to something measurable.\n" +
+       "- **Partner early**, so feasibility shapes the design instead of arriving after it.\n" +
+       "- **Build the system**, not isolated screens.\n" +
+       "- **Validate fast.** 35+ sessions on the Costimizer assistant said more than any round of reviews.",
+    link: { href: "#process", label: "See how I build products" },
+  },
+  {
     id: "design-systems",
     tags: ["design system", "design systems", "tokens", "design tokens", "component", "components", "architecture", "system work", "scale"],
     a: "Design systems are the centre of what I do. I work on token architecture, master components and UI architecture for data-dense products.\n" +
@@ -88,6 +101,15 @@ window.ASK_KB = [
        "At Maxlence that meant 25+ user interviews turned into personas. At BigOhTech it meant 35+ sessions on the Costimizer assistant, which is where the 58-second time-to-first-action number came from.",
   },
   {
+    id: "critique",
+    tags: ["critique", "feedback", "review", "reviews", "criticism", "disagree", "disagreement", "pushback", "stakeholder", "defend", "take feedback", "design review"],
+    a: "By moving the argument earlier, so there is less to defend later.\n" +
+       "- I partner with engineering and founders **from the start**, so feasibility shapes the design instead of arriving as a late objection.\n" +
+       "- Where it is settleable with evidence, I settle it with evidence: **35+ sessions** on the Costimizer assistant said more than any round of reviews.\n" +
+       "- I take designs into the codebase myself, which changes what I put in a spec, because I know what is annoying to receive.",
+    link: { href: "#process", label: "See how I build products" },
+  },
+  {
     id: "handoff",
     tags: ["handoff", "developer handoff", "engineers", "engineering", "collaboration", "specs", "acceptance criteria", "work with developers", "devs"],
     a: "Developer handoff is annotated specs plus acceptance criteria, not a Figma link.\n" +
@@ -96,7 +118,31 @@ window.ASK_KB = [
   {
     id: "tools",
     tags: ["tools", "stack", "software", "what do you use", "figma", "material", "angular", "adobe"],
-    a: "Figma for design systems, tokens, prototypes and specs. Material Design 3 and Angular Material as the component foundation. Claude Code for building. Adobe Suite where it's needed.",
+    a: "Figma for design, Angular Material for the code it ships as.\n" +
+       "- **Figma** for design systems, tokens, prototypes and specs.\n" +
+       "- **Material Design 3** and **Angular Material** as the component foundation.\n" +
+       "- **Claude Code** for building, and Adobe Suite where it is needed.",
+  },
+  {
+    // "Do you know React?" used to match the word "experience" and return a
+    // years-of-experience blurb. Naming the boundary is the better answer: a
+    // stack mismatch stated plainly reads as confidence, not as a gap.
+    id: "frameworks",
+    tags: ["react", "vue", "svelte", "next", "nextjs", "tailwind", "framework", "frontend", "front end", "do you code", "javascript", "typescript", "storybook"],
+    a: "Angular Material, not React.\n" +
+       "- The design system I own ships as **Figma components** and as **Angular Material** code.\n" +
+       "- I take designs into the codebase myself, so specs are written by someone who has had to receive them.\n" +
+       "- This site is hand-built **HTML, CSS and JavaScript**, with no framework at all.",
+    link: { href: "#toolkit", label: "See the full toolkit" },
+  },
+  {
+    id: "what-went-wrong",
+    tags: ["failed", "failure", "went wrong", "mistake", "regret", "differently", "lesson", "next time", "hardest", "what would you change"],
+    a: "On DigiLawyer, measurement was set up after the rollout rather than before it.\n" +
+       "- The reports could not isolate the redesign from everything else shipping at the same time.\n" +
+       "- Next time I would define the funnel **before rollout**: consistent page paths, a recorded release date, and separate events for lookup starts, enquiries and payments.\n" +
+       "- It is why that case study states what it can prove and labels the rest unverified.",
+    link: { href: "digilawyer.html", label: "Read the DigiLawyer case study" },
   },
   {
     id: "ai",

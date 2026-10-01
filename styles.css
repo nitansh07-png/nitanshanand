@@ -1326,7 +1326,10 @@ mark { background: none; color: inherit; }
 
   .ask-launcher { padding: 9px 14px; gap: 10px; }
   .ask-launcher-copy { display: block; }
-  .ask-hint { display: block; line-height: 1.4; }
+  /* The hint is four topics long and wrapped to three lines in a pill this
+     narrow. "Ask me anything." carries the affordance on its own, and dropping
+     it from the a11y tree shortens the button's name rather than padding it. */
+  .ask-hint { display: none; }
 
   .activity-months { font-size: 9px; }
 
@@ -1720,6 +1723,9 @@ mark { background: none; color: inherit; }
 
 @keyframes ask-panel-in  { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: none; } }
 @keyframes ask-panel-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateX(100%); } }
+/* Phones get a sheet instead: it rises from the edge the thumb is nearest. */
+@keyframes ask-sheet-in  { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: none; } }
+@keyframes ask-sheet-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(100%); } }
 /* ask-card-in still drives the phone sheet, which rises rather than slides. */
 @keyframes ask-card-in { from { opacity: 0; transform: translateY(14px) scale(0.975); } to { opacity: 1; transform: none; } }
 @keyframes ask-msg-in  { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -2099,10 +2105,11 @@ mark { background: none; color: inherit; }
 .ask-card button:focus-visible,
 .ask-card a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
-/* ---- phones: still a sidebar, just a full-width one ----
-       A 375px viewport has no room for a panel beside the page, so the
-       drawer takes the width. It keeps the side-panel entrance and the
-       scrim, rather than turning into a different component. */
+/* ---- phones: full screen, rising from the bottom ----
+       A side entrance on a 375px viewport fights the platform: sheets on a
+       phone rise from the bottom, where the thumb already is. The panel then
+       takes the whole screen, so the conversation gets every pixel rather
+       than competing with a page nobody is reading at that point. */
 @media (max-width: 600px) {
   .ask-widget { pointer-events: auto; }
   .ask-scrim {
@@ -2115,10 +2122,20 @@ mark { background: none; color: inherit; }
     animation: document-in 0.28s both;
   }
   .ask-card {
+    /* top:0 against bottom:0 fills the screen, so no explicit height is
+       needed and the base rule's collapse warning does not apply. */
     --ask-top: 0px;
-    width: min(420px, 100%);
-    border-left: 1px solid var(--color-hairline);
+    --ask-shadow: none;
+    left: 0;
+    width: 100%;
+    border-left: 0;
+    /* Nothing is left behind it to separate from, so the edge treatment and
+       the corner radius both go. */
+    border-radius: 0;
+    animation: ask-sheet-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
+  .ask-card.is-leaving { animation: ask-sheet-out 0.22s var(--ease-exit) both; }
+  .theme-dark .ask-card { --ask-shadow: none; }
   .ask-starters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -2762,8 +2779,6 @@ html.cursor-custom iframe * { cursor: auto !important; }
 
 .about-title { margin-top: 10px; }
 .about-lede { margin-top: 18px; max-width: 64ch; }
-/* The second paragraph supports the first rather than competing with it. */
-.about-lede + .about-lede { color: var(--color-soft); }
 
 .about-actions {
   display: flex;
@@ -2850,4 +2865,142 @@ html.cursor-custom iframe * { cursor: auto !important; }
   .about-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about-row:nth-child(-n + 2) { border-top: 0; }
   .about-row:nth-child(even) { border-left: 1px solid var(--color-hairline); }
+}
+
+/* =========================================================================
+   Contact actions, small screens
+
+   Four items in one wrapping flex row broke two ways on a phone: the wrap
+   point moved with the viewport (at 390px Resume was orphaned on its own
+   line), and the two text links rendered 25px tall against a 44px minimum
+   touch target. A 2x2 grid of identical pills fixes both, and the primary
+   action stays primary through its accent fill rather than through size.
+   ========================================================================= */
+
+@media (max-width: 600px) {
+  .contact-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .contact-actions > * {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 14.5px;
+    text-align: center;
+  }
+
+  /* The links become buttons here, so they take the border and drop the
+     underline that distinguished them when they sat in a text row. */
+  .contact-actions .contact-link {
+    gap: 6px;
+    border: 1px solid var(--color-hairline);
+    text-decoration: none;
+  }
+  .contact-actions .contact-link:hover { border-color: var(--color-accent); }
+}
+
+/* Bulleted evidence under an answer's opening verdict. */
+.ask-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+.ask-list li {
+  position: relative;
+  padding-left: 15px;
+  line-height: 1.55;
+}
+.ask-list li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.68em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+.ask-msg--reply strong { font-weight: 650; }
+
+/* ---- pinned shortcuts under the conversation ---- */
+
+.ask-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  /* 12px matches .ask-composer, so the row sits on the panel rhythm. The
+     rule runs full bleed on purpose: inset content, edge-to-edge divider. */
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.ask-cta-label {
+  margin-right: 2px;
+  color: var(--color-soft);
+  font-size: 10.5px;
+  font-weight: 640;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.ask-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color var(--dur-ui), background var(--dur-ui);
+}
+.ask-cta-btn:hover { border-color: var(--color-accent); background: var(--color-sunken); }
+.ask-cta-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.ask-cta-btn svg { width: 14px; height: 14px; flex: none; }
+
+/* ---- voice input ---- */
+
+.ask-mic {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  background: none;
+  color: var(--color-soft);
+  cursor: pointer;
+  transition: border-color var(--dur-ui), color var(--dur-ui), background var(--dur-ui);
+}
+.ask-mic:hover { border-color: var(--color-ink); color: var(--color-ink); }
+.ask-mic:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.ask-mic svg { width: 17px; height: 17px; }
+
+/* Listening: the only state where the control is doing something the visitor
+   cannot otherwise see, so it is the only one that animates. */
+.ask-mic.is-live {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  color: var(--color-accent);
+  animation: ask-mic-pulse 1.4s ease-in-out infinite;
+}
+@keyframes ask-mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 38%, transparent); }
+  50%      { box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-accent) 0%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ask-mic.is-live { animation: none; }
 }

@@ -627,6 +627,18 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     });
   }
 
+  // Tokens that appear across many tags and in half the answer bodies. On its
+  // own none of them identifies a topic: "React experience" is a question about
+  // React, not about experience, and matching the latter is how the panel ended
+  // up answering with a years-of-experience blurb.
+  var GENERIC = {
+    design: 1, designs: 1, designer: 1, designing: 1, work: 1, works: 1,
+    working: 1, experience: 1, experienced: 1, role: 1, roles: 1, project: 1,
+    projects: 1, product: 1, products: 1, build: 1, built: 1, building: 1,
+    use: 1, used: 1, using: 1, know: 1, knows: 1, doing: 1, done: 1, make: 1,
+    made: 1, thing: 1, things: 1, stuff: 1, good: 1, best: 1,
+  };
+
   function score(question, entry) {
     var qNorm = canonical(question);
     var raw = tokens(question);
@@ -634,17 +646,20 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     var ownCount = raw.own;
     var total = 0;
     var hits = 0;
+    var phrase = false;   // a multi-word tag matched verbatim
+    var strong = 0;       // exact matches on tags that actually name a topic
 
     entry.tags.forEach(function (tag) {
       var t = normalise(tag);
       if (t.indexOf(" ") > -1) {
         // Phrase tag: a direct hit is a strong signal.
-        if (qNorm.indexOf(t) > -1) { total += 6; hits++; }
+        if (qNorm.indexOf(t) > -1) { total += 6; hits++; phrase = true; }
         return;
       }
       var st = stem(t);
+      var generic = GENERIC[t] === 1 || GENERIC[st] === 1;
       qTokens.forEach(function (q) {
-        if (q === st) { total += 3; hits++; }
+        if (q === st) { total += 3; hits++; if (!generic) strong++; }
         else if (q.length > 3 && st.length > 3 && (q.indexOf(st) === 0 || st.indexOf(q) === 0)) { total += 1.5; hits++; }
       });
     });
@@ -655,10 +670,14 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
       if (q.length > 3 && body.indexOf(q) > -1) total += 0.5;
     });
 
-    if (!hits) return 0;
+    if (!hits) return { s: 0, phrase: false, strong: 0 };
     // Normalise by question length so long questions are not unfairly
     // favoured, counting only the words the visitor actually typed.
-    return total / Math.sqrt(Math.max(ownCount, 1));
+    return {
+      s: total / Math.sqrt(Math.max(ownCount, 1)),
+      phrase: phrase,
+      strong: strong,
+    };
   }
 
   // Everything the matcher knows about a question, ranked. The caller decides
@@ -666,7 +685,10 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   // the near misses are exactly what a fallback should offer.
   function rank(question) {
     return (window.ASK_KB || [])
-      .map(function (entry) { return { entry: entry, s: score(question, entry) }; })
+      .map(function (entry) {
+        var r = score(question, entry);
+        return { entry: entry, s: r.s, phrase: r.phrase, strong: r.strong };
+      })
       .filter(function (r) { return r.s > 0; })
       .sort(function (a, b) { return b.s - a.s; });
   }
@@ -811,14 +833,49 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     m.stack.appendChild(a);
   }
 
+  /* Answers may use two marks: a line starting "- " is a bullet, and **text**
+     is bold. Built as nodes rather than innerHTML, because this same renderer
+     shows remote answers whenever ASK_ENDPOINT is set, and a server response
+     is not something to trust with markup. */
+  function inline(target, text) {
+    String(text).split("**").forEach(function (part, i) {
+      if (!part) return;
+      if (i % 2) target.appendChild(el("strong", null, part));
+      else target.appendChild(document.createTextNode(part));
+    });
+  }
+
+  // What the copy button puts on the clipboard: the words, without the marks.
+  function plain(answer) {
+    return String(answer)
+      .split("\n")
+      .map(function (l) { return l.trim().replace(/^- /, "").split("**").join(""); })
+      .filter(Boolean)
+      .join(" ")
+      .trim();
+  }
+
   function addReply(answer, link, chips, question) {
     var m = replyRow();
-    String(answer).split("\n").forEach(function (para) {
-      if (para.trim()) m.bubble.appendChild(el("p", null, para.trim()));
+    var list = null;
+    String(answer).split("\n").forEach(function (raw) {
+      var line = raw.trim();
+      if (!line) return;
+      if (line.indexOf("- ") === 0) {
+        if (!list) { list = el("ul", "ask-list"); m.bubble.appendChild(list); }
+        var li = el("li");
+        inline(li, line.slice(2));
+        list.appendChild(li);
+        return;
+      }
+      list = null;            // a paragraph closes any run of bullets
+      var p = el("p");
+      inline(p, line);
+      m.bubble.appendChild(p);
     });
     conversation.appendChild(m.row);
     if (link) addLinkCard(m, link);
-    addActions(m, String(answer).split("\n").join(" ").trim(), question);
+    addActions(m, plain(answer), question);
     addChips(m, chips);
     scrollDown();
   }
@@ -876,15 +933,30 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   }
 
   function localAnswer(question) {
-    // Conversation first: a hello is not a search query.
-    var intent = findIntent(question);
-    if (intent) return { a: intent.a, link: intent.link, chips: intent.chips };
-
     var ranked = rank(question);
-    var top = ranked[0];
-    if (top && top.s >= 2) {
-      return { a: top.entry.a, link: top.entry.link, chips: chipsFor(top.entry.id) };
+
+    // The best entry that actually NAMED a topic, which is not always the
+    // highest scorer: "React experience" ranks experience-length top on the
+    // generic word alone, while the entry about frameworks sits below it.
+    var best = null;
+    for (var i = 0; i < ranked.length; i++) {
+      // 2.0 was set to stop generic tokens answering. Entries that named a
+      // topic have already passed that test, so they get the lower bar: a
+      // three-word question with one real tag hit scores about 1.7, and
+      // "has he shipped anything with AI" should not fail on arithmetic.
+      if (ranked[i].s >= 1.6 && (ranked[i].phrase || ranked[i].strong >= 1)) {
+        best = ranked[i];
+        break;
+      }
     }
+
+    // Conversation first, but only when the knowledge base has nothing
+    // specific: "a time a project failed" trips the weakness intent, yet it
+    // is a content question with a real answer written for it.
+    var intent = findIntent(question);
+    if (intent && !best) return { a: intent.a, link: intent.link, chips: intent.chips };
+
+    if (best) return { a: best.entry.a, link: best.entry.link, chips: chipsFor(best.entry.id) };
     return miss(ranked);
   }
 
@@ -1829,4 +1901,100 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     field.remove();
     done(ok ? email + " copied to your clipboard." : "Could not copy. The address is " + email, ok);
   });
+})();
+
+/* ------------------------------------------------------------------ *
+ * Nav bubble opens the assistant.                                     *
+ *                                                                     *
+ * The widget only exists on index.html, so the other two pages link    *
+ * to index.html#ask and land here. Both routes click the launcher      *
+ * rather than reimplementing open(), which already handles focus,      *
+ * the exit-animation unwind and the already-open case.                 *
+ * ------------------------------------------------------------------ */
+(function () {
+  var launcher = document.getElementById("ask");
+  if (!launcher) return;            // a case-study page: let the link navigate
+
+  function openAsk() { launcher.click(); }
+
+  var navAsk = document.querySelector(".nav-ask");
+  if (navAsk) {
+    navAsk.addEventListener("click", function (e) {
+      e.preventDefault();           // no jump to the launcher behind the panel
+      openAsk();
+    });
+  }
+
+  // Arriving from another page's nav link.
+  if (location.hash === "#ask") openAsk();
+
+  // And if someone is already here and the hash changes to #ask.
+  window.addEventListener("hashchange", function () {
+    if (location.hash === "#ask") openAsk();
+  });
+})();
+
+/* ------------------------------------------------------------------ *
+ * In-page shortcuts in the pinned row close the panel first.          *
+ * Without this the visitor jumps to a section hidden behind it, which *
+ * reads as the link having done nothing.                              *
+ * ------------------------------------------------------------------ */
+(function () {
+  var close = document.getElementById("ask-close");
+  if (!close) return;
+  [].slice.call(document.querySelectorAll("[data-ask-jump]")).forEach(function (a) {
+    a.addEventListener("click", function () { close.click(); });
+  });
+})();
+
+/* ------------------------------------------------------------------ *
+ * Voice input.                                                        *
+ *                                                                     *
+ * Web Speech API: free, local, and absent in Firefox, so the button   *
+ * ships hidden and is revealed only on feature detection rather than  *
+ * on a browser sniff. The transcript lands in the box and stops       *
+ * there; nothing is sent until the visitor presses send, because a    *
+ * mishearing should be correctable, not published.                    *
+ * ------------------------------------------------------------------ */
+(function () {
+  var Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var mic = document.getElementById("ask-mic");
+  var input = document.getElementById("ask-input");
+  if (!Rec || !mic || !input) return;
+
+  mic.hidden = false;
+
+  var rec = new Rec();
+  // The visitor's locale, not the author's: this transcribes their speech.
+  rec.lang = navigator.language || "en";
+  rec.interimResults = true;
+  rec.continuous = false;
+
+  var listening = false;
+  var base = "";
+
+  function setState(on) {
+    listening = on;
+    mic.classList.toggle("is-live", on);
+    mic.setAttribute("aria-label", on ? "Stop listening" : "Ask by voice");
+  }
+
+  mic.addEventListener("click", function () {
+    if (listening) { rec.stop(); return; }
+    // Keep anything already typed, so voice appends rather than replaces.
+    base = input.value.trim() ? input.value.trim() + " " : "";
+    try { rec.start(); } catch (e) { setState(false); }
+  });
+
+  rec.onstart = function () { setState(true); };
+  rec.onend = function () { setState(false); };
+  rec.onerror = function () { setState(false); };
+
+  rec.onresult = function (e) {
+    var text = "";
+    for (var i = 0; i < e.results.length; i++) text += e.results[i][0].transcript;
+    input.value = base + text;
+    // The send button and the auto-grow both key off this.
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  };
 })();
