@@ -2635,6 +2635,15 @@ html.cursor-custom iframe * { cursor: auto !important; }
 }
 .contact-link:hover { text-decoration-color: var(--color-accent); }
 .contact-link .arrow { transition: transform var(--dur-tap) var(--ease-calm); }
+/* The LinkedIn mark rides with the label. currentColor rather than the brand
+   blue, because --color-linkedin is aliased to the site accent everywhere
+   else: this page deliberately does not borrow other companies' palettes. */
+.contact-mark {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
 .contact-link:hover .arrow { transform: translate(1px, -1px); }
 
 .contact-status {
@@ -2656,15 +2665,23 @@ html.cursor-custom iframe * { cursor: auto !important; }
   max-width: 58ch;
 }
 
-/* The row reads as motion passing behind the page, so it ignores the gutter
-   and runs to both viewport edges. Being a direct child of the padded
-   .section (not of .col-wide) is what makes a plain negative gutter land
-   exactly on the edges at every width. */
+/* The row is framed by the same dotted verticals as everything else, so it
+   clips on the 784px rail rather than running to the viewport edges. That
+   width is body::before's own; if the rail moves, move this with it. */
+/* The wrapper cancels the section gutter so its box is the body's, which is
+   what body::before measures against. Without it "100%" is the padded content
+   box and the row sits inside the lines at every width below about 912px. */
+.tk-bleed {
+  margin-inline: calc(var(--gutter) * -1);
+  margin-top: clamp(1.6rem, 3.2vw, 2.4rem);
+}
+
 .tk-marquee {
   --tk-gap: clamp(0.65rem, 1.4vw, 1.05rem);
-  margin-top: clamp(1.6rem, 3.2vw, 2.4rem);
-  margin-inline: calc(var(--gutter) * -1);
-  /* Hard clip at both viewport edges: tiles are cut, not faded out. */
+  /* Identical formula to body::before, so the clip lands on the lines. */
+  width: min(100% - 2rem, 784px);
+  margin-inline: auto;
+  /* Hard clip on the rail: tiles are cut at the lines, not faded out. */
   overflow: hidden;
 }
 
@@ -2728,8 +2745,109 @@ html.cursor-custom iframe * { cursor: auto !important; }
   .tk-row { animation: none; }
   .tk-marquee {
     overflow-x: auto;
-    padding-inline: var(--gutter);
     scrollbar-width: thin;
   }
   .tk-track[aria-hidden="true"] { display: none; }
+}
+
+/* =========================================================================
+   About
+   ========================================================================= */
+
+/* Deliberately NOT two columns. The site's measure is 720px, which left the
+   copy column at 346px, wrapping every five words, and widening the section to
+   fix that pushed its left edge off the rail every other section sits on. So
+   the copy keeps the full measure and the facts go underneath. */
+.about-grid { display: block; }
+
+.about-title { margin-top: 10px; }
+.about-lede { margin-top: 18px; max-width: 64ch; }
+/* The second paragraph supports the first rather than competing with it. */
+.about-lede + .about-lede { color: var(--color-soft); }
+
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* Same shape as the contact buttons, outlined rather than filled: this is a
+   secondary invitation, the primary one is still "Email me". */
+.about-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 14.5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--dur-ui), transform var(--dur-tap) var(--ease-calm);
+}
+.about-btn:hover { border-color: var(--color-accent); transform: translateY(-1px); }
+.about-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.about-btn .arrow { transition: transform var(--dur-tap) var(--ease-calm); }
+.about-btn:hover .arrow { transform: translateY(1px); }
+
+/* ---- the fact list ---- */
+
+.about-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: clamp(2rem, 4vw, 2.75rem) 0 0;
+  border: 1px solid var(--color-hairline);
+  border-radius: 16px;
+  background: var(--color-raised);
+  /* so the row dividers stop cleanly at the rounded corners */
+  overflow: hidden;
+}
+
+.about-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: clamp(1rem, 2vw, 1.3rem) clamp(1.05rem, 2.2vw, 1.45rem);
+}
+.about-row { border-top: 1px solid var(--color-hairline); }
+.about-row:first-child { border-top: 0; }
+
+.about-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-accent) 13%, transparent);
+  color: var(--color-accent);
+}
+.about-icon svg { width: 19px; height: 19px; }
+
+.about-label {
+  color: var(--color-soft);
+  font-size: 11.5px;
+  font-weight: 640;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.about-value {
+  margin: 3px 0 0;
+  font-size: 15.5px;
+  line-height: 1.45;
+}
+
+/* The two columns stop earning their keep once the fact values start wrapping
+   onto three lines, which happens well before the usual tablet breakpoint. */
+/* Two facts abreast once there is room: every value then fits on one line,
+   which four stacked full-width rows did not achieve any better. */
+@media (min-width: 560px) {
+  .about-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-row:nth-child(-n + 2) { border-top: 0; }
+  .about-row:nth-child(even) { border-left: 1px solid var(--color-hairline); }
 }
