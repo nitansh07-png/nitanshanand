@@ -11,4 +11,4 @@ Allow: /
 Disallow: /portfolio-standalone.html
 Disallow: /agent-mode-standalone.html
 
-Sitemap: https://nitanshanand.com/sitemap.xml
+Sitemap: https://nitanshanand.vercel.app/sitemap.xml
