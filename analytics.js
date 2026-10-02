@@ -17,7 +17,7 @@
 
   var CONFIG = {
     clarity: "",   // <-- paste your Clarity project ID
-    ga4: "",       // <-- paste your GA4 measurement ID
+    ga4: "G-WNEHNJFFFL",   // GA4 measurement ID (public by design, not a secret)
 
     // Hosts that should never report. Add a staging domain if you have one.
     ignoreHosts: ["localhost", "127.0.0.1", "0.0.0.0", ""],
