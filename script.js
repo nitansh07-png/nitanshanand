@@ -1998,3 +1998,11 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     input.dispatchEvent(new Event("input", { bubbles: true }));
   };
 })();
+
+/* The bottom bar's Ask button reuses the launcher, same as the nav bubble. */
+(function () {
+  var b = document.getElementById("bn-ask");
+  var launcher = document.getElementById("ask");
+  if (!b || !launcher) return;
+  b.addEventListener("click", function () { launcher.click(); });
+})();

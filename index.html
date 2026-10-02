@@ -52,7 +52,6 @@
 
       <nav class="site-nav" aria-label="Primary">
         <a href="#work">Work</a>
-        <a href="#labs">Labs</a>
         <a href="#ask" class="nav-ask">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="nav-label">Ask me anything</span>
@@ -172,6 +171,38 @@
           <span>Assembled from one set of DigiLawyer sections, by the wider team</span>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <!-- ──────────────────────  SHIPPED FOR  ─────────────────────
+       Products worked on directly. No heading by request: the row carries
+       itself. The second .sh-track is a pixel duplicate so the loop has no
+       seam, so it is aria-hidden and each name is announced once.
+       ─────────────────────────────────────────────────── -->
+  <section class="section gutter sh-section" id="shipped" aria-label="Products shipped for">
+    <div class="sh-bleed">
+      <div class="sh-marquee">
+        <div class="sh-row">
+          <ul class="sh-track">
+            <li class="sh-item"><img src="assets/logos/clients/digilawyer.svg" alt="DigiLawyer" width="160" height="40" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/costimizer.svg" alt="Costimizer" width="120" height="32" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/dgsign.svg" alt="DG Sign" width="127" height="40" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/igx.webp" alt="IGX" width="204" height="102" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/yatra.webp" alt="Yatra" width="126" height="54" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/dmrc.webp" alt="Delhi Metro" width="64" height="64" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/bigoh.svg" alt="BigOh" width="40" height="40" loading="lazy" decoding="async" /></li>
+          </ul>
+          <ul class="sh-track" aria-hidden="true">
+            <li class="sh-item"><img src="assets/logos/clients/digilawyer.svg" alt="DigiLawyer" width="160" height="40" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/costimizer.svg" alt="Costimizer" width="120" height="32" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/dgsign.svg" alt="DG Sign" width="127" height="40" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/igx.webp" alt="IGX" width="204" height="102" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/yatra.webp" alt="Yatra" width="126" height="54" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/dmrc.webp" alt="Delhi Metro" width="64" height="64" loading="lazy" decoding="async" /></li>
+            <li class="sh-item"><img src="assets/logos/clients/bigoh.svg" alt="BigOh" width="40" height="40" loading="lazy" decoding="async" /></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -357,61 +388,6 @@
 
   
 
-  <!-- ────────────────────────  ABOUT  ─────────────────────────
-       Every figure here is sourced from this page's own career section and
-       hero: 2+ years, Associate Product Designer, three live SaaS products.
-       Location is deliberately absent because the site never states one.
-
-       The first button reuses .ask-about, which already opens the assistant
-       with a question prefilled, so this needs no new JavaScript.
-       ─────────────────────────────────────────────────── -->
-  <section class="section gutter" id="about">
-    <div class="col-wide about-grid">
-      <div class="about-copy">
-        <p class="eyebrow">About</p>
-        <h2 class="t-section about-title">I own the system side.</h2>
-        <p class="t-lede about-lede">
-          The section library I built at BigOhTech assembles three live SaaS products,
-          as a Figma library and as Angular Material code. The handoff is the system itself.
-        </p>
-        <div class="about-actions">
-          <button type="button" class="about-btn ask-about" data-question="What does Nitansh actually own on the system side?">Ask about my work</button>
-          <a class="about-btn about-btn--quiet" href="Nitansh-Anand-Resume.pdf" download>R&eacute;sum&eacute; <span class="arrow" aria-hidden="true">&#8595;</span></a>
-        </div>
-      </div>
-
-      <dl class="about-meta">
-        <div class="about-row">
-          <span class="about-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.2 7 21l5-2.5L17 21l-1.5-7.8"/></svg></span>
-          <div>
-            <dt class="about-label">Experience</dt>
-            <dd class="about-value">2+ years</dd>
-          </div>
-        </div>
-        <div class="about-row">
-          <span class="about-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/></svg></span>
-          <div>
-            <dt class="about-label">Current role</dt>
-            <dd class="about-value">Associate Product Designer &middot; BigOhTech</dd>
-          </div>
-        </div>
-        <div class="about-row">
-          <span class="about-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/></svg></span>
-          <div>
-            <dt class="about-label">Focus</dt>
-            <dd class="about-value">Design systems &middot; Enterprise UX &middot; Legal tech</dd>
-          </div>
-        </div>
-        <div class="about-row">
-          <span class="about-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9.5 15.5 1.8 1.8 3.4-3.4"/></svg></span>
-          <div>
-            <dt class="about-label">Open to</dt>
-            <dd class="about-value">Product design roles</dd>
-          </div>
-        </div>
-      </dl>
-    </div>
-  </section>
 
   <!-- ─────────────────────────  CAREER  ───────────────────────── -->
   <section class="section gutter" id="career">
@@ -647,7 +623,7 @@
       <div class="linkedin-feed">
         <div class="linkedin-summary">
           <p id="li-summary">Latest original posts</p>
-          <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener">View LinkedIn <span class="arrow" aria-hidden="true">&#8599;</span></a>
+          <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener"><svg class="li-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>View LinkedIn <span class="arrow" aria-hidden="true">&#8599;</span></a>
         </div>
 
         <div data-buzz="Yes, I did post that." class="li-track" id="li-track" tabindex="0" aria-label="Recent posts, scrollable">
@@ -680,7 +656,7 @@
         <button data-buzz="Saves you the typing." type="button" class="contact-copy" id="copy-email" data-email="nitansh07@gmail.com">
           <span class="contact-copy-label">Copy address</span>
         </button>
-        <a class="contact-link" href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener"><svg class="contact-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>LinkedIn <span class="arrow" aria-hidden="true">&#8599;</span></a>
+        <a class="contact-link" href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener"><svg class="li-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>LinkedIn <span class="arrow" aria-hidden="true">&#8599;</span></a>
         <a class="contact-link" href="Nitansh-Anand-Resume.pdf" download>R&eacute;sum&eacute; <span class="arrow" aria-hidden="true">&#8595;</span></a>
       </div>
       <p class="contact-status" id="copy-status" role="status" aria-live="polite"></p>
@@ -690,12 +666,67 @@
 </main>
 
 <footer class="gutter home-footer">
-  <div class="col-wide">
-    <a href="mailto:nitansh07@gmail.com">nitansh07@gmail.com</a> <span aria-hidden="true">&middot;</span>
-    <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener">LinkedIn</a> <span aria-hidden="true">&middot;</span>
-    <a href="Nitansh-Anand-Resume.pdf" download>Resume</a>
+  <div class="col-wide ft-grid">
+    <nav class="ft-col" aria-label="Site sections">
+      <h2 class="ft-head">Explore</h2>
+      <a href="#work">Work</a>
+      <a href="#career">Career</a>
+      <a href="#writings">Writings</a>
+      <a href="agent-mode.html">Playground</a>
+      <a href="digilawyer.html">DigiLawyer case study</a>
+    </nav>
+
+    <!-- A recruiter researches people in whichever assistant they already use.
+         These open that assistant with the question pre-written, so the first
+         thing it reads is sourced from this site rather than guessed. -->
+    <nav class="ft-col" aria-label="Ask an AI about Nitansh">
+      <h2 class="ft-head">Ask an AI</h2>
+      <a href="https://chatgpt.com/?q=I'm%20evaluating%20a%20product%20designer.%20Tell%20me%20about%20Nitansh%20Anand%3A%20the%20reusable%20section%20library%20he%20built%20at%20BigOhTech%20that%20assembles%20three%20live%20SaaS%20products%2C%20his%20redesign%20of%20DigiLawyer's%20service%20pages%2C%20and%20the%20AI%20assistant%20layer%20he%20designed%20for%20Costimizer.%20Summarise%20the%20highlights%20from%20his%20site%3A%20nitanshanand.vercel.app" target="_blank" rel="noopener"><svg class="ft-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.28 9.82a5.98 5.98 0 0 0-.51-4.91 6.05 6.05 0 0 0-6.51-2.9A6.07 6.07 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .75 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.51 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07Zm-9.02 12.61a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.79.79 0 0 0 .4-.68v-6.74l2.02 1.17a.07.07 0 0 1 .4.05v5.59a4.5 4.5 0 0 1-4.5 4.49Zm-9.66-4.13a4.47 4.47 0 0 1-.53-3.01l.14.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.34a.08.08 0 0 1-.3.06L9.74 19.95a4.5 4.5 0 0 1-6.14-1.65ZM2.34 7.9a4.49 4.49 0 0 1 2.37-1.98v5.69a.77.77 0 0 0 .39.67l5.81 3.36-2.02 1.16a.08.08 0 0 1-.07 0l-4.83-2.79A4.5 4.5 0 0 1 2.34 7.87Zm16.6 3.86-5.84-3.4 2.02-1.16a.08.08 0 0 1 .07 0l4.83 2.79a4.49 4.49 0 0 1-.68 8.1v-5.67a.79.79 0 0 0-.4-.66Zm2.01-3.03-.14-.08-4.77-2.78a.78.78 0 0 0-.79 0L9.41 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66ZM8.31 12.86l-2.02-1.16a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.14.08-4.78 2.76a.79.79 0 0 0-.4.68Zm1.1-2.37 2.6-1.5 2.61 1.5v3l-2.6 1.5-2.6-1.5Z"/></svg>ChatGPT <span class="arrow" aria-hidden="true">&#8599;</span></a>
+      <a href="https://claude.ai/new?q=I'm%20evaluating%20a%20product%20designer.%20Tell%20me%20about%20Nitansh%20Anand%3A%20the%20reusable%20section%20library%20he%20built%20at%20BigOhTech%20that%20assembles%20three%20live%20SaaS%20products%2C%20his%20redesign%20of%20DigiLawyer's%20service%20pages%2C%20and%20the%20AI%20assistant%20layer%20he%20designed%20for%20Costimizer.%20Summarise%20the%20highlights%20from%20his%20site%3A%20nitanshanand.vercel.app" target="_blank" rel="noopener"><svg class="ft-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6c.4 0 .7.3.8.6l1 4.3 3.2-3a.8.8 0 0 1 1.2 1.1l-3 3.2 4.3 1a.8.8 0 0 1 0 1.5l-4.3 1 3 3.2a.8.8 0 0 1-1.2 1.1l-3.2-3-1 4.3a.8.8 0 0 1-1.6 0l-1-4.3-3.2 3a.8.8 0 0 1-1.2-1.1l3-3.2-4.3-1a.8.8 0 0 1 0-1.5l4.3-1-3-3.2a.8.8 0 1 1 1.2-1.1l3.2 3 1-4.3c.1-.3.4-.6.8-.6Z"/></svg>Claude <span class="arrow" aria-hidden="true">&#8599;</span></a>
+      <a href="https://www.perplexity.ai/search?q=I'm%20evaluating%20a%20product%20designer.%20Tell%20me%20about%20Nitansh%20Anand%3A%20the%20reusable%20section%20library%20he%20built%20at%20BigOhTech%20that%20assembles%20three%20live%20SaaS%20products%2C%20his%20redesign%20of%20DigiLawyer's%20service%20pages%2C%20and%20the%20AI%20assistant%20layer%20he%20designed%20for%20Costimizer.%20Summarise%20the%20highlights%20from%20his%20site%3A%20nitanshanand.vercel.app" target="_blank" rel="noopener"><svg class="ft-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.25 2.4 5.4 7.35H2.7v9.3h2.7v4.95l5.85-4.95v4.95h1.5v-4.95l5.85 4.95V16.65h2.7v-9.3h-2.7L12.75 2.4v5.0h-1.5V2.4ZM12.75 9.9h5.4v5.25h-1.2v-2.7l-4.2-3.55v1Zm-1.5 0v-1l-4.2 3.55v2.7h-1.2V9.9h5.4Zm1.5 1.95 3.9 3.3v3.2l-3.9-3.3v-3.2Zm-1.5 0v3.2l-3.9 3.3v-3.2l3.9-3.3Z"/></svg>Perplexity <span class="arrow" aria-hidden="true">&#8599;</span></a>
+      <a href="https://www.google.com/search?udm=50&q=I'm%20evaluating%20a%20product%20designer.%20Tell%20me%20about%20Nitansh%20Anand%3A%20the%20reusable%20section%20library%20he%20built%20at%20BigOhTech%20that%20assembles%20three%20live%20SaaS%20products%2C%20his%20redesign%20of%20DigiLawyer's%20service%20pages%2C%20and%20the%20AI%20assistant%20layer%20he%20designed%20for%20Costimizer.%20Summarise%20the%20highlights%20from%20his%20site%3A%20nitanshanand.vercel.app" target="_blank" rel="noopener"><svg class="ft-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c.5 4.6 3.4 8.4 9 10.5-5.6 2.1-8.5 5.9-9 10.5-.5-4.6-3.4-8.4-9-10.5 5.6-2.1 8.5-5.9 9-10.5Z"/></svg>Gemini <span class="arrow" aria-hidden="true">&#8599;</span></a>
+    </nav>
+
+    <div class="ft-col ft-col--contact">
+      <h2 class="ft-head">Get in touch</h2>
+      <a href="mailto:nitansh07@gmail.com"><svg class="ft-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.6 7 8.4 5.8L20.4 7"/></svg>nitansh07@gmail.com</a>
+      <a href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener"><svg class="ft-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="col-wide ft-legal">
+    <p>Product names and logos are trademarks of their respective owners. Work shown was produced in employment or internship; it is shown as portfolio evidence, not as a claim of ownership.</p>
+    <p class="ft-copy">&copy; 2026 Nitansh Anand. Hand-built, no framework.</p>
   </div>
 </footer>
+
+<!-- ─────────────────────────  BOTTOM NAV  ─────────────────────────
+     Phones only. The header's targets measure 17x32 to 30x32, under both the
+     44px platform minimum and WCAG 2.2's 24px floor, and they sit at the top
+     of the screen away from the thumb. These are 48px and within reach.
+
+     Ask lives here rather than in its own floating pill: the pill is fixed to
+     the same corner this bar occupies, and two fixed layers on a phone fight.
+     ───────────────────────────────────────────────────────────── -->
+<nav class="bottom-nav" aria-label="Primary">
+  <a class="bn-item" href="#work">
+    <span class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/></svg></span>
+    <span class="bn-label">Work</span>
+  </a>
+  <a class="bn-item" href="agent-mode.html">
+    <span class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/></svg></span>
+    <span class="bn-label">Playground</span>
+  </a>
+  <a class="bn-item" href="#contact">
+    <span class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>
+    <span class="bn-label">Contact</span>
+  </a>
+  <button type="button" class="bn-item bn-item--accent" id="bn-ask">
+    <span class="bn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9Z"/></svg></span>
+    <span class="bn-label">Ask</span>
+  </button>
+</nav>
+
 
 <!-- Energy packets that travel the column and section rules. -->
 <!-- A second cursor that trails the real one with a line about whatever
