@@ -1668,3 +1668,18 @@ body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: none; }
   body[data-read="skim"] .cs-section { display: revert; }
   body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: revert; }
 }
+
+/* One artifact on its own, outside the four-up grid.
+   .cs-artifact is declared twice in this file and the later block pins the
+   tile height, so these have to sit after both to take effect. Full width
+   would turn the crop into a wall, and the top of this page is the same hero
+   the grid already carries, so the frame sits lower, on the labelled
+   sections that are the reason for showing it. */
+.cs-artifact--solo {
+  max-width: 330px;
+  margin-inline: auto;
+}
+.cs-artifact--solo img {
+  height: 420px;
+  object-position: center 26%;
+}

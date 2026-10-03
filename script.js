@@ -1707,6 +1707,7 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     labelText.classList.add("is-swapping");
     setTimeout(function () {
       labelText.textContent = text;
+      labelText.classList.toggle("is-long", text.length > 64);
       labelText.classList.remove("is-swapping");
       queue();          // the text may have arrived after the glyph settled
     }, 180);
@@ -1756,8 +1757,15 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     return document.elementFromPoint(x, y);
   }
 
+  // A pen hovers, so it gets the glyph and the label too. Touch does not:
+  // there is no hover to report, and a label chasing a finger that has
+  // already lifted would be describing something nobody is pointing at.
+  function hovers(e) {
+    return e.pointerType === "mouse" || e.pointerType === "pen";
+  }
+
   document.addEventListener("pointermove", function (e) {
-    if (e.pointerType !== "mouse") return;
+    if (!hovers(e)) return;
     tip.x = e.clientX;
     tip.y = e.clientY;
     if (!seen) { lag.x = tip.x; lag.y = tip.y; seen = true; cursor.classList.remove("is-hidden"); }
@@ -1768,7 +1776,7 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   }, { passive: true });
 
   document.addEventListener("pointerdown", function (e) {
-    if (e.pointerType !== "mouse") return;
+    if (!hovers(e)) return;
     var el = at(e.clientX, e.clientY);
     held = el && el.closest ? el.closest(DRAG) : null;
     cursor.classList.add("is-pressed");
@@ -1776,7 +1784,7 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   }, { passive: true });
 
   document.addEventListener("pointerup", function (e) {
-    if (e.pointerType !== "mouse") return;
+    if (!hovers(e)) return;
     held = null;
     cursor.classList.remove("is-pressed");
     setState(stateFor(at(e.clientX, e.clientY)));

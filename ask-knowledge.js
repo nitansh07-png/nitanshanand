@@ -29,9 +29,13 @@ window.ASK_KB = [
     id: "section-library",
     tags: ["section library", "component library", "reusable", "library", "sections", "assembled", "biggest project", "proudest"],
     a: "A section library, so new sites get assembled rather than redesigned.\n" +
+       "- **My part** Audited the repeat website work, defined the section taxonomy, and built the library and the specs engineering builds against.\n" +
        "- Heroes, features, testimonials, timelines and pricing blocks, each with **multiple variants**.\n" +
        "- Now powers **3 live SaaS products**.\n" +
-       "- Cut launch time from **3 months to under 1 month**.",
+       "- Cut launch time from **3 months to under 1 month**.\n" +
+       "- **The constraint** Every new site was redesigned from scratch, so the same hero and pricing patterns were rebuilt each time at full cost.\n" +
+       "- **The decision** Design the variants up front rather than per project. A section gets chosen and configured, not drawn again.\n" +
+       "- **The evidence** Three products now ship from the same library, and launch fell from three months to under one.\n",
   },
   {
     id: "company-website",
@@ -42,7 +46,10 @@ window.ASK_KB = [
     id: "digilawyer",
     tags: ["digilawyer", "product detail", "listing pages", "challan", "legal", "ecommerce", "e-commerce", "filtering", "path to purchase", "service pages"],
     a: "I audited DigiLawyer's service pages, then rebuilt the challan page around the task people actually came for: checking a vehicle, not booking a consultation. The opening ask went from four fields to one.\n" +
-       "That structure then became master Figma components, with equivalents built in code. Three page types assemble from them now, and product owners build pages with them too.",
+       "That structure then became master Figma components, with equivalents built in code. Three page types assemble from them now, and product owners build pages with them too.\n" +
+       "- **The constraint** The long explanations were load-bearing for search, so the content team could not simply lose them.\n" +
+       "- **The decision** Ask for the vehicle number first and move the depth behind a control, rather than choosing between the visitor and the SEO strategy.\n" +
+       "- **The evidence** Three page types now assemble from the same sections, and product owners build pages without a designer.\n",
     link: { href: "digilawyer.html", label: "Read the case study" },
   },
   {
@@ -66,7 +73,10 @@ window.ASK_KB = [
     id: "costimizer",
     tags: ["costimizer", "ai assistant", "cloud cost", "dashboard", "ai layer", "assistant", "usability sessions"],
     a: "I designed and tested the AI assistant layer for Costimizer, a cloud cost dashboard.\n" +
-       "35+ user sessions showed a 4-minute average session length and a 58-second time to first action.",
+       "35+ user sessions showed a 4-minute average session length and a 58-second time to first action.\n" +
+       "- **The constraint** The brief arrived before the product did. Nobody could yet say what the model would reliably do.\n" +
+       "- **The decision** Design the empty state and the failure state first, so the interface stayed honest whatever the model returned.\n" +
+       "- **The evidence** Across 35+ sessions, first useful action landed at 58 seconds.\n",
     link: {
       href: "https://medium.com/@nitansh07/i-was-a-fresher-designer-asked-to-build-an-ai-nobody-fully-understood-heres-what-happened-155939ac0f88",
       label: "Read the case study on Medium",
@@ -82,7 +92,10 @@ window.ASK_KB = [
     id: "dmrc",
     tags: ["delhi metro", "dmrc", "metro", "system design intern", "passenger", "feedback system", "public sector", "transit"],
     a: "I was a System Design Intern at Delhi Metro Rail Corporation, September to November 2023.\n" +
-       "I designed a passenger feedback system for station and in-transit use, which DMRC approved for full production rollout. I worked with Metro officials through the whole design-to-handoff cycle, shaping the system around operational constraints so it could be sustained after launch.",
+       "I designed a passenger feedback system for station and in-transit use, which DMRC approved for full production rollout. I worked with Metro officials through the whole design-to-handoff cycle, shaping the system around operational constraints so it could be sustained after launch.\n" +
+       "- **The constraint** The only channel was a once-a-year survey buried on a government site, in two languages, in a city that speaks dozens.\n" +
+       "- **The decision** Move feedback into the journey and make it a conversation: voice or text, categorised up front so every answer arrives routable.\n" +
+       "- **The evidence** DMRC approved it for full production rollout.\n",
     link: {
       href: "https://metrodost-case-study.vercel.app/",
       label: "Read the MetroDost case study",
