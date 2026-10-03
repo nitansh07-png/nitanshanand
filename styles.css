@@ -3227,3 +3227,21 @@ html.cursor-custom iframe * { cursor: auto !important; }
   opacity: 0.75;
 }
 .ft-col a:hover .ft-mark { opacity: 1; }
+
+/* The bar is shared across pages, so the current one has to say so: colour
+   alone would be invisible to anyone who cannot distinguish it. */
+@media (max-width: 600px) {
+  .bn-item.is-current { color: var(--color-ink); }
+  .bn-item.is-current .bn-icon { position: relative; }
+  .bn-item.is-current .bn-icon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 14px;
+    height: 2px;
+    border-radius: 2px;
+    transform: translateX(-50%);
+    background: var(--color-accent);
+  }
+}
