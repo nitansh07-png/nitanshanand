@@ -46,6 +46,23 @@ window.ASK_KB = [
     link: { href: "digilawyer.html", label: "Read the case study" },
   },
   {
+    id: "four-to-one",
+    tags: ["four-to-one", "four to one", "reduction", "four fields", "one field", "initial screen", "scope", "what it covers", "claim", "entry point"],
+    a: "It covers the **opening screen only**. Before the redesign the entry point asked four fields, none of them the vehicle. After it, one field: the vehicle itself.\n" +
+       "- Further information and resolution belong to the steps after that one, so the number is not a claim about the whole flow.\n" +
+       "- The case study says that in a note beside the figure, rather than leaving it to be read as a funnel result.",
+    link: { href: "digilawyer.html#decisions", label: "See the decision and its cost" },
+  },
+  {
+    id: "wider-team",
+    tags: ["wider team", "team extend", "extended", "team adoption", "adoption", "who else", "beyond my pages", "page formats", "product owners", "handover"],
+    a: "The case study is explicit about the split: Nitansh owned the concept, the team extended it. Three things went beyond his own pages.\n" +
+       "- The approach supported **three page formats**: listing, product detail, and use-case pages.\n" +
+       "- The Figma sections had corresponding components built by developers.\n" +
+       "- Product owners used the shared sections to structure further pages, working with the content and SEO teams.",
+    link: { href: "digilawyer.html#outcomes", label: "See the outcomes" },
+  },
+  {
     id: "costimizer",
     tags: ["costimizer", "ai assistant", "cloud cost", "dashboard", "ai layer", "assistant", "usability sessions"],
     a: "I designed and tested the AI assistant layer for Costimizer, a cloud cost dashboard.\n" +

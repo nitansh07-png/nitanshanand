@@ -1584,3 +1584,87 @@ body:not([data-slots="show"]) .cs-cta-pending { display: none; }
   letter-spacing: 0.06em;
   line-height: 1.25;
 }
+
+/* =========================================================================
+   Reading mode
+   ========================================================================= */
+
+.rm-pill {
+  position: fixed;
+  left: 50%;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 60;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  border: 1px solid var(--cs-line);
+  border-radius: 999px;
+  /* Solid, not glass: over a page of screenshots the blur picked up whatever
+     scrolled under it, and the labels had to survive that. */
+  background: var(--color-raised);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 14px 34px -16px rgba(0, 0, 0, 0.42);
+}
+
+.rm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--color-soft);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-ui, 0.2s), color var(--dur-ui, 0.2s);
+}
+
+.rm-btn svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+/* The icon carries the state as well as the fill does, so it leads slightly
+   while the mode is off and comes to full strength once it is on. */
+.rm-btn svg { opacity: 0.75; }
+.rm-btn:hover svg,
+.rm-btn[aria-pressed="true"] svg { opacity: 1; }
+.rm-btn:hover { color: var(--color-ink); }
+.rm-btn:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: 2px; }
+.rm-btn[aria-pressed="true"] { background: var(--cs-accent); color: var(--cs-on-accent); }
+
+/* Ask is not a mode, so it sits behind a divider rather than in the pair. */
+.rm-btn--ask {
+  margin-left: 2px;
+  padding-left: 15px;
+  border-left: 1px solid var(--cs-line);
+  border-radius: 0 999px 999px 0;
+}
+
+/* ---- skim ----
+   Three sections, not a compression of eleven: problem, solution, outcomes.
+   Everything outside .cs-section stays, so the hero still says what is being
+   read, and the sections keep their full detail rather than being collapsed. */
+body[data-read="skim"] .cs-section:not(#problem):not(#solution):not(#outcomes) {
+  display: none;
+}
+
+/* A jump pill pointing at a hidden section is a dead link. */
+body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: none; }
+
+@media (max-width: 600px) {
+  .rm-pill { display: none; }
+  /* Nothing can leave the page stuck in a mode it can no longer exit: resize
+     below this and the control disappears with it. */
+  body[data-read="skim"] .cs-section { display: revert; }
+  body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: revert; }
+}

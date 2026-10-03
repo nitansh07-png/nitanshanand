@@ -820,16 +820,39 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
 
   // A link is a destination, so it gets a card rather than a line of text.
   function addLinkCard(m, link) {
-    var a = el("a", "ask-source");
-    a.href = link.href;
-    var kind = /^mailto:/.test(link.href) ? "mail"
-             : /^https?:/.test(link.href) ? "link"
+    var href = link.href;
+    var kind = /^mailto:/.test(href) ? "mail"
+             : /^https?:/.test(href) ? "link"
              : "doc";
+
+    // The knowledge base is shared, and every bare hash in it names a section
+    // of the landing page. Read anywhere else it is wrong twice over: some of
+    // those sections do not exist here, and process exists on a case study
+    // too, where it means that project's process rather than how Nitansh
+    // works. So off the landing page, a bare hash resolves against that page.
+    var p = location.pathname;
+    var onHome = p === "/" || p.slice(-11) === "/index.html";
+    if (/^#/.test(href) && !onHome) {
+      href = "index.html" + href;
+    }
+
+    // On the page a link points at, "Read the case study" is a no-op. Drop a
+    // bare self-link; keep one with a hash, as a jump to that section.
+    if (kind === "doc" && !/^#/.test(href)) {
+      var u = new URL(href, location.href);
+      if (u.pathname === location.pathname) {
+        if (!u.hash) return;
+        href = u.hash;
+      }
+    }
+
+    var a = el("a", "ask-source");
+    a.href = href;
     a.appendChild(icon(ICON[kind]));
     a.appendChild(el("span", "ask-source-label", link.label));
     a.appendChild(el("span", "ask-source-go", kind === "link" ? "↗" : "→"));
-    if (/^https?:/.test(link.href)) { a.target = "_blank"; a.rel = "noopener"; }
-    else if (/^#/.test(link.href)) a.addEventListener("click", close);
+    if (/^https?:/.test(href)) { a.target = "_blank"; a.rel = "noopener"; }
+    else if (/^#/.test(href)) a.addEventListener("click", close);
     m.stack.appendChild(a);
   }
 

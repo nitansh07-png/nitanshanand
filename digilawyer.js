@@ -195,3 +195,65 @@
   note.textContent = "Live link not set. Replace SET_LIVE_URL in the markup.";
   link.parentNode.replaceChild(note, link);
 })();
+
+/* ------------------------------------------------------------------ *
+ * Reading mode.                                                       *
+ *                                                                     *
+ * Skim collapses the cards to their labels; depth is the real page and *
+ * stays the default. Ask opens the assistant if this page ever carries *
+ * it, and otherwise sends the reader home to the panel, where the hash *
+ * handler opens it on arrival.                                         *
+ * ------------------------------------------------------------------ */
+(function () {
+  var pill = document.querySelector(".rm-pill");
+  if (!pill) return;
+
+  var modes = [].slice.call(pill.querySelectorAll("[data-read-mode]"));
+
+  /* overview is the hero, which is not a .cs-section and so is never hidden:
+     its pill has to stay too, or the nav loses its way back to the top. */
+  var KEPT = { overview: 1, problem: 1, solution: 1, outcomes: 1 };
+
+  /* The jump nav is built from the sections, so its pills have to know which
+     of them skim hides, or they become links to nothing. */
+  function flagPills() {
+    [].slice.call(document.querySelectorAll(".dl-pill")).forEach(function (a) {
+      var id = (a.getAttribute("href") || "").replace("#", "");
+      if (id && !KEPT[id]) a.setAttribute("data-hidden-in-skim", "");
+    });
+  }
+
+  function set(mode) {
+    if (mode === "skim") document.body.setAttribute("data-read", "skim");
+    else document.body.removeAttribute("data-read");
+    modes.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.readMode === mode));
+    });
+  }
+
+  flagPills();
+  modes.forEach(function (b) {
+    b.addEventListener("click", function () { set(b.dataset.readMode); });
+  });
+
+  /* A link into the page can point at a section skim hides, whether it comes
+     from the jump nav or from an Ask answer. Leave skim before the jump, so
+     there is something for it to land on. */
+  document.addEventListener("click", function (e) {
+    if (!document.body.hasAttribute("data-read")) return;
+    var t = e.target;
+    var a = t && t.closest ? t.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var id = a.getAttribute("href").slice(1);
+    if (id && !KEPT[id]) set("depth");
+  });
+
+  var ask = document.getElementById("rm-ask");
+  if (ask) {
+    ask.addEventListener("click", function () {
+      var launcher = document.getElementById("ask");
+      if (launcher) launcher.click();
+      else window.location.href = "index.html#ask";
+    });
+  }
+})();

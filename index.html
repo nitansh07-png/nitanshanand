@@ -146,7 +146,7 @@
       <div class="proof-head">
         <div class="proof-title">
           <p class="eyebrow">What the work moved</p>
-          <h2 class="t-section">Claims are cheap.<br />These aren&rsquo;t.</h2>
+          <h2 class="t-section">Claims are cheap. These aren&rsquo;t.</h2>
         </div>
         <p class="proof-note">
           Four outcomes from shipped work, not descriptions of what I did.
@@ -641,31 +641,9 @@
     </div>
   </section>
 
-
-  <!-- ─────────────────────────  CONTACT  ─────────────────────── -->
-  <section class="section gutter" id="contact">
-    <div class="col-wide">
-      <h2 class="t-section">Let&rsquo;s talk</h2>
-      <p class="t-lede contact-lede">
-        I am open to product design roles and happy to walk through any of the
-        work above. The fastest way to reach me is email.
-      </p>
-
-      <div class="contact-actions">
-        <a class="home-contact-button" href="mailto:nitansh07@gmail.com" data-buzz="Go on, then.">Email me</a>
-        <button data-buzz="Saves you the typing." type="button" class="contact-copy" id="copy-email" data-email="nitansh07@gmail.com">
-          <span class="contact-copy-label">Copy address</span>
-        </button>
-        <a class="contact-link" href="https://linkedin.com/in/nitansh10" target="_blank" rel="noopener"><svg class="li-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>LinkedIn <span class="arrow" aria-hidden="true">&#8599;</span></a>
-        <a class="contact-link" href="Nitansh-Anand-Resume.pdf" download>R&eacute;sum&eacute; <span class="arrow" aria-hidden="true">&#8595;</span></a>
-      </div>
-      <p class="contact-status" id="copy-status" role="status" aria-live="polite"></p>
-    </div>
-  </section>
-
 </main>
 
-<footer class="gutter home-footer">
+<footer class="gutter home-footer" id="contact">
   <div class="col-wide ft-grid">
     <nav class="ft-col" aria-label="Site sections">
       <h2 class="ft-head">Explore</h2>
@@ -694,9 +672,15 @@
     </div>
   </div>
 
-  <div class="col-wide ft-legal">
-    <p>Product names and logos are trademarks of their respective owners. Work shown was produced in employment or internship; it is shown as portfolio evidence, not as a claim of ownership.</p>
-    <p class="ft-copy">&copy; 2026 Nitansh Anand. Hand-built, no framework.</p>
+  <!-- The closing line. It cancels the footer gutter so the rule above it runs
+       edge to edge, then puts the measure back inside so the three parts line
+       up with the columns above. -->
+  <div class="ft-bar">
+    <div class="col-wide ft-bar-row">
+      <p>&copy; 2026 Nitansh Anand</p>
+      <p>Built with <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>, no framework</p>
+      <p>Last updated 3 October 2026</p>
+    </div>
   </div>
 </footer>
 

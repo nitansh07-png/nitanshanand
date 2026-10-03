@@ -3245,3 +3245,46 @@ html.cursor-custom iframe * { cursor: auto !important; }
     background: var(--color-accent);
   }
 }
+
+/* =========================================================================
+   Footer closing bar
+   ========================================================================= */
+
+/* The band closes the page, so the footer stops padding below it. */
+.home-footer { padding-bottom: 0; }
+
+/* Full bleed: cancel the gutter the footer sets, then pay it back as padding
+   so the text still lines up with the columns above. */
+.ft-bar {
+  margin-inline: calc(var(--gutter) * -1);
+  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  padding: 16px var(--gutter) clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--color-hairline);
+  color: var(--color-soft);
+}
+
+.ft-bar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 24px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.ft-bar-row p { margin: 0; }
+
+.ft-bar a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-hairline);
+  text-underline-offset: 3px;
+}
+.ft-bar a:hover { color: var(--color-ink); text-decoration-color: var(--color-accent); }
+
+/* Three parts will not sit side by side on a phone, and a ragged two-and-one
+   row reads worse than a centred stack. */
+@media (max-width: 720px) {
+  .ft-bar-row { justify-content: center; text-align: center; gap: 4px 16px; }
+}
