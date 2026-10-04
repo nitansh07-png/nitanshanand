@@ -112,7 +112,10 @@
       "<span>Full page</span>";
     trigger.addEventListener("click", function () {
       last = trigger;
-      full.src = img.currentSrc || img.src;
+      /* data-full points at the whole page where the inline frame only holds
+         its top. It is the heavy file, so it is fetched here rather than with
+         the article. */
+      full.src = img.dataset.full || img.currentSrc || img.src;
       full.alt = img.alt;
       var cap = host.querySelector("figcaption");
       caption.textContent = cap ? cap.textContent.trim() : "";
@@ -122,10 +125,9 @@
     host.appendChild(trigger);
   });
 
-  // These exports run from 249 to 1147px wide. Stretching a narrow one
-  // across a 1000px dialog is a 3x blow-up that turns to mush, so the
-  // dialog takes its width from the image, capped at twice natural: enough
-  // to read the structure, not so much that it invents detail.
+  // A narrow export stretched across a 1000px dialog is a blow-up that turns
+  // to mush, so the dialog takes its width from the image, capped at twice
+  // natural: enough to read the structure, not so much that it invents detail.
   full.addEventListener("load", function () {
     var natural = full.naturalWidth;
     if (!natural) return;
