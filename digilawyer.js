@@ -76,6 +76,28 @@
   var caption = dialog.querySelector("figcaption");
   var last = null;
 
+  /* A modal <dialog> does not stop the page behind it scrolling, so a wheel
+     over a tall capture moved the article instead of the capture. Holding the
+     page still sends the wheel where the pointer is. The scrollbar's width is
+     paid back as padding so nothing shifts sideways as it disappears. */
+  var scrollY = 0;
+  function lockPage() {
+    if (locked) return;
+    locked = true;
+    scrollY = window.scrollY;
+    var bar = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.overflow = "hidden";
+    if (bar > 0) document.documentElement.style.paddingRight = bar + "px";
+  }
+  var locked = false;
+  function unlockPage() {
+    if (!locked) return;
+    locked = false;
+    document.documentElement.style.overflow = "";
+    document.documentElement.style.paddingRight = "";
+    window.scrollTo({ top: scrollY, behavior: "instant" });
+  }
+
   shots.forEach(function (img) {
     var host = img.closest("[data-zoom]");
     host.classList.add("is-zoomable");
@@ -94,6 +116,7 @@
       full.alt = img.alt;
       var cap = host.querySelector("figcaption");
       caption.textContent = cap ? cap.textContent.trim() : "";
+      lockPage();
       dialog.showModal();
     });
     host.appendChild(trigger);
@@ -110,16 +133,23 @@
     dialog.style.width = Math.max(width, 280) + "px";
   });
 
+  /* Every way out unlocks, rather than trusting one event: the close event
+     did not reach us in testing, and a page left locked cannot be scrolled
+     at all, which is worse than the bug this fixes. */
   dialog.querySelector(".dl-lightbox-close").addEventListener("click", function () {
+    unlockPage();
     dialog.close();
   });
 
   // Clicking the backdrop closes it; clicking the image itself does not.
   dialog.addEventListener("click", function (e) {
-    if (e.target === dialog) dialog.close();
+    if (e.target === dialog) { unlockPage(); dialog.close(); }
   });
 
+  dialog.addEventListener("cancel", unlockPage);
+
   dialog.addEventListener("close", function () {
+    unlockPage();
     full.removeAttribute("src");
     if (last && last.focus) last.focus();
   });
