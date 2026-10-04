@@ -3334,3 +3334,11 @@ html.cursor-custom iframe * { cursor: auto !important; }
   text-align: center;
 }
 .work-slot svg { width: 22px; height: 22px; opacity: 0.6; }
+
+/* --- mobile: keep the composer out of iOS's zoom ------------------------
+   Safari zooms the whole page in when a field under 16px takes focus. That
+   pushed the send button off the right edge mid-sentence, so 16px here is a
+   threshold rather than a type choice. */
+@media (max-width: 600px) {
+  .ask-composer textarea { font-size: 16px; }
+}

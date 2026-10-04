@@ -1683,3 +1683,37 @@ body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: none; }
   height: 420px;
   object-position: center 26%;
 }
+
+/* =========================================================================
+   Image placeholders
+   Every capture is out of the page for now. The frames keep each figure's
+   shape so the layout does not move when the real thing arrives, and the
+   captions stay put, in grey, saying what belongs there.
+   ========================================================================= */
+
+.cs-ph {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1.5px dashed color-mix(in srgb, var(--color-soft) 42%, transparent);
+  border-radius: var(--cs-radius-sm);
+  background: color-mix(in srgb, var(--color-soft) 6%, transparent);
+  color: var(--color-soft);
+}
+.cs-ph svg { width: 28px; height: 28px; opacity: 0.75; }
+
+/* The four-up tiles are page-shaped, so their frames are too. The solo one
+   keeps the bounded width it already had. */
+.cs-artifact .cs-ph { aspect-ratio: 3 / 4; }
+.cs-artifact--solo .cs-ph { height: 420px; aspect-ratio: auto; }
+
+/* A wide shot is a band rather than a page. */
+.cs-shot--wide .cs-ph { aspect-ratio: 21 / 6; }
+
+/* Grey, not the accent: these are notes about what is missing, not links. */
+.cs-shot figcaption,
+.cs-artifact figcaption,
+.cs-slot figcaption {
+  color: var(--color-soft);
+}

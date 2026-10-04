@@ -1433,3 +1433,33 @@ so the type keeps its footing when the
    them here (62ch on the lede, 78ch on the note) left the text filling half a
    1217px card while the preview above it spanned all of it, which read as an
    unfinished column rather than a deliberate one. */
+
+/* --- mobile: clear the bottom nav ---------------------------------------
+   The hero is 100svh and its last row sits on that bottom edge, which is
+   exactly where the fixed bottom bar is drawn, so the record button went
+   under it. The bar is 62px plus whatever the device reserves below. */
+@media (max-width: 600px) {
+  .hero__foot {
+    margin-bottom: calc(62px + env(safe-area-inset-bottom) + 0.75rem);
+  }
+}
+
+/* --- Smaller machines on a narrow screen --------------------------------
+   The collapse to one column is declared up at the 720px query, but the
+   restored card block below it redefines grid-template-columns and quietly
+   undoes it. At 375px that left each card 161px wide with a 104px text
+   column: about thirteen characters a line, titles breaking after every
+   word, and cards 853px tall. Re-stated here so it lands after the block
+   that overrides it. */
+@media (max-width: 720px) {
+  .ag-cards { grid-template-columns: minmax(0, 1fr); }
+  .ag-card {
+    padding: 24px 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  /* The two-column border pattern does not apply to a single column. */
+  .ag-card:nth-child(even) { border-right: 0; }
+  .ag-card:nth-last-child(-n + 2) { border-bottom: 1px solid var(--color-hairline); }
+  .ag-card:last-child { border-bottom: 0; }
+}
