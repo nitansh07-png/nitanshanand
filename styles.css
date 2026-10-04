@@ -2457,11 +2457,11 @@ html.cursor-custom iframe * { cursor: auto !important; }
 
 .work-visual {
   display: block;
-  /* auto pushes it to the foot, so the diagrams line up across a row whose
-     cards carry different amounts of text. The negative inline margin pays
-     back the card's padding so it reaches both edges. */
+  /* The negative inline margin pays back the card's padding so the shot
+     reaches both edges, and the top edge too. No padding of its own: the
+     image is the content here, not something mounted inside a frame. */
   margin: 0 -24px 20px;
-  padding: 16px 18px;
+  padding: 0;
   border: 0;
   border-bottom: 1px solid var(--color-hairline);
   border-radius: 0;
@@ -3341,4 +3341,16 @@ html.cursor-custom iframe * { cursor: auto !important; }
    threshold rather than a type choice. */
 @media (max-width: 600px) {
   .ask-composer textarea { font-size: 16px; }
+}
+
+/* The card image slot keeps one shape whether it holds a capture or is still
+   waiting for one, so a row of cards does not go ragged while some are
+   filled and some are not. */
+.work-visual, .work-visual--empty { aspect-ratio: 16 / 9; }
+/* The shots are framed browser mockups, so they fill the slot and anchor to
+   the top: the window chrome and the headline are the part worth showing, and
+   the foot of the page is the part that can go. */
+.work-visual img {
+  object-fit: cover;
+  object-position: top center;
 }
