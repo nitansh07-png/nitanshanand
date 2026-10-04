@@ -1254,6 +1254,28 @@ mark { background: none; color: inherit; }
 }
 .linkedin-arrows button:disabled { opacity: 0.35; cursor: default; }
 
+/* Touch sizing. This has to sit after the rules above: a media query adds no
+   specificity, so declared first it simply lost to them.
+
+   The dots stay 7px; what you can hit does not. The hit box is absolute, so
+   it costs no layout, but two 44px boxes 29px apart overlap and a tap near
+   the seam picks the wrong post. Vertical room is free, horizontal is not,
+   so it goes tall and takes only the pitch the row can spare. */
+@media (hover: none) {
+  .linkedin-dots { gap: 26px; }
+  .linkedin-dots button { position: relative; }
+  .linkedin-dots button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+  .linkedin-arrows button { min-width: 44px; height: 44px; }
+}
+
 .li-track:focus-visible,
 .linkedin-dots button:focus-visible,
 .linkedin-arrows button:focus-visible,

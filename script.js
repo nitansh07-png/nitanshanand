@@ -1349,7 +1349,9 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
       right.href = post.url || feed.profile || "#";
       right.target = "_blank";
       right.rel = "noopener";
-      right.textContent = post.impressions != null ? post.impressions.toLocaleString("en-US") + " impressions" : "View on LinkedIn";
+      right.textContent = (post.impressions != null
+        ? post.impressions.toLocaleString("en-US") + " impressions"
+        : "View on LinkedIn") + " ↗";   // leaves the site, like every other ↗ here
       foot.append(left, right);
       card.appendChild(foot);
 
@@ -2036,4 +2038,33 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   var launcher = document.getElementById("ask");
   if (!b || !launcher) return;
   b.addEventListener("click", function () { launcher.click(); });
+})();
+
+/* ------------------------------------------------------------------ *
+ * "Last updated"                                                      *
+ *                                                                     *
+ * Written by hand it was two days stale within two days, on a site    *
+ * that had been rebuilt four times that morning. document.lastModified*
+ * is the page's own Last-Modified header, which this host sets to the *
+ * deploy, so the claim maintains itself. The markup keeps a literal    *
+ * for the case where no header arrives and the browser substitutes     *
+ * the current time, which would be a lie told confidently.             *
+ * ------------------------------------------------------------------ */
+(function () {
+  var el = document.getElementById("ft-updated");
+  if (!el) return;
+
+  var stamp = Date.parse(document.lastModified);
+  if (!stamp) return;
+
+  var d = new Date(stamp);
+  // A header the host did not send leaves this at "now". Anything inside
+  // the last minute is that, not a deploy, so the literal stands.
+  if (Date.now() - stamp < 60000) return;
+
+  var months = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+  el.textContent = "Last updated " + d.getDate() + " " + months[d.getMonth()] +
+                   " " + d.getFullYear();
+  el.setAttribute("datetime", d.toISOString().slice(0, 10));
 })();
