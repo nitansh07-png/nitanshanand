@@ -77,6 +77,11 @@
   </div>
 </header>
 
+<!-- Below 1100px the section rail is gone, so this is the only thing left
+     saying how far through an eleven-section article you are. Decorative:
+     a screen reader has the headings. -->
+<div class="cs-progress" aria-hidden="true"><i id="cs-progress-fill"></i></div>
+
 <main class="cs-page" id="main">
 
   <!-- ═════════════════════════  HERO  ═════════════════════════ -->
@@ -318,6 +323,7 @@
 
       <div class="cs-pain-grid">
         <article class="cs-card cs-card--paper cs-pain">
+          <span class="cs-pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16M4 9h16M4 12.5h16M4 16h11M4 19.5h16"/></svg></span>
           <h3 class="cs-pain-finding">Dense explanations and competing messages</h3>
           <span class="cs-split" aria-hidden="true"></span>
           <p class="cs-answer">
@@ -325,6 +331,7 @@
           </p>
         </article>
         <article class="cs-card cs-card--paper cs-pain">
+          <span class="cs-pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 12a8.5 8.5 0 1 1-2.8-6.3"/><path d="M20.5 3.2v4h-4"/></svg></span>
           <h3 class="cs-pain-finding">Visitors moving around the hero before leaving</h3>
           <span class="cs-split" aria-hidden="true"></span>
           <p class="cs-answer">
@@ -332,6 +339,7 @@
           </p>
         </article>
         <article class="cs-card cs-card--paper cs-pain">
+          <span class="cs-pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5 15.4 10l-4.3 1.1 2.2 4.3-2.1 1-2.2-4.3L5 15Z"/><path d="M17.8 4.6 19.6 3"/><path d="M19.4 8.6H22"/><path d="M17.4 12.4l1.9 1.3"/></svg></span>
           <h3 class="cs-pain-finding">Rage clicks and form responsiveness issues</h3>
           <span class="cs-split" aria-hidden="true"></span>
           <p class="cs-answer">
@@ -339,6 +347,7 @@
           </p>
         </article>
         <article class="cs-card cs-card--paper cs-pain">
+          <span class="cs-pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5.5 6v12M10.5 10v8M15.5 14v4M20.5 17.5V18"/></svg></span>
           <h3 class="cs-pain-finding">Fewer clicks farther down the page</h3>
           <span class="cs-split" aria-hidden="true"></span>
           <p class="cs-answer">
@@ -346,6 +355,7 @@
           </p>
         </article>
         <article class="cs-card cs-card--paper cs-pain">
+          <span class="cs-pain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.2"/><path d="M7.8 7.8h8.4M7.8 11h5"/><rect x="7.8" y="14.6" width="8.4" height="3.4" rx="1.3"/></svg></span>
           <h3 class="cs-pain-finding">Scannable, action-focused competitor pages</h3>
           <span class="cs-split" aria-hidden="true"></span>
           <p class="cs-answer">
@@ -614,15 +624,21 @@
       <!-- One page at a time. The filters move the track; the track moves the
            filters back, so the two can never disagree about what is on screen. -->
       <div class="cs-gallery" id="cs-gallery">
-        <div class="cs-gallery-filters" role="tablist" aria-label="Page type">
+        <div class="cs-gallery-bar">
+          <div class="cs-gallery-filters" role="tablist" aria-label="Page type">
           <button type="button" class="cs-filter" role="tab" id="tab-listing" aria-controls="page-listing" aria-selected="true" tabindex="0">Listing</button>
           <button type="button" class="cs-filter" role="tab" id="tab-product" aria-controls="page-product" aria-selected="false" tabindex="-1">Product detail</button>
           <button type="button" class="cs-filter" role="tab" id="tab-usecase" aria-controls="page-usecase" aria-selected="false" tabindex="-1">Use case</button>
           <button type="button" class="cs-filter" role="tab" id="tab-assembled" aria-controls="page-assembled" aria-selected="false" tabindex="-1">Assembled</button>
           <button type="button" class="cs-filter" role="tab" id="tab-master" aria-controls="page-master" aria-selected="false" tabindex="-1">Master page</button>
+          </div>
+          <p class="cs-gallery-count" aria-hidden="true"><b id="cs-gallery-n">1</b> of 5</p>
         </div>
 
-        <div class="cs-gallery-track" id="cs-gallery-track">
+        <!-- tabindex makes the strip scrollable by keyboard, which a bare
+             overflow container is not. -->
+        <div class="cs-gallery-track" id="cs-gallery-track" tabindex="0"
+             role="group" aria-label="Page exports, scroll sideways or use the filters above">
           <figure class="cs-card cs-card--paper cs-slide" id="page-listing" role="tabpanel" aria-labelledby="tab-listing" data-zoom>
             <img src="assets/pages/listing.webp" alt="The Notices Hub listing page: a headline offering legal notices from one rupee, above search and category filters." width="2000" height="1125" loading="lazy" decoding="async" />
             <figcaption>

@@ -459,11 +459,23 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 /* Five fixed columns put a 14px paragraph in a 150px measure, about 21
    characters a line. Auto-fit lets the row break to three-and-two, which
    costs a ragged edge and buys a readable line. */
+/* Four shared rows, the same device the users cards use: icon, finding,
+   rule, response. margin-top:auto could not do this, because it aligns to
+   the bottom of the card and the responses are not all the same length, so
+   a three-line response dragged its own rule up out of line. */
 .cs-pain-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  grid-template-rows: auto auto auto auto;
+  align-items: start;
   gap: var(--cs-gap);
   margin-top: clamp(26px, 3vw, 40px);
+}
+.cs-pain {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
 }
 /* Same shape as a visitor-task card in 03, so it takes the same type. */
 .cs-pain-finding {
@@ -471,7 +483,26 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
   font-weight: 600;
   line-height: 1.28;
   letter-spacing: -0.01em;
+  margin-bottom: 16px;
 }
+
+/* An outlined square rather than a filled chip: the page is built out of
+   hairlines, and a block of colour five times over would outweigh the
+   findings themselves. */
+.cs-pain-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 15px;
+  border: 1px solid var(--cs-line);
+  border-radius: 10px;
+  color: var(--cs-accent-ink);
+}
+.cs-pain-icon svg { width: 19px; height: 19px; }
+
+/* The rule sits in its own shared row, so it needs no pushing. */
+.cs-pain .cs-split { align-self: end; }
 
 
 /* =========================================================================
@@ -1552,6 +1583,52 @@ body:not([data-slots="show"]) .cs-cta-pending { display: none; }
     0 14px 34px -16px rgba(0, 0, 0, 0.42);
 }
 
+/* =========================================================================
+   Reading progress
+   Only where the rail is not: above 1100px the rail already says where you
+   are, and two answers to the same question is one too many.
+   ========================================================================= */
+
+.cs-progress { display: none; }
+
+@media (max-width: 1100px) {
+  .cs-progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 70;
+    height: 2px;
+    pointer-events: none;
+  }
+  .cs-progress i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--cs-accent-ink, #2f6bff);
+  }
+}
+
+/* Tucked out of the way while reading forward. Transform only, so it costs
+   nothing to animate, and it still answers to focus. */
+.rm-pill {
+  transition: transform var(--dur-ui, 0.2s) ease, opacity var(--dur-ui, 0.2s) ease;
+}
+.rm-pill.is-tucked {
+  transform: translateX(-50%) translateY(calc(100% + 28px));
+  opacity: 0;
+  pointer-events: none;
+}
+/* Declarative, so a tucked pill can never swallow the keyboard focus that
+   just landed on it, whatever order the scroll and focus handlers run in. */
+.rm-pill.is-tucked:focus-within {
+  transform: translateX(-50%);
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rm-pill { transition: none; }
+}
+
 .rm-btn {
   display: inline-flex;
   align-items: center;
@@ -1597,7 +1674,10 @@ body:not([data-slots="show"]) .cs-cta-pending { display: none; }
    Three sections, not a compression of eleven: problem, solution, outcomes.
    Everything outside .cs-section stays, so the hero still says what is being
    read, and the sections keep their full detail rather than being collapsed. */
-body[data-read="skim"] .cs-section:not(#problem):not(#solution):not(#outcomes) {
+/* :where() keeps the exclusions at zero specificity. Written as :not(#id)
+   this rule scored three ids, so the small-screen override below could never
+   outrank it and skim stayed stuck on with no control left to turn it off. */
+body[data-read="skim"] .cs-section:not(:where(#problem, #solution, #outcomes)) {
   display: none;
 }
 
@@ -1606,7 +1686,8 @@ body[data-read="skim"] .cs-section:not(#problem):not(#solution):not(#outcomes) {
 @media (max-width: 600px) {
   .rm-pill { display: none; }
   /* Nothing can leave the page stuck in a mode it can no longer exit: resize
-     below this and the control disappears with it. */
+     below this and the control disappears with it. Same specificity as the
+     rule above and declared later, so this wins. */
   body[data-read="skim"] .cs-section { display: revert; }
 }
 
@@ -1657,11 +1738,40 @@ body[data-read="skim"] .cs-section:not(#problem):not(#solution):not(#outcomes) {
 
 .cs-gallery { margin-top: clamp(22px, 2.6vw, 32px); }
 
+/* The filters and the position sit on one line: the five names say what you
+   can jump to, the count says where you are in the set. */
+.cs-gallery-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
 .cs-gallery-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
+}
+
+.cs-gallery-count {
+  flex: none;
+  margin: 0;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted, #8c867e);
+}
+.cs-gallery-count b { font-weight: 600; color: var(--color-ink, inherit); }
+
+/* A focusable scroll container needs to show that it has focus. */
+.cs-gallery-track:focus-visible {
+  outline: 2px solid var(--cs-accent-ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  /* stacked, so five chips never squeeze the count off the end */
+  .cs-gallery-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 
 .cs-filter {
@@ -1676,6 +1786,10 @@ body[data-read="skim"] .cs-section:not(#problem):not(#solution):not(#outcomes) {
   cursor: pointer;
   transition: background var(--dur-ui, 0.2s), border-color var(--dur-ui, 0.2s),
               color var(--dur-ui, 0.2s);
+}
+/* Chips were 34px tall against a 44px minimum, and there is room here. */
+@media (hover: none) {
+  .cs-filter { min-height: 44px; padding-top: 0; padding-bottom: 0; }
 }
 .cs-filter:hover { border-color: var(--cs-accent-ink); }
 .cs-filter:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: 2px; }

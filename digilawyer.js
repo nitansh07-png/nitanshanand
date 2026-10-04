@@ -230,6 +230,41 @@
       else window.location.href = "index.html#ask";
     });
   }
+
+  /* The pill is hidden below 600px, so skim set on a wider screen would
+     otherwise survive into a width that cannot turn it off. CSS already
+     restores the sections there; this keeps the state itself in step, so
+     coming back up does not silently hide eight sections again. */
+  var narrow = window.matchMedia("(max-width: 600px)");
+  function leaveSkimWhenNarrow(mq) {
+    if (mq.matches && document.body.getAttribute("data-read") === "skim") set("depth");
+  }
+  if (narrow.addEventListener) narrow.addEventListener("change", leaveSkimWhenNarrow);
+  else if (narrow.addListener) narrow.addListener(leaveSkimWhenNarrow);
+  leaveSkimWhenNarrow(narrow);
+
+  /* Fixed at the bottom over a page of captures, the pill sat on whatever
+     caption was underneath it with no way to move it. It now steps out of
+     the way while you read forward and comes back the moment you scroll
+     up, which is also when you are most likely to want it. */
+  var lastY = window.scrollY;
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      var y = window.scrollY;
+      if (Math.abs(y - lastY) < 6) return;            // ignore jitter
+      var down = y > lastY;
+      lastY = y;
+      // never hide it at the very top, where it is the only hint it exists
+      pill.classList.toggle("is-tucked", down && y > 260);
+    });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  // a keyboard user tabbing to it must not be moving focus to something hidden
+  pill.addEventListener("focusin", function () { pill.classList.remove("is-tucked"); });
 })();
 
 /* ================================================================== *
@@ -248,6 +283,8 @@
   var panels = [].slice.call(track.querySelectorAll(".cs-slide"));
   if (tabs.length !== panels.length || !tabs.length) return;
 
+  var counter = document.getElementById("cs-gallery-n");
+
   function select(i, moveFocus) {
     tabs.forEach(function (t, n) {
       var on = n === i;
@@ -255,6 +292,8 @@
       t.tabIndex = on ? 0 : -1;
       if (on && moveFocus) t.focus();
     });
+    // five named filters do not say which of the five you are on
+    if (counter) counter.textContent = String(i + 1);
   }
 
   function show(i) {
@@ -293,4 +332,35 @@
     if (ratios[best] > 0) select(best, false);
   }, { root: track, threshold: [0, 0.25, 0.5, 0.75, 1] });
   panels.forEach(function (p) { io.observe(p); });
+})();
+
+/* ================================================================== *
+ * Reading progress                                                   *
+ *                                                                    *
+ * Eleven sections and twenty-odd screens on a phone, with the rail   *
+ * hidden below 1100px. This is the only remaining answer to how far  *
+ * in you are. It measures the article, not the document, so the      *
+ * footer does not read as unfinished article.                        *
+ * ================================================================== */
+(function () {
+  var fill = document.getElementById("cs-progress-fill");
+  var article = document.getElementById("main");
+  if (!fill || !article) return;
+
+  var ticking = false;
+  function update() {
+    var start = article.offsetTop;
+    var span = article.offsetHeight - window.innerHeight;
+    if (span <= 0) { fill.style.width = "100%"; return; }
+    var p = (window.scrollY - start) / span;
+    fill.style.width = Math.max(0, Math.min(1, p)) * 100 + "%";
+  }
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; update(); });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  update();
 })();

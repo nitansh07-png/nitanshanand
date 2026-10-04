@@ -1312,8 +1312,11 @@ mark { background: none; color: inherit; }
     gap: 14px;
     font-size: 12px;
   }
+  /* 44px is the touch minimum. Width cannot reach it at this size without
+     dropping an item, but the height is free and vertical slop is what a
+     horizontal row of small icons actually gets mis-tapped on. */
   .site-nav > a,
-  .site-nav > button { min-height: 32px; }
+  .site-nav > button { min-height: 44px; }
   .nav-ask .nav-label,
   .agent-mode-link .nav-label { display: none; }
   .nav-ask svg { width: 17px; height: 17px; }
