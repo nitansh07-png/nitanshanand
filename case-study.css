@@ -1571,8 +1571,8 @@ body:not([data-slots="show"]) .cs-cta-pending { display: none; }
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 5px;
+  gap: 5px;
+  padding: 6px;
   border: 1px solid var(--cs-line);
   border-radius: 999px;
   /* Solid, not glass: over a page of screenshots the blur picked up whatever
@@ -1632,9 +1632,9 @@ body:not([data-slots="show"]) .cs-cta-pending { display: none; }
 .rm-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   min-height: 38px;
-  padding: 0 14px;
+  padding: 0 16px;
   border: 0;
   border-radius: 999px;
   background: none;
@@ -1662,12 +1662,20 @@ body:not([data-slots="show"]) .cs-cta-pending { display: none; }
 .rm-btn:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: 2px; }
 .rm-btn[aria-pressed="true"] { background: var(--cs-accent); color: var(--cs-on-accent); }
 
-/* Ask is not a mode, so it sits behind a divider rather than in the pair. */
+/* Ask is not a mode, so it sits behind a divider rather than in the pair.
+   The rule wants equal air on both sides: 5px of pill gap plus 7px of
+   margin on the left, 12px of padding on the right. Written as 2 and 15
+   it sat almost against the mode it followed. */
 .rm-btn--ask {
-  margin-left: 2px;
-  padding-left: 15px;
+  margin-left: 7px;
+  padding-left: 12px;
   border-left: 1px solid var(--cs-line);
   border-radius: 0 999px 999px 0;
+}
+
+/* The pill survives to 600px, so it meets a touch screen on a tablet. */
+@media (hover: none) {
+  .rm-btn { min-height: 44px; }
 }
 
 /* ---- skim ----
