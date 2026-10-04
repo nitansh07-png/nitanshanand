@@ -219,11 +219,30 @@
         starting point, and violation examples, benefits and badges competed around it.
       </p>
 
-      <figure class="cs-shot cs-shot--wide" data-zoom>
-        <img src="assets/digilawyer/old-hero.webp" alt="The previous DigiLawyer challan hero. A four-field enquiry form asks for name, problem statement, phone number and preferred time slot, with a Proceed button." width="1147" height="667" loading="lazy" decoding="async" />
+      <!-- A recording, not a still: the point is what the old page did as you
+           moved through it. No audio track at all, so nothing to unmute. The
+           poster is its first frame, which is the same view the still showed,
+           so a browser that cannot decode WebM still gets the picture. -->
+      <figure class="cs-shot cs-shot--wide cs-shot--video">
+        <div class="cs-video-frame">
+        <video
+          id="old-page-video"
+          class="cs-video"
+          poster="assets/digilawyer/old-page-poster.webp"
+          width="1280" height="720"
+          muted loop playsinline preload="none"
+          aria-label="A walkthrough of the previous DigiLawyer challan page. A four-field enquiry form asks for name, problem statement, phone number and preferred time slot, with a Proceed button, and the page scrolls through violation examples, benefits and badges.">
+          <source src="assets/digilawyer/old-page.webm" type="video/webm" />
+        </video>
+        <button type="button" class="cs-video-btn" data-video="old-page-video" aria-pressed="false">
+          <svg class="cs-video-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg>
+          <svg class="cs-video-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+          <span class="cs-video-label">Play</span>
+        </button>
+        </div>
         <figcaption>
           The entry point before the redesign: four fields, none of them the vehicle
-          number. Annotated design-stage capture, not a live screenshot.
+          number. A recording of the previous page, with no sound.
         </figcaption>
       </figure>
 
@@ -640,35 +659,35 @@
         <div class="cs-gallery-track" id="cs-gallery-track" tabindex="0"
              role="group" aria-label="Page exports, scroll sideways or use the filters above">
           <figure class="cs-card cs-card--paper cs-slide" id="page-listing" role="tabpanel" aria-labelledby="tab-listing" data-zoom>
-            <img src="assets/pages/listing.webp" alt="The Notices Hub listing page: a headline offering legal notices from one rupee, above search and category filters." width="2000" height="1125" loading="lazy" decoding="async" />
+            <img src="assets/pages/listing.webp" data-full="assets/pages/listing-full.webp" alt="The Notices Hub listing page: a headline offering legal notices from one rupee, above search and category filters." width="2000" height="1125" loading="lazy" decoding="async" />
             <figcaption>
               <span class="cs-meta-label">Listing</span>
               <span class="cs-artifact-desc">Search, categories and relevant service options</span>
             </figcaption>
           </figure>
           <figure class="cs-card cs-card--paper cs-slide" id="page-product" role="tabpanel" aria-labelledby="tab-product" data-zoom>
-            <img src="assets/pages/product.webp" alt="The money recovery notice page: the service explained beside a sample notice and a send button." width="2000" height="1125" loading="lazy" decoding="async" />
+            <img src="assets/pages/product.webp" data-full="assets/pages/product-full.webp" alt="The money recovery notice page: the service explained beside a sample notice and a send button." width="2000" height="1125" loading="lazy" decoding="async" />
             <figcaption>
               <span class="cs-meta-label">Product detail</span>
               <span class="cs-artifact-desc">Service details and the situations they apply to</span>
             </figcaption>
           </figure>
           <figure class="cs-card cs-card--paper cs-slide" id="page-usecase" role="tabpanel" aria-labelledby="tab-usecase" data-zoom>
-            <img src="assets/pages/usecase.webp" alt="The friendly loan recovery page: a headline about money a friend has not returned, beside a form asking what happened." width="2000" height="1125" loading="lazy" decoding="async" />
+            <img src="assets/pages/usecase.webp" data-full="assets/pages/usecase-full.webp" alt="The friendly loan recovery page: a headline about money a friend has not returned, beside a form asking what happened." width="2000" height="1125" loading="lazy" decoding="async" />
             <figcaption>
               <span class="cs-meta-label">Use case</span>
               <span class="cs-artifact-desc">Friendly loan recovery, with a form matched to the situation</span>
             </figcaption>
           </figure>
           <figure class="cs-card cs-card--paper cs-slide" id="page-assembled" role="tabpanel" aria-labelledby="tab-assembled" data-zoom>
-            <img src="assets/pages/assembled.webp" alt="The challan page: a single vehicle-number field beside a Settle Your Challan button, above the results summary." width="2000" height="1125" loading="lazy" decoding="async" />
+            <img src="assets/pages/assembled.webp" data-full="assets/pages/assembled-full.webp" alt="The challan page: a single vehicle-number field beside a Settle Your Challan button, above the results summary." width="2000" height="1125" loading="lazy" decoding="async" />
             <figcaption>
               <span class="cs-meta-label">Assembled</span>
               <span class="cs-artifact-desc">Built from the same shared sections</span>
             </figcaption>
           </figure>
           <figure class="cs-card cs-card--paper cs-slide" id="page-master" role="tabpanel" aria-labelledby="tab-master" data-zoom>
-            <img src="assets/pages/master.webp" alt="The master asset page: shared sections laid out in order, each under a heading naming its type." width="1715" height="965" loading="lazy" decoding="async" />
+            <img src="assets/pages/master.webp" data-full="assets/pages/master-full.webp" alt="The master asset page: shared sections laid out in order, each under a heading naming its type." width="1715" height="965" loading="lazy" decoding="async" />
             <figcaption>
               <span class="cs-meta-label">Master page</span>
               <span class="cs-artifact-desc">Every shared section in one place, each under a heading naming its type. Placeholder copy throughout: this is the catalogue, not a page.</span>

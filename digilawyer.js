@@ -364,3 +364,55 @@
   window.addEventListener("resize", onScroll, { passive: true });
   update();
 })();
+
+/* ================================================================== *
+ * The recording of the old page                                      *
+ *                                                                    *
+ * It starts when it comes into view and stops when it leaves, so it  *
+ * costs nothing to scroll past and nothing to leave open. preload is *
+ * "none" in the markup: until someone reaches this section the only  *
+ * thing fetched is the poster.                                       *
+ *                                                                    *
+ * Anyone who has asked for less motion gets the poster and a button, *
+ * never an autoplay. The button works either way, because a loop you *
+ * cannot stop is the thing being criticised two sections below.      *
+ * ================================================================== */
+(function () {
+  var btn = document.querySelector(".cs-video-btn");
+  if (!btn) return;
+  var video = document.getElementById(btn.dataset.video);
+  if (!video) return;
+
+  var label = btn.querySelector(".cs-video-label");
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var userPaused = false;
+
+  function sync() {
+    var on = !video.paused;
+    btn.setAttribute("aria-pressed", String(on));
+    if (label) label.textContent = on ? "Pause" : "Play";
+  }
+  video.addEventListener("play", sync);
+  video.addEventListener("pause", sync);
+
+  btn.addEventListener("click", function () {
+    if (video.paused) { userPaused = false; video.play().catch(function () {}); }
+    else { userPaused = true; video.pause(); }
+  });
+
+  if (!("IntersectionObserver" in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      // isIntersecting is true for a single pixel; wait until it is actually
+      // being looked at.
+      if (e.intersectionRatio > 0.35) {
+        if (!calm.matches && !userPaused) video.play().catch(function () {});
+      } else if (!video.paused) {
+        video.pause();
+      }
+    });
+  }, { threshold: [0, 0.35, 0.7] });
+  io.observe(video);
+
+  sync();
+})();

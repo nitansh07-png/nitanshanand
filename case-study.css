@@ -842,6 +842,52 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 }
 .cs-shot--wide img { max-height: none; }
 
+/* ---- the recording of the old page ---- */
+/* The button is anchored to the video, not to the figure. Against the
+   figure it measured from the bottom of the caption and landed on top of
+   the words. */
+.cs-video-frame { position: relative; display: block; }
+.cs-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+  background: var(--cs-paper);
+}
+
+/* One control, bottom right, over the frame. There is no timeline because
+   the file carries no duration to scrub against, so offering a scrubber
+   would be offering something that does not work. */
+.cs-video-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--cs-line);
+  border-radius: 999px;
+  background: var(--color-raised);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.5);
+}
+.cs-video-btn svg { width: 15px; height: 15px; flex: none; }
+.cs-video-btn:hover { border-color: var(--cs-accent-ink); }
+.cs-video-btn:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: 2px; }
+.cs-video-pause { display: none; }
+.cs-video-btn[aria-pressed="true"] .cs-video-play { display: none; }
+.cs-video-btn[aria-pressed="true"] .cs-video-pause { display: inline; }
+
+@media (max-width: 600px) {
+  .cs-video-btn { right: 8px; bottom: 8px; padding: 0 13px; }
+}
+
 /* An artifact tile that carries an image rather than a title and an arrow. */
 .cs-artifact { overflow: hidden; }
 .cs-artifact img {
