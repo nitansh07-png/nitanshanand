@@ -377,9 +377,14 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
    03 Users
    ========================================================================= */
 
+/* Three shared rows, so the turn and the answer land on the same line across
+   the row however many lines a task title runs to. Without this the first
+   card's single-line title lifted its arrow 22px above the other three. */
 .cs-users {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-rows: auto auto auto;
+  align-items: start;
   gap: var(--cs-gap);
   margin-top: clamp(26px, 3vw, 40px);
 }
@@ -387,16 +392,23 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 
 /* The card carries its own padding now that nothing sits flush to its
    edge. */
-.cs-user { padding: clamp(20px, 2vw, 28px); }
+.cs-user {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  padding: clamp(20px, 2vw, 28px);
+}
 .cs-user-task {
   font-size: clamp(1.02rem, 1.3vw, 1.18rem);
   font-weight: 600;
   line-height: 1.28;
   letter-spacing: -0.01em;
 }
-/* The turn from the visitor's task to the page's answer: an arrow and a
-   rule running to the card edge, in place of the sentence that used to
-   say the same thing in all four cards. */
+/* The turn from the visitor's task to the page's answer. In the users cards
+   these words were screen-reader-only, which left everyone else an arrow and
+   no clue what it meant; they are visible there now. The hairline that used
+   to trail the arrow is gone with them: at this card width it had no room. */
 .cs-turn {
   display: flex;
   align-items: center;
@@ -405,8 +417,27 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
   color: var(--cs-accent-ink);
 }
 .cs-turn svg { flex: none; width: 17px; height: 17px; }
-.cs-turn::after { content: ""; flex: 1; height: 1px; background: var(--cs-line); }
-.cs-answer { margin-top: 13px; font-size: 14.5px; line-height: 1.6; opacity: 0.82; }
+/* Still wanted where the row carries no label of its own. */
+.cs-turn[aria-hidden]::after { content: ""; flex: 1; height: 1px; background: var(--cs-line); }
+/* A rule, not a repeated label. The words belong to the section, not to each
+   card: four identical headings down a row were a column header pasted into
+   every cell. The lede above says what the two halves are, and the phrase is
+   still spoken for anyone who cannot see the split. */
+.cs-split {
+  display: block;
+  align-self: end;
+  width: 100%;
+  height: 1px;
+  margin-top: 16px;
+  background: var(--cs-line);
+}
+.cs-answer {
+  margin-top: 13px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  opacity: 0.82;
+}
+.cs-user .cs-answer { align-self: start; }
 
 /* Hidden from the page, read aloud. The site had no such utility. */
 .cs-sr {
@@ -481,26 +512,26 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
    07 Components
    ========================================================================= */
 
+/* An inventory, not a control panel. These were six equal grid columns of
+   54px pills, which gave "FAQs" the same slab as "Comparison sections" and
+   made eight nouns look like filters you could press. They size to their own
+   content now and wrap, and the softer corner stops them reading as buttons. */
 .cs-chips {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 14px;
-  margin: clamp(26px, 3vw, 40px) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 10px;
+  margin: clamp(22px, 2.6vw, 32px) 0 0;
   padding: 0;
   list-style: none;
 }
 .cs-chips li {
-  display: grid;
-  place-items: center;
-  min-height: 54px;
-  padding: 12px 14px;
+  padding: 7px 13px;
   border: 1px solid var(--cs-line);
-  border-radius: 999px;
+  border-radius: 8px;
   background: var(--cs-paper);
-  font-size: 14px;
-  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.35;
 }
-.cs-chips li.is-featured { border-color: var(--cs-accent-ink); }
 
 /* =========================================================================
    08 Decisions
@@ -538,6 +569,15 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 }
 .cs-decision-label:first-of-type { margin-top: 0; }
 .cs-decision-label + p { margin-top: 6px; font-size: 14.5px; line-height: 1.6; opacity: 0.84; }
+
+/* The decision itself. Every card used to introduce it with a "Decision"
+   label, which repeated what the section heading already said; with that gone
+   the type carries the hierarchy instead. A step above the qualification under
+   it, rather than the full 18px body size it fell back to. */
+.cs-decision .cs-h3 + p:not(.cs-decision-label) {
+  font-size: 15.5px;
+  line-height: 1.62;
+}
 
 /* =========================================================================
    09 Process
@@ -680,7 +720,6 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
      shell is 242px, which breaks the longest onto a third line. */
   .cs-pain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cs-problem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cs-chips { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .cs-outcomes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cs-artifacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -702,13 +741,15 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
   .cs-hero-grid,
   .cs-meta-grid,
   .cs-problem-grid,
-  .cs-users,
-  .cs-pain-grid,
   .cs-modules,
   .cs-outcomes,
   .cs-goals,
   .cs-artifacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cs-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* One, as the 860px comment intends. Two columns here left each card
+     160px wide: titles ran to three lines and the turn label to three. */
+  .cs-users,
+  /* Same reason: these findings are sentences, not labels. */
+  .cs-pain-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1013,136 +1054,50 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
   .dl-zoom { transition: none; }
 }
 
-/* ---- jump to a section ----
-   The dot rail is a position indicator; this is a menu. It tells you what the
-   page holds before you commit to scrolling all of it. */
-
-.dl-jump {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 16px;
-  max-width: var(--cs-shell, 1180px);
-  margin: 0 auto;
-  padding: 22px var(--gutter, 24px);
-  border-top: 1px solid var(--cs-line);
-  border-bottom: 1px solid var(--cs-line);
-}
-.dl-jump[hidden] { display: none; }
-
-.dl-jump-label {
-  color: var(--color-soft);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.dl-jump-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.dl-jump-list a {
-  display: inline-block;
-  padding: 7px 14px;
-  border: 1px solid var(--color-hairline);
-  border-radius: 999px;
-  color: var(--color-ink);
-  font-size: 12.5px;
-  font-weight: 500;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-}
-.dl-jump-list a:hover {
-  border-color: color-mix(in srgb, var(--color-ink) 35%, var(--color-hairline));
-  background: color-mix(in srgb, var(--color-ink) 6%, transparent);
-}
-.dl-jump-list a.is-current {
-  border-color: transparent;
-  background: var(--color-ink);
-  color: var(--color-ground);
-}
-
 /* ---- the design question ----
-   It was set as body copy, which buried the one sentence the rest of the page
-   exists to answer. */
+   An aside, not a notice. It was a tinted box with a filled badge, which read
+   as an alert and competed with the accent cards either side of it. A rule in
+   the margin marks it as an aside and lets the question carry itself. */
 
 .dl-question {
-  display: flex;
-  gap: clamp(14px, 2vw, 22px);
+  display: block;
   margin-top: clamp(26px, 3vw, 38px);
-  padding: clamp(20px, 2.4vw, 28px);
-  border: 1px solid color-mix(in srgb, var(--cs-accent-ink) 55%, var(--color-hairline));
-  border-radius: var(--cs-radius);
-  /* Mixed into the raised surface rather than into transparency, so the tint
-     sits on something solid in both themes. */
-  background: color-mix(in srgb, var(--cs-accent-ink) 12%, var(--color-raised));
-}
-
-.dl-question-mark {
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--cs-accent);
-  color: var(--cs-on-accent);
-  font-family: var(--font-display);
-  font-weight: var(--display-wght);
-  font-size: 21px;
-  line-height: 1;
+  padding: 2px 0 2px clamp(18px, 2vw, 24px);
+  border: 0;
+  border-left: 3px solid var(--cs-accent-ink);
+  border-radius: 0;
+  background: none;
 }
 
 .dl-question-body { min-width: 0; }
+
+/* The label is the signal the badge used to carry, so it takes the accent. */
 .dl-question-label {
-  color: color-mix(in srgb, var(--color-soft) 55%, var(--color-ink));
+  color: var(--cs-accent-ink);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
+
 .dl-question-text {
   margin-top: 10px;
-  max-width: 54ch;
+  max-width: 46ch;
   font-family: var(--font-display);
   font-weight: var(--display-wght);
-  font-size: clamp(1.15rem, 2vw, 1.6rem);
-  line-height: 1.32;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1.3;
   letter-spacing: -0.018em;
   text-wrap: balance;
 }
+
 .dl-question-note {
-  margin-top: 12px;
-  color: color-mix(in srgb, var(--color-soft) 55%, var(--color-ink));
-  font-size: 13.5px;
+  margin-top: 10px;
+  color: var(--color-soft);
+  font-size: 13px;
 }
 
 @media (max-width: 720px) {
-  /* Twelve pills wrap to four rows and eat 235px of a phone screen before
-     the article starts. One scrolling row keeps it to about fifty. */
-  .dl-jump {
-    display: block;
-    padding-block: 14px;
-  }
-  .dl-jump-label { display: block; margin-bottom: 10px; }
-  .dl-jump-list {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    /* The gutter is on the nav, so the row needs its own runway to let the
-       last pill clear the edge rather than butting against it. */
-    margin-inline: calc(var(--gutter, 24px) * -1);
-    padding-inline: var(--gutter, 24px);
-    scroll-padding-inline: var(--gutter, 24px);
-  }
-  .dl-jump-list::-webkit-scrollbar { display: none; }
-  .dl-question { flex-direction: column; gap: 14px; }
 }
 
 /* =========================================================================
@@ -1195,22 +1150,10 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
   .dl-layers { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Five findings across three columns leave a gap at the end of row two. Six
-   half-tracks let the first three take two each and the last two take three,
-   so both rows fill.
-
-   Guarded twice. To exactly five children, because the spans are wrong for
-   any other count. And to 1000px, because a sixth of the shell below that
-   is a 169px card whose heading runs to three lines: under 1000 the grid
-   falls back to its own auto-fit, which is already correct there. */
-@media (min-width: 1000px) {
-  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) > * { grid-column: span 2; }
-  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) > :nth-child(4),
-  .cs-pain-grid:has(> :nth-child(5)):not(:has(> :nth-child(6))) > :nth-child(5) { grid-column: span 3; }
-}
+/* Five findings in three columns leave one empty cell at the end. That used
+   to be closed by letting the last two span wider, which made them 54%
+   broader and 68px shorter than the three above: two kinds of card in one
+   set. An empty cell reads as a gap; mismatched cards read as a mistake. */
 
 /* Dimming by opacity was calibrated against the old yellow fill: dark text
    faded toward pale yellow stays dark. White faded toward a saturated blue
@@ -1659,30 +1602,14 @@ body[data-read="skim"] .cs-section:not(#problem):not(#solution):not(#outcomes) {
 }
 
 /* A jump pill pointing at a hidden section is a dead link. */
-body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: none; }
 
 @media (max-width: 600px) {
   .rm-pill { display: none; }
   /* Nothing can leave the page stuck in a mode it can no longer exit: resize
      below this and the control disappears with it. */
   body[data-read="skim"] .cs-section { display: revert; }
-  body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: revert; }
 }
 
-/* One artifact on its own, outside the four-up grid.
-   .cs-artifact is declared twice in this file and the later block pins the
-   tile height, so these have to sit after both to take effect. Full width
-   would turn the crop into a wall, and the top of this page is the same hero
-   the grid already carries, so the frame sits lower, on the labelled
-   sections that are the reason for showing it. */
-.cs-artifact--solo {
-  max-width: 330px;
-  margin-inline: auto;
-}
-.cs-artifact--solo img {
-  height: 420px;
-  object-position: center 26%;
-}
 
 /* =========================================================================
    Image placeholders
@@ -1705,8 +1632,11 @@ body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: none; }
 
 /* The four-up tiles are page-shaped, so their frames are too. The solo one
    keeps the bounded width it already had. */
-.cs-artifact .cs-ph { aspect-ratio: 3 / 4; }
-.cs-artifact--solo .cs-ph { height: 420px; aspect-ratio: auto; }
+/* An empty frame does not need the page's proportions. At 3/4 these were
+   329px of nothing above 94px of caption: three quarters of each card, four
+   times across the row. A short strip still reads as a slot, and the real
+   captures get their page shape back from the img rules when they land. */
+.cs-artifact .cs-ph { aspect-ratio: auto; height: 104px; }
 
 /* A wide shot is a band rather than a page. */
 .cs-shot--wide .cs-ph { aspect-ratio: 21 / 6; }
@@ -1716,4 +1646,102 @@ body[data-read="skim"] .dl-pill[data-hidden-in-skim] { display: none; }
 .cs-artifact figcaption,
 .cs-slot figcaption {
   color: var(--color-soft);
+}
+
+/* =========================================================================
+   Page gallery
+   Four whole pages, one at a time, rather than four thumbnails too small to
+   read. The filters are real buttons because they do something, unlike the
+   component tags above them.
+   ========================================================================= */
+
+.cs-gallery { margin-top: clamp(22px, 2.6vw, 32px); }
+
+.cs-gallery-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cs-filter {
+  padding: 7px 14px;
+  border: 1px solid var(--cs-line);
+  border-radius: 999px;
+  background: var(--cs-paper);
+  color: inherit;
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: background var(--dur-ui, 0.2s), border-color var(--dur-ui, 0.2s),
+              color var(--dur-ui, 0.2s);
+}
+.cs-filter:hover { border-color: var(--cs-accent-ink); }
+.cs-filter:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: 2px; }
+.cs-filter[aria-selected="true"] {
+  background: var(--cs-accent);
+  border-color: var(--cs-accent);
+  color: var(--cs-on-accent);
+}
+
+/* The track scrolls horizontally and snaps, so a page always lands squarely
+   rather than halfway between two. */
+.cs-gallery-track {
+  display: grid;
+  grid-auto-flow: column;
+  /* One page fills the track: a half-visible neighbour is not "one at a
+     time", and it makes the snap ambiguous. */
+  grid-auto-columns: 100%;
+  gap: var(--cs-gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* room for the focus ring, and for the card shadow to clear the edge */
+  padding: 4px;
+  margin: -4px;
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+
+.cs-slide {
+  scroll-snap-align: start;
+  padding: 0;
+  overflow: hidden;
+}
+.cs-slide .cs-ph {
+  height: clamp(340px, 64vh, 620px);
+  border: 0;
+  border-bottom: 1px solid var(--cs-line);
+  border-radius: 0;
+}
+.cs-slide img {
+  display: block;
+  width: 100%;
+  height: clamp(340px, 64vh, 620px);
+  object-fit: cover;
+  object-position: top center;
+}
+.cs-slide figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 14px 18px 16px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* A tall box on a narrow slide is a portrait window onto a landscape capture:
+   at 334px wide and 520px tall it threw away 64% of the width and cut the
+   headline at both ends. Below this the height comes from the image's own
+   shape instead, so the page stays whole across. */
+@media (max-width: 720px) {
+  .cs-slide img,
+  .cs-slide .cs-ph {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-gallery-track { scroll-behavior: auto; }
 }

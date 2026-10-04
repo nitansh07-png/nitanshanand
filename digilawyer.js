@@ -125,54 +125,6 @@
   });
 })();
 
-/* ================================================================== *
- * Jump to a section                                                  *
- *                                                                    *
- * Built from the same [data-rail] labels the dot rail uses, so the   *
- * two can never disagree about what the page contains.               *
- * ================================================================== */
-(function () {
-  var nav = document.getElementById("dl-jump");
-  var list = nav && nav.querySelector(".dl-jump-list");
-  if (!nav || !list) return;
-
-  var sections = [].slice.call(document.querySelectorAll("main [data-rail][id]"));
-  if (sections.length < 3) return;
-
-  sections.forEach(function (section) {
-    var li = document.createElement("li");
-    var a = document.createElement("a");
-    a.href = "#" + section.id;
-    a.textContent = section.dataset.rail;
-    a.className = "dl-pill";
-    li.appendChild(a);
-    list.appendChild(li);
-  });
-  nav.hidden = false;
-
-  // Light the pill for whichever section is currently in view.
-  if (!("IntersectionObserver" in window)) return;
-  var links = [].slice.call(list.querySelectorAll("a"));
-
-  function mark(id) {
-    links.forEach(function (a) {
-      var on = a.getAttribute("href") === "#" + id;
-      a.classList.toggle("is-current", on);
-      if (on) a.setAttribute("aria-current", "true");
-      else a.removeAttribute("aria-current");
-    });
-  }
-
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) mark(e.target.id);
-    });
-    // A band across the middle of the viewport, so the current section is
-    // the one being read rather than the one just entering.
-  }, { rootMargin: "-45% 0px -45% 0px" });
-
-  sections.forEach(function (s) { io.observe(s); });
-})();
 
 /* ================================================================== *
  * The live-site link                                                 *
@@ -210,18 +162,9 @@
 
   var modes = [].slice.call(pill.querySelectorAll("[data-read-mode]"));
 
-  /* overview is the hero, which is not a .cs-section and so is never hidden:
-     its pill has to stay too, or the nav loses its way back to the top. */
+  /* What skim keeps. overview is the hero, which is not a .cs-section and so
+     is never hidden either way. */
   var KEPT = { overview: 1, problem: 1, solution: 1, outcomes: 1 };
-
-  /* The jump nav is built from the sections, so its pills have to know which
-     of them skim hides, or they become links to nothing. */
-  function flagPills() {
-    [].slice.call(document.querySelectorAll(".dl-pill")).forEach(function (a) {
-      var id = (a.getAttribute("href") || "").replace("#", "");
-      if (id && !KEPT[id]) a.setAttribute("data-hidden-in-skim", "");
-    });
-  }
 
   function set(mode) {
     if (mode === "skim") document.body.setAttribute("data-read", "skim");
@@ -231,14 +174,13 @@
     });
   }
 
-  flagPills();
   modes.forEach(function (b) {
     b.addEventListener("click", function () { set(b.dataset.readMode); });
   });
 
-  /* A link into the page can point at a section skim hides, whether it comes
-     from the jump nav or from an Ask answer. Leave skim before the jump, so
-     there is something for it to land on. */
+  /* A link into the page can point at a section skim hides, an Ask answer
+     being the usual source. Leave skim before the jump, so there is
+     something for it to land on. */
   document.addEventListener("click", function (e) {
     if (!document.body.hasAttribute("data-read")) return;
     var t = e.target;
@@ -256,4 +198,67 @@
       else window.location.href = "index.html#ask";
     });
   }
+})();
+
+/* ================================================================== *
+ * Page gallery                                                       *
+ *                                                                    *
+ * Whole pages, one at a time. The filters scroll the track; the      *
+ * track reports back which page is on screen, so dragging the strip  *
+ * leaves the right filter lit rather than a stale one.               *
+ * ================================================================== */
+(function () {
+  var gallery = document.getElementById("cs-gallery");
+  var track = document.getElementById("cs-gallery-track");
+  if (!gallery || !track) return;
+
+  var tabs = [].slice.call(gallery.querySelectorAll(".cs-filter"));
+  var panels = [].slice.call(track.querySelectorAll(".cs-slide"));
+  if (tabs.length !== panels.length || !tabs.length) return;
+
+  function select(i, moveFocus) {
+    tabs.forEach(function (t, n) {
+      var on = n === i;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      if (on && moveFocus) t.focus();
+    });
+  }
+
+  function show(i) {
+    select(i, false);
+    // scrollIntoView would also scroll the page to the gallery; this moves
+    // only the track.
+    track.scrollTo({ left: panels[i].offsetLeft - panels[0].offsetLeft,
+                     behavior: "smooth" });
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { show(i); });
+    // left and right walk the set, as a tablist should
+    t.addEventListener("keydown", function (e) {
+      var n = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : -1;
+      if (n < 0 || n >= tabs.length) return;
+      e.preventDefault();
+      select(n, true);
+      show(n);
+    });
+  });
+
+  // whichever page covers the middle of the track is the current one
+  if (!("IntersectionObserver" in window)) return;
+  // isIntersecting is true for a single visible pixel, so the first callback
+  // lit whichever neighbour happened to be reported last. Take the panel
+  // covering the most of the track instead.
+  var ratios = panels.map(function () { return 0; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var i = panels.indexOf(e.target);
+      if (i > -1) ratios[i] = e.intersectionRatio;
+    });
+    var best = 0;
+    for (var n = 1; n < ratios.length; n++) if (ratios[n] > ratios[best]) best = n;
+    if (ratios[best] > 0) select(best, false);
+  }, { root: track, threshold: [0, 0.25, 0.5, 0.75, 1] });
+  panels.forEach(function (p) { io.observe(p); });
 })();
