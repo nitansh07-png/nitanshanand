@@ -2569,6 +2569,9 @@ html.cursor-custom iframe * { cursor: auto !important; }
 .work-link-icon { width: 15px; height: 15px; flex: none; }
 .work-link:hover .arrow { transform: translateX(2px); }
 .work-note { color: var(--color-soft); font-size: 13px; }
+/* A note sits on its own line above the action, so the action itself stays
+   on the same baseline as its neighbours' across the row. */
+.work-actions > .work-note { flex-basis: 100%; }
 
 /* --- The whole card is the click target ---------------------------------
    Wrapping the card in an <a> would nest the two buttons inside a link:
