@@ -2569,28 +2569,30 @@ html.cursor-custom iframe * { cursor: auto !important; }
    card. One link in the accessibility tree, one tab stop, whole card
    clickable.
 
-   Only cards that have somewhere to go get this. The selector asks for an
-   anchor, so the section library card, whose actions are both buttons,
-   is left alone rather than pretending to be clickable. */
-.work-actions > a.work-link::after {
+   Every card gets it. On the section library card the one action is the
+   "Ask about this project" button, so the overlay stretches that instead
+   and a click anywhere opens the assistant with the question ready. */
+.work-actions > .work-link::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   border-radius: 14px;
 }
-/* Anything interactive has to sit above that overlay or the card swallows
-   it. The panel is lifted too: it holds its own content once expanded. */
+/* Anything else interactive has to sit above that overlay or the card
+   swallows it. The panel is lifted too: it holds its own content once
+   expanded. (The card's own action must NOT be lifted: positioning it would
+   shrink its ::after back to the link's few words.) */
 .work-card .think-toggle,
-.work-card .work-link.ask-about,
 .work-card .think-panel {
   position: relative;
   z-index: 2;
 }
 /* The overlay covers the card, so the hover underline needs the card as its
    trigger rather than the link's own few words. */
-.work-card:hover .work-link:not(.ask-about) { text-decoration-color: var(--color-accent); }
-.work-card:hover .work-link:not(.ask-about) .arrow { transform: translateX(2px); }
+.work-actions > .work-link { cursor: pointer; }
+.work-card:hover .work-link { text-decoration-color: var(--color-accent); }
+.work-card:hover .work-link .arrow { transform: translateX(2px); }
 
 @media (max-width: 720px) {
   .work-grid { grid-template-columns: minmax(0, 1fr); }
