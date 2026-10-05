@@ -71,12 +71,15 @@ html.theme-dark body.case-study {
 /* The home page's column rules would cut through the wider case study grid. */
 body.case-study::before { display: none; }
 
-/* Header and footer are the site's own, widened to this page's measure so they
-   line up with the content. Drop these two rules to keep them at 720px. */
-.case-study .site-header .col-wide,
-.case-study .home-footer .col-wide { max-width: var(--cs-measure); }
+/* The header is the site's own, widened to this page's measure so it lines up
+   with the content. Drop this rule to keep it at 720px. The page has no
+   footer: it ends on the article. */
+.case-study .site-header .col-wide { max-width: var(--cs-measure); }
 
-.case-study .home-footer { border-top-color: var(--cs-line); }
+/* The footer used to hold the last card clear of the fixed reading pill.
+   This keeps that clearance: the pill's height and offset plus room to
+   breathe (on phones the bottom bar's own body padding adds to it). */
+.case-study .cs-page { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 
 /* =========================================================================
    Shell and rhythm

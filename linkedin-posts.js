@@ -47,10 +47,6 @@ window.LINKEDIN_POSTS = {
       // not safe to hotlink.
       media: "assets/posts/ai-copilot.webp",
     },
-
-    /* Off the page for now: a 2023 one-liner pointing at Behance, sitting
-       right after the strongest post, read as the feed running out. Uncomment
-       to bring it back.
     {
       date: "2023-05-30",
       body: "Hey everyone! Go check out my latest project on Behance & let me know what you think of it. Cheers!",
@@ -60,7 +56,6 @@ window.LINKEDIN_POSTS = {
       impressions: null,
       media: "assets/posts/behance-project.webp",
     },
-    */
 
     /* Two more posts you sent are behind LinkedIn's sign-in wall, so their
        text and images could not be read. Paste the body in and they are ready:
