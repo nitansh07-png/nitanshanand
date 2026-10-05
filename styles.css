@@ -1704,6 +1704,12 @@ mark { background: none; color: inherit; }
 
 /* --- docked ask pill ----------------------------------------------------- */
 
+/* Retired. The sticky header already shows "Ask me anything" at every width
+   above 600px, and the bottom bar carries Ask below it, so the pill was a
+   third copy of the same entry point, parked over the content. The markup
+   and its script stay so it can come back by deleting this one line. */
+.ask-docked { display: none !important; }
+
 .ask-docked {
   position: fixed;
   left: 50%;
@@ -2559,6 +2565,8 @@ html.cursor-custom iframe * { cursor: auto !important; }
 }
 .work-link:hover { text-decoration-color: var(--color-accent); }
 .work-link .arrow { transition: transform var(--dur-tap) var(--ease-calm); }
+/* The one card that opens the assistant rather than a page says so up front. */
+.work-link-icon { width: 15px; height: 15px; flex: none; }
 .work-link:hover .arrow { transform: translateX(2px); }
 .work-note { color: var(--color-soft); font-size: 13px; }
 
@@ -3211,9 +3219,13 @@ html.cursor-custom iframe * { cursor: auto !important; }
      carries the difference rather than position. */
   .bn-item--accent { color: var(--color-accent); }
 
-  /* Content has to clear the bar, and the docked pill would sit on top of it. */
+  /* Content has to clear the bar. */
   body { padding-bottom: calc(62px + env(safe-area-inset-bottom)); }
-  .ask-docked { display: none !important; }
+
+  /* This bar already carries Work, Playground and Ask, with labels. The
+     header's icon-only copies of the same three said it twice, and less
+     clearly, so on phones the header keeps only the theme toggle. */
+  .site-nav > a { display: none; }
 }
 
 /* =========================================================================

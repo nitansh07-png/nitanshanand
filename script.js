@@ -1136,6 +1136,11 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     if (i % PER_WEEK === 0) {
       var m = day.getUTCMonth();
       if (m !== lastMonth) {
+        // The window rarely opens on the 1st, so the first label can sit a
+        // week or two before the next one and print on top of it ("SepOct").
+        // A label needs about three columns; drop the stub rather than collide.
+        var prevSpan = monthSpans[monthSpans.length - 1];
+        if (prevSpan && i / PER_WEEK + 1 - prevSpan.col < 3) monthSpans.pop();
         monthSpans.push({ col: i / PER_WEEK + 1, name: day.toLocaleDateString("en", { month: "short", timeZone: "UTC" }) });
         lastMonth = m;
       }
@@ -1370,6 +1375,11 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     });
 
     if (summary) summary.textContent = feed.posts.length === 1 ? "Latest post" : "Latest posts";
+
+    // One post has nowhere to page to: a lone dot and two dead arrows would
+    // only advertise that the feed is short.
+    var key = document.querySelector(".linkedin-key");
+    if (key) key.style.display = feed.posts.length < 2 ? "none" : "";
   }
 
   var cards = Array.prototype.slice.call(track.querySelectorAll(".li-card"));
