@@ -3422,6 +3422,13 @@ html.cursor-custom iframe * { cursor: auto !important; }
   scroll-behavior: smooth;
   overscroll-behavior-x: contain;
 }
+/* No scrollbar. The half card at the edge already says the row keeps going,
+   and the bar was the loudest thing in the section. Scrolling itself is
+   untouched, and the rail still takes focus, so the keyboard keeps its
+   arrow keys. */
+.mp-rail { scrollbar-width: none; }
+.mp-rail::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
 .mp-rail:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 .mp-item { scroll-snap-align: start; }
 
