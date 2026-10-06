@@ -3294,6 +3294,9 @@ html.cursor-custom iframe * { cursor: auto !important; }
   opacity: 0.75;
 }
 .ft-col a:hover .ft-mark { opacity: 1; }
+/* Brand marks carry their own colour, and dimming a brand colour just
+   muddies it, so they sit at full strength. */
+.ft-mark--brand { opacity: 1; }
 
 /* The bar is shared across pages, so the current one has to say so: colour
    alone would be invisible to anyone who cannot distinguish it. */
