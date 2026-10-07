@@ -3530,6 +3530,16 @@ a.mp-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 .mp-card.is-empty .mp-scrim { display: none; }
 .mp-card.is-empty .mp-metric { font-weight: 500; }
 .mp-card.is-empty .mp-line { color: var(--color-muted, #8c867e); }
+/* ---- picture in, words still to come ----
+   The card looks like a card, but the unfilled slots are underlined so it
+   is obvious at a glance which ones are still waiting. */
+.mp-slot {
+  color: rgba(244, 241, 236, 0.5);
+  text-decoration: underline dashed rgba(244, 241, 236, 0.35);
+  text-underline-offset: 4px;
+}
+.mp-card.is-pending .mp-metric { font-weight: 500; }
+
 .mp-note {
   position: absolute;
   z-index: 2;
