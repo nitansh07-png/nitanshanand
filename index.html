@@ -279,7 +279,89 @@
     </div>
   </section>
 
-  
+
+  <!-- ───────────────────  MORE PROJECTS  ───────────────────
+       A sideways rail, not a grid: these sit under selected work and are
+       meant to be skimmed. Empty for now. Each card is a project, a year, a
+       picture, one number and one line. The commented template below is a
+       filled card, ready to copy over a placeholder.
+
+       The placeholders are articles, not links. A card with nowhere to go
+       gets no hover label and no tab stop, because an affordance that does
+       nothing is worse than no affordance.
+       ───────────────────────────────────────────────────────── -->
+  <section class="section gutter" id="more">
+    <div class="col-wide">
+      <h2 class="t-section">More projects</h2>
+
+      <!-- tabindex makes the rail scrollable from the keyboard, which a bare
+           overflow container is not. -->
+      <ol class="mp-rail" id="mp-rail" tabindex="0" role="group"
+          aria-label="More projects, scroll sideways">
+          <li class="mp-item">
+            <article class="mp-card">
+              <img src="assets/work/yatra.webp" alt="Two phone screens from the Yatra travel app: a Delhi to Mumbai flight list sorted by cheapest, each fare carrying its carbon figure, and the home screen with booking categories, offers and recent searches." width="1654" height="2000" loading="lazy" decoding="async" />
+              <span class="mp-scrim" aria-hidden="true"></span>
+              <p class="mp-meta"><span>Yatra</span> <span aria-hidden="true">&middot;</span> <span>2024</span></p>
+              <div class="mp-foot">
+                <p class="mp-metric">&minus;28%</p>
+                <p class="mp-line">Time reduced to book a flight.</p>
+              </div>
+            </article>
+          </li>
+          <li class="mp-item">
+            <article class="mp-card">
+              <img src="assets/work/iex.webp" alt="Two phone screens from the IEX market data app: a price trend chart broken into time blocks, and a monthly view listing discovered price, bid counts and trade volume." width="1654" height="2000" loading="lazy" decoding="async" />
+              <span class="mp-scrim" aria-hidden="true"></span>
+              <p class="mp-meta"><span>IEX Mobile App</span> <span aria-hidden="true">&middot;</span> <span>2025</span></p>
+              <div class="mp-foot">
+                <p class="mp-metric">&minus;40%</p>
+                <p class="mp-line">Search and action time, in stakeholder tests.</p>
+              </div>
+            </article>
+          </li>
+          <li class="mp-item">
+            <article class="mp-card">
+              <img src="assets/work/fleet-challans.webp" alt="A fleet operations dashboard open on its Challan Center: counters for customers, pending amount and pending challans, a challans-by-month chart, a breakdown by offence, and a table of individual challans by vehicle." width="1288" height="1536" loading="lazy" decoding="async" />
+              <span class="mp-scrim" aria-hidden="true"></span>
+              <p class="mp-meta"><span>DGFleet</span> <span aria-hidden="true">&middot;</span> <span>2026</span></p>
+              <div class="mp-foot">
+                <p class="mp-metric">One console</p>
+                <p class="mp-line">Challans, FASTag and tolls. In progress.</p>
+              </div>
+            </article>
+          </li>
+          <li class="mp-item">
+            <article class="mp-card">
+              <img src="assets/work/app-builder.webp" alt="A drag-and-drop app builder: the settings panel for a Scrollable Grid block, beside an empty phone canvas waiting for blocks." width="1654" height="2000" loading="lazy" decoding="async" />
+              <span class="mp-scrim" aria-hidden="true"></span>
+              <p class="mp-meta"><span>Createwith</span> <span aria-hidden="true">&middot;</span> <span>2024</span></p>
+              <div class="mp-foot">
+                <p class="mp-metric">80+ customers</p>
+                <p class="mp-line">Five stars on the App Store and Play Store.</p>
+              </div>
+            </article>
+          </li>
+      </ol>
+
+      <!-- Copy this over a placeholder once the project is real. The card is
+           the picture; everything else sits on top of it.
+
+      <li class="mp-item">
+        <a class="mp-card" href="REPLACE.html">
+          <img src="assets/work/REPLACE.webp" alt="Describe what the screen shows." width="1200" height="1500" loading="lazy" decoding="async" />
+          <span class="mp-scrim" aria-hidden="true"></span>
+          <p class="mp-meta"><span>Client</span> <span aria-hidden="true">&middot;</span> <span>2025</span></p>
+          <span class="mp-peek" aria-hidden="true">View details</span>
+          <div class="mp-foot">
+            <p class="mp-metric">+00%</p>
+            <p class="mp-line">What the number is.</p>
+          </div>
+        </a>
+      </li>
+      -->
+    </div>
+  </section>
 
 
   <!-- ─────────────────────────  CAREER  ───────────────────────── -->
