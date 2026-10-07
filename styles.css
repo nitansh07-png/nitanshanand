@@ -3559,3 +3559,20 @@ a.mp-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 @media (max-width: 720px) {
   .mp-rail { grid-auto-columns: minmax(230px, 76%); gap: 16px; }
 }
+
+/* The rail's arrows sit on the heading's line, right aligned. */
+.mp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.mp-head .t-section { margin-bottom: 0; }
+.mp-arrows { flex: none; }
+/* Chevrons, not arrows: no shaft, just the turn. */
+.mp-arrows button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.mp-arrows svg { width: 15px; height: 15px; }

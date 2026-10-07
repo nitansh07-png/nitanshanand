@@ -2078,3 +2078,51 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
                    " " + d.getFullYear();
   el.setAttribute("datetime", d.toISOString().slice(0, 10));
 })();
+
+/* ------------------------------------------------------------------ *
+ * More projects: the rail's arrows                                    *
+ *                                                                     *
+ * One card per press, measured off the first two items rather than    *
+ * assumed, so it keeps step when the breakpoint changes the card      *
+ * width. Each arrow goes dim at its end of the row, which is the only *
+ * edge signal left now that the scrollbar is gone.                     *
+ * ------------------------------------------------------------------ */
+(function () {
+  var rail = document.getElementById("mp-rail");
+  var prev = document.getElementById("mp-prev");
+  var next = document.getElementById("mp-next");
+  if (!rail || !prev || !next) return;
+
+  function step() {
+    var items = rail.children;
+    if (items.length > 1) return items[1].offsetLeft - items[0].offsetLeft;
+    return items.length ? items[0].getBoundingClientRect().width : rail.clientWidth;
+  }
+
+  function sync() {
+    var max = rail.scrollWidth - rail.clientWidth;
+    // The rail carries 4px of padding so the focus ring has room, and it
+    // comes to rest at that, not at zero. Measured rather than assumed, so
+    // changing the padding cannot quietly strand the left arrow enabled.
+    var start = parseFloat(getComputedStyle(rail).paddingLeft) || 0;
+    prev.disabled = rail.scrollLeft <= start + 2;
+    next.disabled = rail.scrollLeft >= max - 1;
+  }
+
+  function go(dir) {
+    rail.scrollBy({ left: dir * step(), behavior: "smooth" });
+  }
+
+  prev.addEventListener("click", function () { go(-1); });
+  next.addEventListener("click", function () { go(1); });
+
+  var ticking = false;
+  rail.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; sync(); });
+  }, { passive: true });
+  window.addEventListener("resize", sync, { passive: true });
+
+  sync();
+})();
