@@ -3462,9 +3462,17 @@ html.cursor-custom iframe * { cursor: auto !important; }
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  /* The bottom stops are set from the worst case, not by eye: over the
+     near-white phone screens on three of these cards the old ramp left only
+     0.31 alpha under the metric, which measured 2:1. The text sits around a
+     third of the way up, so the ramp has to still be heavy there. */
   background:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 22%),
-    linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.3) 24%, rgba(0, 0, 0, 0) 46%);
+    linear-gradient(to top,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.85) 22%,
+      rgba(0, 0, 0, 0.55) 42%,
+      rgba(0, 0, 0, 0) 66%);
 }
 
 .mp-meta,
