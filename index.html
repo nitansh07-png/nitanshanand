@@ -292,12 +292,31 @@
        ───────────────────────────────────────────────────────── -->
   <section class="section gutter" id="more">
     <div class="col-wide">
-      <h2 class="t-section">More projects</h2>
+      <div class="mp-head">
+        <h2 class="t-section">More projects</h2>
+        <!-- Same control the LinkedIn carousel uses, so the page has one way
+             of saying "there is more sideways". -->
+        <span class="linkedin-arrows mp-arrows">
+          <button type="button" id="mp-prev" aria-label="Previous projects" aria-controls="mp-rail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
+          <button type="button" id="mp-next" aria-label="Next projects" aria-controls="mp-rail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </span>
+      </div>
 
       <!-- tabindex makes the rail scrollable from the keyboard, which a bare
            overflow container is not. -->
       <ol class="mp-rail" id="mp-rail" tabindex="0" role="group"
           aria-label="More projects, scroll sideways">
+          <li class="mp-item">
+            <article class="mp-card">
+              <img src="assets/work/fleet-challans.webp" alt="A fleet operations dashboard open on its Challan Center: counters for customers, pending amount and pending challans, a challans-by-month chart, a breakdown by offence, and a table of individual challans by vehicle." width="1288" height="1536" loading="lazy" decoding="async" />
+              <span class="mp-scrim" aria-hidden="true"></span>
+              <p class="mp-meta"><span>DGFleet</span> <span aria-hidden="true">&middot;</span> <span>2026</span></p>
+              <div class="mp-foot">
+                <p class="mp-metric">One console</p>
+                <p class="mp-line">Challans, FASTag and tolls. In progress.</p>
+              </div>
+            </article>
+          </li>
           <li class="mp-item">
             <article class="mp-card">
               <img src="assets/work/yatra.webp" alt="Two phone screens from the Yatra travel app: a Delhi to Mumbai flight list sorted by cheapest, each fare carrying its carbon figure, and the home screen with booking categories, offers and recent searches." width="1654" height="2000" loading="lazy" decoding="async" />
@@ -317,17 +336,6 @@
               <div class="mp-foot">
                 <p class="mp-metric">&minus;40%</p>
                 <p class="mp-line">Search and action time, in stakeholder tests.</p>
-              </div>
-            </article>
-          </li>
-          <li class="mp-item">
-            <article class="mp-card">
-              <img src="assets/work/fleet-challans.webp" alt="A fleet operations dashboard open on its Challan Center: counters for customers, pending amount and pending challans, a challans-by-month chart, a breakdown by offence, and a table of individual challans by vehicle." width="1288" height="1536" loading="lazy" decoding="async" />
-              <span class="mp-scrim" aria-hidden="true"></span>
-              <p class="mp-meta"><span>DGFleet</span> <span aria-hidden="true">&middot;</span> <span>2026</span></p>
-              <div class="mp-foot">
-                <p class="mp-metric">One console</p>
-                <p class="mp-line">Challans, FASTag and tolls. In progress.</p>
               </div>
             </article>
           </li>
