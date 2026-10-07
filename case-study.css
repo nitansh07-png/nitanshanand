@@ -1916,3 +1916,8 @@ body[data-read="skim"] .cs-section:not(:where(#problem, #solution, #outcomes)) {
 @media (prefers-reduced-motion: reduce) {
   .cs-gallery-track { scroll-behavior: auto; }
 }
+
+/* The hero's live link. Sits under the lede, before the overview grid, and
+   carries less air than the closing pair so it does not fight the title. */
+.cs-hero-actions { margin-top: 4px; }
+.cs-hero-actions .cs-cta { margin-top: 18px; }

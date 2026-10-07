@@ -167,17 +167,21 @@
  * hides along with the image placeholders.                           *
  * ================================================================== */
 (function () {
-  var link = document.querySelector("[data-live-link]");
-  if (!link) return;
+  // There are two of these now, one in the hero and one at the close, so a
+  // single querySelector would have left the second as a dead link.
+  var links = [].slice.call(document.querySelectorAll("[data-live-link]"));
+  if (!links.length) return;
 
-  var href = link.getAttribute("href") || "";
-  if (/^https?:\/\//i.test(href)) return;   // real URL, nothing to do
+  links.forEach(function (link) {
+    var href = link.getAttribute("href") || "";
+    if (/^https?:\/\//i.test(href)) return;   // real URL, nothing to do
 
-  var note = document.createElement("p");
-  note.className = "cs-cta-pending";
-  note.setAttribute("data-slot", "");
-  note.textContent = "Live link not set. Replace SET_LIVE_URL in the markup.";
-  link.parentNode.replaceChild(note, link);
+    var note = document.createElement("p");
+    note.className = "cs-cta-pending";
+    note.setAttribute("data-slot", "");
+    note.textContent = "Live link not set. Replace SET_LIVE_URL in the markup.";
+    link.parentNode.replaceChild(note, link);
+  });
 })();
 
 /* ------------------------------------------------------------------ *
