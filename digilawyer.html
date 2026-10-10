@@ -918,6 +918,29 @@
 <!-- Section rail, built by case-study.js from [data-rail]. -->
 <nav class="cs-rail" id="cs-rail" aria-label="Case study sections"></nav>
 
+<!-- The rail above is the desktop way through twelve sections, and it is
+     hidden below 1100px. This is the same list for everyone else: a button
+     that opens it as a sheet. Built from the sections themselves in
+     digilawyer.js, so the two can never disagree. -->
+<button type="button" class="cs-toc-open" id="cs-toc-open"
+        aria-haspopup="dialog" aria-expanded="false" aria-controls="cs-toc">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  <span>Contents</span>
+</button>
+
+<div class="cs-toc" id="cs-toc" hidden>
+  <div class="cs-toc-scrim" id="cs-toc-scrim"></div>
+  <nav class="cs-toc-sheet" role="dialog" aria-modal="true" aria-labelledby="cs-toc-title">
+    <div class="cs-toc-head">
+      <h2 class="cs-toc-title" id="cs-toc-title">Contents</h2>
+      <button type="button" class="cs-toc-close" id="cs-toc-close" aria-label="Close contents">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ol class="cs-toc-list" id="cs-toc-list"></ol>
+  </nav>
+</div>
+
 <div class="ask-widget" id="ask-widget" hidden>
   <div class="ask-scrim" id="ask-scrim" aria-hidden="true"></div>
 

@@ -1921,3 +1921,108 @@ body[data-read="skim"] .cs-section:not(:where(#problem, #solution, #outcomes)) {
    carries less air than the closing pair so it does not fight the title. */
 .cs-hero-actions { margin-top: 4px; }
 .cs-hero-actions .cs-cta { margin-top: 18px; }
+
+/* =========================================================================
+   Contents, below the rail's breakpoint
+   The rail disappears at 1100px. This is the same twelve sections for
+   everyone under that, reachable in one tap and out of the way otherwise.
+   ========================================================================= */
+
+.cs-toc-open { display: none; }
+
+@media (max-width: 1100px) {
+  .cs-toc-open {
+    position: fixed;
+    right: clamp(12px, 3vw, 20px);
+    bottom: calc(max(20px, env(safe-area-inset-bottom)) + var(--cs-toc-lift, 0px));
+    z-index: 65;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--cs-line);
+    border-radius: 999px;
+    background: var(--color-raised);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.5);
+  }
+  .cs-toc-open svg { width: 16px; height: 16px; }
+  .cs-toc-open:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: 2px; }
+}
+
+/* The bottom nav owns the bottom of a phone, so the button sits above it. */
+@media (max-width: 600px) { :root { --cs-toc-lift: 68px; } }
+
+.cs-toc[hidden] { display: none; }
+.cs-toc { position: fixed; inset: 0; z-index: 120; }
+.cs-toc-scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); }
+
+.cs-toc-sheet {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: 78vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 20px calc(24px + env(safe-area-inset-bottom));
+  border-radius: 18px 18px 0 0;
+  background: var(--color-raised);
+  box-shadow: 0 -20px 50px -30px rgba(0, 0, 0, 0.7);
+}
+@media (min-width: 601px) {
+  .cs-toc-sheet { right: auto; left: 50%; bottom: 50%; width: min(380px, 92vw); transform: translate(-50%, 50%); border-radius: 18px; }
+}
+
+.cs-toc-head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0 10px;
+  background: var(--color-raised);
+}
+.cs-toc-title { margin: 0; font-size: 15px; font-weight: 600; }
+.cs-toc-close {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.cs-toc-close svg { width: 18px; height: 18px; }
+.cs-toc-close:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: -4px; }
+
+.cs-toc-list { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+.cs-toc-list a {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  min-height: 44px;
+  padding: 11px 0;
+  border-top: 1px solid var(--cs-line);
+  color: inherit;
+  text-decoration: none;
+  font-size: 15px;
+}
+.cs-toc-list li { counter-increment: toc; }
+.cs-toc-list a::before {
+  content: counter(toc, decimal-leading-zero);
+  flex: none;
+  color: var(--color-muted, #8c867e);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.cs-toc-list a:hover { color: var(--cs-accent-ink); }
+.cs-toc-list a:focus-visible { outline: 2px solid var(--cs-accent-ink); outline-offset: -2px; }

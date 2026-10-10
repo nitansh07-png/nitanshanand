@@ -427,3 +427,86 @@
 
   sync();
 })();
+
+/* ================================================================== *
+ * Contents, for everyone the rail does not reach                     *
+ *                                                                    *
+ * The rail is the desktop way through twelve sections and it is      *
+ * hidden below 1100px, which left the longest reading on the site    *
+ * with no way to skim it on the device most likely to be skimming.   *
+ *                                                                    *
+ * The list is built from the sections, so it cannot drift from them. *
+ * It is a real dialog: the page behind goes inert, Escape closes,    *
+ * focus starts inside and comes back to the button afterwards.       *
+ * ================================================================== */
+(function () {
+  var open = document.getElementById("cs-toc-open");
+  var sheet = document.getElementById("cs-toc");
+  var list = document.getElementById("cs-toc-list");
+  var closeBtn = document.getElementById("cs-toc-close");
+  var scrim = document.getElementById("cs-toc-scrim");
+  if (!open || !sheet || !list) return;
+
+  var sections = [].slice.call(
+    document.querySelectorAll("main [data-rail][id]")
+  );
+  if (!sections.length) return;
+
+  sections.forEach(function (sec) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "#" + sec.id;
+    a.textContent = sec.getAttribute("data-rail");
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+
+  var inerted = [];
+  function setInert(on) {
+    if (!on) {
+      inerted.forEach(function (el) { el.removeAttribute("inert"); });
+      inerted = [];
+      return;
+    }
+    [].slice.call(document.body.children).forEach(function (el) {
+      if (el === sheet || el.hasAttribute("inert")) return;
+      el.setAttribute("inert", "");
+      inerted.push(el);
+    });
+  }
+
+  function show() {
+    sheet.removeAttribute("hidden");
+    open.setAttribute("aria-expanded", "true");
+    setInert(true);
+    var first = list.querySelector("a");
+    if (first) first.focus();
+  }
+
+  function hide(returnFocus) {
+    if (sheet.hasAttribute("hidden")) return;
+    // Inert comes off first: the button is one of the inerted elements and
+    // focus() on an inert element does nothing.
+    setInert(false);
+    sheet.setAttribute("hidden", "");
+    open.setAttribute("aria-expanded", "false");
+    if (returnFocus !== false) open.focus();
+  }
+
+  open.addEventListener("click", show);
+  if (closeBtn) closeBtn.addEventListener("click", function () { hide(); });
+  if (scrim) scrim.addEventListener("click", function () { hide(); });
+
+  // A link inside the sheet is going somewhere: close, but let the jump keep
+  // the focus it is about to take rather than yanking it back to the button.
+  list.addEventListener("click", function (e) {
+    if (e.target.closest("a")) hide(false);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !sheet.hasAttribute("hidden")) {
+      e.preventDefault();
+      hide();
+    }
+  });
+})();
