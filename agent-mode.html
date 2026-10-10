@@ -90,13 +90,16 @@
         alt="A vintage turntable resting on a mossy rock in an alpine meadow at golden hour"
         decoding="async"
       />
+      <!-- autoplay and preload are set by script only when the visitor has
+           not asked for less motion or less data. Declared here they ran for
+           everyone, and a full-screen video is the heaviest thing on the
+           page. The <img> above is the still that shows either way. -->
       <video
         id="heroVideo"
-        autoplay
         muted
         loop
         playsinline
-        preload="auto"
+        preload="none"
         aria-hidden="true"
         poster="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260908_122011_59c97465-4d23-4fdc-ac40-f6832f573e28.png&amp;w=1920&amp;q=85"
       >
@@ -112,6 +115,10 @@
     </div>
 
     <div class="hero__foot rise d6">
+      <!-- The only thing to press in the opening screen was the music. The
+           headline says what the page is; this says where the work is. -->
+      <a class="hero-to-work" href="#built">See what I built <span aria-hidden="true">&#8595;</span></a>
+
       <button type="button" class="record-toggle" id="recordToggle" aria-pressed="false" aria-controls="recordPanel">
         <span class="record-disc" aria-hidden="true"></span>
         <span class="record-label" id="recordLabel">Play the record</span>

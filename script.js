@@ -151,11 +151,21 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
 
   var pending = targets.length;
 
+  /* The stylesheet zeroes animation-duration under reduced motion, but that
+     only reaches CSS animations. These are Web Animations, built in script,
+     and they ran at full length regardless: 1100ms from opacity 0, held
+     blank through the delay by fill:backwards. Someone who asked for less
+     motion was watching the page fade in anyway. */
+  var calmReveal = window.matchMedia("(prefers-reduced-motion: reduce)");
+
   function reveal(el, delay, animate) {
     (groups.get(el) || []).forEach(function (part) {
       delete part.dataset.revealPending;
-      // Never animate something the keyboard is currently inside.
-      if (!animate || part.contains(document.activeElement)) return;
+      // Never animate something the keyboard is currently inside, and never
+      // animate at all for someone who asked not to see it. Dropping out
+      // here leaves the content on screen, because the pending flag that
+      // was hiding it has already gone.
+      if (!animate || calmReveal.matches || part.contains(document.activeElement)) return;
       part.animate(
         [
           { opacity: 0, transform: "translateY(48px)" },

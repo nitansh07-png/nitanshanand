@@ -367,3 +367,29 @@
   window.addEventListener("click", nudge, { once: true });
   window.addEventListener("keydown", nudge, { once: true });
 })();
+
+/* ------------------------------------------------------------------ *
+ * The hero video, by preference                                       *
+ *                                                                     *
+ * It used to carry autoplay and preload="auto" in the markup, so a     *
+ * full-screen video fetched and played for everyone, including people  *
+ * who had asked their device for less motion or less data. Those are   *
+ * now conditions rather than defaults. The <img> behind it is the      *
+ * still that shows when the video does not run, so nothing is blank.   *
+ * ------------------------------------------------------------------ */
+(function () {
+  var video = document.getElementById("heroVideo");
+  if (!video) return;
+
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var saveData = navigator.connection && navigator.connection.saveData;
+  var slow = navigator.connection &&
+             /2g/.test(navigator.connection.effectiveType || "");
+
+  if (calm.matches || saveData || slow) return;   // the poster image stands in
+
+  video.preload = "auto";
+  video.setAttribute("autoplay", "");
+  var go = video.play();
+  if (go && go.catch) go.catch(function () { /* a blocked autoplay is fine */ });
+}());
