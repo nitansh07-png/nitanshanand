@@ -3577,10 +3577,11 @@ a.mp-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 }
 .mp-head .t-section { margin-bottom: 0; }
 .mp-arrows { flex: none; }
-/* Chevrons, not arrows: no shaft, just the turn. */
-.mp-arrows button {
+/* Chevrons, not arrows: no shaft, just the turn. Both carousels use them,
+   so the rule sits on the class they share. */
+.linkedin-arrows button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-.mp-arrows svg { width: 15px; height: 15px; }
+.linkedin-arrows svg { width: 15px; height: 15px; }
