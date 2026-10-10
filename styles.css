@@ -3596,3 +3596,9 @@ a.mp-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 .proof-grid a:hover b,
 .proof-grid a:focus-visible b { color: var(--color-accent); }
 .proof-grid a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 6px; }
+
+/* Anchors parked the target at the top of the viewport, which is behind the
+   57px sticky header: following a link to a section hid its number and often
+   its heading. The header is 57px at every width, so one value covers all,
+   plus room so the number is not flush against the header's edge. */
+html { scroll-padding-top: 76px; }
