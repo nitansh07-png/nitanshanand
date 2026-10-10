@@ -476,12 +476,41 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     document.documentElement.classList.add("ask-open");
     // Now that it has layout, let the composer size itself properly.
     if (typeof syncComposer === "function") syncComposer();
+    if (modalWidth.matches) setInert(true);
     if (input) setTimeout(function () { input.focus(); }, 140);
   }
 
   function finishClose() {
     settle();
     widget.setAttribute("hidden", "");
+  }
+
+  /* Below 600px the panel covers the screen, so it is modal whether or not
+     it describes itself that way, and Tab was reaching the skip link behind
+     it. Everything that is not the panel goes inert at that size. Above it
+     the panel is deliberately non-modal and nothing is inerted.
+
+     Siblings are walked up from the panel rather than taken from <body>, so
+     this keeps working if the panel is ever moved deeper into the page. */
+  var modalWidth = window.matchMedia("(max-width: 600px)");
+  var inerted = [];
+
+  function setInert(on) {
+    if (!on) {
+      inerted.forEach(function (el) { el.removeAttribute("inert"); });
+      inerted = [];
+      return;
+    }
+    if (inerted.length) return;
+    var node = widget;
+    while (node && node.parentNode && node !== document.body) {
+      [].slice.call(node.parentNode.children).forEach(function (el) {
+        if (el === node || el.hasAttribute("inert")) return;
+        el.setAttribute("inert", "");
+        inerted.push(el);
+      });
+      node = node.parentNode;
+    }
   }
 
   // Anything inside the panel is about to be [hidden], and <body> is not a
@@ -501,6 +530,9 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   function close() {
     if (!isOpen() || leaving) return;
     document.documentElement.classList.remove("ask-open");
+    // Before restoreFocus, not after: the launcher is one of the things
+    // inerted, and focus() on an inert element is a no-op.
+    setInert(false);
     // Focus goes home now, not when the animation ends — a keyboard user
     // should never be parked on a control that is on its way off screen.
     restoreFocus();
@@ -514,6 +546,13 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && isOpen()) { e.preventDefault(); close(); }
   });
+
+  function syncModal(mq) {
+    if (!isOpen()) return;
+    setInert(mq.matches);
+  }
+  if (modalWidth.addEventListener) modalWidth.addEventListener("change", syncModal);
+  else if (modalWidth.addListener) modalWidth.addListener(syncModal);
 
   launcher.addEventListener("click", open);
   if (docked) docked.addEventListener("click", open);

@@ -20,6 +20,7 @@
 
   var tabs = [].slice.call(group.querySelectorAll("[data-panel]"));
   var count = group.querySelector(".dl-count-value");
+  var unit = group.querySelector(".dl-count-unit");
   if (!tabs.length) return;
 
   function select(tab, moveFocus) {
@@ -31,6 +32,12 @@
       if (panel) panel.hidden = !on;
     });
     if (count) count.textContent = tab.dataset.fields;
+    // The number moved and the noun did not, so After read "1 fields".
+    if (unit) {
+      unit.textContent = tab.dataset.fields === "1"
+        ? "field before you can begin"
+        : "fields before you can begin";
+    }
     if (moveFocus) tab.focus();
   }
 
