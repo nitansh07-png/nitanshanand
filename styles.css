@@ -3624,3 +3624,11 @@ html { scroll-padding-top: 76px; }
     color: var(--color-soft);
   }
 }
+
+/* The cards carry a cursor label saying why they do not click, which a
+   touch screen never shows. This says it once, for everyone. */
+.mp-note {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: var(--color-soft);
+}
