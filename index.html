@@ -89,6 +89,26 @@
         <div class="home-copy">
           <h1 class="t-display home-title" id="hero-title">I turn enterprise complexity into patterns engineers can reuse.</h1>
 
+      <!-- The actions sit directly under the title. Below the two intro
+           paragraphs they fell 108px past the fold on a 390px phone and
+           319px past it at 320px, behind the bottom nav in both cases.
+           Moved in the markup rather than with CSS order, so what a
+           keyboard reaches matches what the eye sees. -->
+      <div class="home-contact-actions">
+        <a data-buzz="The evidence, this way." class="home-contact-button" href="#work">Explore my work</a>
+        <span class="resume-hint">
+          <a data-buzz="One page. I promise." class="home-resume-button" href="Nitansh-Anand-Resume.pdf" download>Download resume</a>
+          <!-- Page 1 rendered from the PDF. Regenerate with tools/build-resume-preview.md
+               if the resume changes. Decorative: the link itself is the content. -->
+          <span class="resume-peek" aria-hidden="true">
+            <img data-src="assets/resume-preview.webp" alt="" width="720" height="932" decoding="async" />
+            <span class="resume-peek-foot">1 page &middot; PDF</span>
+          </span>
+        </span>
+
+          </div>
+
+
       <p class="t-lede home-intro">
         I&rsquo;m Nitansh Anand, a product designer working on design systems and enterprise UX. Over 2+ years I&rsquo;ve
         worked with
@@ -110,19 +130,6 @@
         I work closely with engineering and founders, turning loose briefs into patterns that ship.
       </p>
 
-          <div class="home-contact-actions">
-        <a data-buzz="The evidence, this way." class="home-contact-button" href="#work">Explore my work</a>
-        <span class="resume-hint">
-          <a data-buzz="One page. I promise." class="home-resume-button" href="Nitansh-Anand-Resume.pdf" download>Download resume</a>
-          <!-- Page 1 rendered from the PDF. Regenerate with tools/build-resume-preview.md
-               if the resume changes. Decorative: the link itself is the content. -->
-          <span class="resume-peek" aria-hidden="true">
-            <img data-src="assets/resume-preview.webp" alt="" width="720" height="932" decoding="async" />
-            <span class="resume-peek-foot">1 page &middot; PDF</span>
-          </span>
-        </span>
-
-          </div>
         </div>
 
       </div>
@@ -152,7 +159,7 @@
       <div class="proof-head">
         <div class="proof-title">
           <p class="eyebrow">What the work moved</p>
-          <h2 class="t-section">Claims are cheap. These aren&rsquo;t.</h2>
+          <h2 class="t-section">Selected outcomes.</h2>
         </div>
         <p class="proof-note">
           Four outcomes from shipped work, not descriptions of what I did.
@@ -169,8 +176,10 @@
           <span>Organic traffic growth on the BigOhTech website, within three months</span>
         </li>
         <li data-buzz="Months back on every launch.">
-          <b>3 &rarr; 1 month</b>
-          <span>Launch time for a new site, before and after the section library</span>
+          <a href="#work">
+          <b>3 &rarr; under 1</b>
+          <span>Months to launch a new marketing site, before and after the section library</span>
+          </a>
         </li>
         <li data-buzz="Testing, not taste.">
           <b>33%</b>
@@ -239,7 +248,7 @@
         <li class="work-item">
           <article class="work-card" data-buzz="My part: as System Design Intern, designed feedback for stations and trains, and carried it through DMRC&rsquo;s operational constraints to handoff.">
             <span class="work-visual"><img src="assets/work/metrodost.webp" alt="The MetroDost case study page: the headline Every journey creates an experience over a Delhi Metro train at sunset, above a line describing a network carrying 3.3 million riders a day." width="786" height="599" loading="lazy" decoding="async" /></span>
-            <h3 class="work-headline">A passenger feedback system for <mark class="highlight">3.3 million daily riders</mark></h3>
+            <h3 class="work-headline">A passenger feedback system for a network carrying <mark class="highlight">3.3 million riders a day</mark></h3>
             <p class="work-context">Public sector &middot; Delhi Metro</p>
 
             <div class="work-actions">
@@ -254,7 +263,8 @@
             <p class="work-context">Design systems &middot; BigOhTech</p>
 
             <div class="work-actions">
-<span class="work-note">Case study coming soon</span>
+<a class="work-link" href="https://medium.com/@nitansh07/i-built-one-design-system-that-replaced-five-developer-workflows-abb937c73b00" target="_blank" rel="noopener">Read on Medium <span class="arrow" aria-hidden="true">&#8599;</span></a>
+<span class="work-note">Full case study coming soon</span>
 <button type="button" class="work-link ask-about" data-question="What did Nitansh contribute to the section library?">
                 <svg class="work-link-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Ask about this project <span class="arrow" aria-hidden="true">&#8594;</span>
@@ -266,7 +276,7 @@
         <li class="work-item">
           <article class="work-card" data-buzz="My part: designed the assistant&rsquo;s empty state, its wording, and how it handles being wrong, then tested it across 35+ sessions.">
             <span class="work-visual"><img src="assets/work/costimizer.webp" alt="The Costimizer assistant: an agent picker offering a cost and a storage optimiser above a cloud-cost prompt, beside panels recommending an EC2 right-sizing with the projected monthly saving." width="1200" height="900" loading="lazy" decoding="async" /></span>
-            <h3 class="work-headline">An AI cost assistant users put to work in <mark class="highlight">58 seconds</mark></h3>
+            <h3 class="work-headline">An AI cost assistant: first useful action in <mark class="highlight">58 seconds</mark>, across 35+ test sessions</h3>
             <p class="work-context">AI product &middot; Costimizer</p>
 
             <div class="work-actions">

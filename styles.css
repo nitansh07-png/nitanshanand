@@ -3585,3 +3585,14 @@ a.mp-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
   justify-content: center;
 }
 .linkedin-arrows svg { width: 15px; height: 15px; }
+
+/* One outcome has a project on this page to go to. The tile keeps its
+   shape; the link just makes the whole of it the target. */
+.proof-grid a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.proof-grid a:hover b,
+.proof-grid a:focus-visible b { color: var(--color-accent); }
+.proof-grid a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 6px; }
