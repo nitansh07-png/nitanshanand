@@ -3528,35 +3528,6 @@ a.mp-card:hover img { transform: scale(1.03); }
 a.mp-card img { transition: transform 0.5s var(--ease-calm, ease); }
 a.mp-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 
-/* ---- the empty state ----
-   Keeps the card's shape and says what belongs in it. */
-.mp-card.is-empty {
-  background: var(--color-sunken);
-  border: 1px dashed var(--color-hairline);
-  color: var(--color-soft);
-}
-.mp-card.is-empty .mp-scrim { display: none; }
-.mp-card.is-empty .mp-metric { font-weight: 500; }
-.mp-card.is-empty .mp-line { color: var(--color-muted, #8c867e); }
-/* ---- picture in, words still to come ----
-   The card looks like a card, but the unfilled slots are underlined so it
-   is obvious at a glance which ones are still waiting. */
-.mp-slot {
-  color: rgba(244, 241, 236, 0.5);
-  text-decoration: underline dashed rgba(244, 241, 236, 0.35);
-  text-underline-offset: 4px;
-}
-.mp-card.is-pending .mp-metric { font-weight: 500; }
-
-.mp-note {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 13px;
-  color: var(--color-muted, #8c867e);
-}
 
 @media (prefers-reduced-motion: reduce) {
   .mp-rail { scroll-behavior: auto; }
