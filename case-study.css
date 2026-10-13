@@ -1391,7 +1391,12 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
   grid-auto-columns: minmax(0, 1fr);
   margin: 0;
 }
-.dl-stat { padding: clamp(18px, 2vw, 26px); }
+.dl-stat {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 2vw, 26px);
+}
+.dl-stat dd { margin-top: auto; }
 .dl-stat + .dl-stat { border-left: 1px solid var(--cs-line); }
 .dl-stat dt {
   font-size: 11px;
@@ -1420,6 +1425,7 @@ a.cs-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset
 
 @media (max-width: 700px) {
   .dl-stat { padding: clamp(14px, 4vw, 20px); }
+  .dl-stat dt { min-height: 3.3em; min-height: 2lh; }
   .dl-stat dd { font-size: clamp(1.6rem, 8vw, 2.1rem); }
 }
 
