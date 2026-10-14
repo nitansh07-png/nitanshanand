@@ -2477,7 +2477,7 @@ html.cursor-custom iframe * { cursor: auto !important; }
       transparent 78%);
   transition: border-color var(--dur-ui) var(--ease-calm),
               transform var(--dur-ui) var(--ease-calm),
-              --glow-a 420ms var(--ease-calm);
+              --glow-a var(--dur-ui) var(--ease-calm);
 }
 /* Registered so the wash can fade in. An unregistered custom property is
    just a string to the engine, and jumps from 0 to 1 with no transition. */
@@ -2508,7 +2508,7 @@ html.cursor-custom iframe * { cursor: auto !important; }
   z-index: 0;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 420ms var(--ease-calm);
+  transition: opacity var(--dur-ui) var(--ease-calm);
 }
 .work-card:hover .work-motifs,
 .work-card:focus-within .work-motifs { opacity: 1; }
@@ -2532,7 +2532,7 @@ html.cursor-custom iframe * { cursor: auto !important; }
 
 .work-card:hover .work-shot,
 .work-card:focus-within .work-shot {
-  border-color: color-mix(in srgb, var(--color-accent) 42%, var(--color-hairline));
+  border-color: color-mix(in srgb, hsl(var(--glow) 70% 50%) 40%, var(--color-hairline));
   transform: translateY(-2px);
   --glow-a: 1;
 }
