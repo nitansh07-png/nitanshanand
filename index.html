@@ -229,55 +229,102 @@
        not move the layout. -->
   <section class="section gutter" id="work">
     <div class="col-wide">
-      <h2 class="t-section">Selected work</h2>
+      <div class="work-head">
+        <h2 class="t-section">Selected work</h2>
+        <!-- Same control the other two rails use, so the page has one way of
+             saying "there is more sideways". -->
+        <span class="linkedin-arrows work-arrows">
+          <button type="button" id="work-prev" aria-label="Previous projects" aria-controls="work-rail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button>
+          <button type="button" id="work-next" aria-label="Next projects" aria-controls="work-rail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </span>
+      </div>
 
-      <ol class="work-grid">
+      <!-- Three across, the fourth reached by scrolling. tabindex makes the
+           rail scrollable from the keyboard, which a bare overflow container
+           is not. -->
+      <ol class="work-grid" id="work-rail" tabindex="0" role="group"
+          aria-label="Selected work, scroll sideways for more">
 
         <li class="work-item">
           <article class="work-card" data-buzz="My part: audited the service pages, rebuilt the challan page around checking a vehicle, and turned it into Figma components engineering built.">
-            <span class="work-visual"><img src="assets/work/digilawyer.webp" alt="The redesigned DigiLawyer challan page in a browser window: a single vehicle-number field beside a Settle Your Challan button, above the results summary." width="1200" height="900" loading="lazy" decoding="async" /></span>
-            <h3 class="work-headline">A challan page redesign, reused for <mark class="highlight">three page types</mark></h3>
-            <p class="work-context">Service pages &middot; DigiLawyer</p>
+            <span class="work-shot" style="--rot: -5deg;">
+              <span class="work-kicker">DigiLawyer</span>
+              <span class="work-shot-img"><img src="assets/work/digilawyer.webp" alt="The redesigned DigiLawyer challan page in a browser window: a single vehicle-number field beside a Settle Your Challan button, above the results summary." width="1200" height="900" loading="lazy" decoding="async" /></span>
+              <span class="work-role-tag">
+                <b>Product<br /><mark class="work-mark">Designer</mark></b>
+                <i>On service pages</i>
+              </span>
+            </span>
+
+            <p class="work-name">DigiLawyer <span class="work-live">Live</span></p>
+            <h3 class="work-headline">A challan page that became a system</h3>
+            <p class="work-sub">Three page formats are built from it, in Figma and in code.</p>
 
             <div class="work-actions">
-<a class="work-link" href="digilawyer.html">Read case study <span class="arrow" aria-hidden="true">&#8594;</span></a>
+<a class="work-link" href="digilawyer.html">Read the case study <span class="arrow" aria-hidden="true">&#8594;</span></a>
             </div>
           </article>
         </li>
 
         <li class="work-item">
           <article class="work-card" data-buzz="My part: as System Design Intern, designed feedback for stations and trains, and carried it through DMRC&rsquo;s operational constraints to handoff.">
-            <span class="work-visual"><img src="assets/work/metrodost.webp" alt="The MetroDost case study page: the headline Every journey creates an experience over a Delhi Metro train at sunset, above a line describing a network carrying 3.3 million riders a day." width="786" height="599" loading="lazy" decoding="async" /></span>
-            <h3 class="work-headline">A passenger feedback system for a network carrying <mark class="highlight">3.3 million riders a day</mark></h3>
-            <p class="work-context">Public sector &middot; Delhi Metro</p>
+            <span class="work-shot" style="--rot: 4deg;">
+              <span class="work-kicker">Delhi Metro</span>
+              <span class="work-shot-img"><img src="assets/work/metrodost.webp" alt="The MetroDost case study page: the headline Every journey creates an experience over a Delhi Metro train at sunset, above a line describing a network carrying 3.3 million riders a day." width="786" height="599" loading="lazy" decoding="async" /></span>
+              <span class="work-role-tag">
+                <b>System<br />Design <mark class="work-mark">Intern</mark></b>
+                <i>Carried to handoff</i>
+              </span>
+            </span>
+
+            <p class="work-name">MetroDost</p>
+            <h3 class="work-headline">Feedback designed for 3.3 million daily riders</h3>
+            <p class="work-sub">Stations and trains, carried through DMRC&rsquo;s constraints to handoff.</p>
 
             <div class="work-actions">
 <a class="work-link" href="https://metrodost-case-study.vercel.app/" target="_blank" rel="noopener">Read on the MetroDost site <span class="arrow" aria-hidden="true">&#8599;</span></a>
             </div>
           </article>
         </li>
-      <li class="work-item">
-          <article class="work-card" data-buzz="My part: audited the repeat website work, defined the section types, and built the library plus the specs engineering builds against.">
-            <span class="work-visual"><img src="assets/work/sections.webp" alt="Two sections assembled on a page: a statistics band carrying headline figures, above a use-case grid of cloud-platform cards." width="1200" height="900" loading="lazy" decoding="async" /></span>
-            <h3 class="work-headline">A website section library behind <mark class="highlight">three live SaaS products</mark></h3>
-            <p class="work-context">Design systems &middot; BigOhTech</p>
 
+        <li class="work-item">
+          <article class="work-card" data-buzz="My part: audited the repeat website work, defined the section types, and built the library plus the specs engineering builds against.">
+            <span class="work-shot" style="--rot: -4deg;">
+              <span class="work-kicker">BigOhTech</span>
+              <span class="work-shot-img"><img src="assets/work/sections.webp" alt="Two sections assembled on a page: a statistics band carrying headline figures, above a use-case grid of cloud-platform cards." width="1200" height="900" loading="lazy" decoding="async" /></span>
+              <span class="work-role-tag">
+                <b>Designer.<br /><mark class="work-mark">Builder.</mark></b>
+                <i>And spec author</i>
+              </span>
+            </span>
+
+            <p class="work-name">Section library <span class="work-live">Live</span></p>
+            <h3 class="work-headline">One library replaced five workflows</h3>
+            <p class="work-sub">It backs three live SaaS products, and the specs engineering builds from.</p>
+
+            <!-- Secondary items sit ABOVE the primary link, not beside it: the
+                 link row is bottom-anchored, so anything sharing its row makes
+                 this card taller and opens an 87px void in the other three. -->
             <div class="work-actions">
 <a class="work-link" href="https://medium.com/@nitansh07/i-built-one-design-system-that-replaced-five-developer-workflows-abb937c73b00" target="_blank" rel="noopener">Read on Medium <span class="arrow" aria-hidden="true">&#8599;</span></a>
-<span class="work-note">Full case study coming soon</span>
-<button type="button" class="work-link ask-about" data-question="What did Nitansh contribute to the section library?">
-                <svg class="work-link-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.6-4.6A8.4 8.4 0 0 1 3.6 11 8.4 8.4 0 0 1 12 2.6a8.4 8.4 0 0 1 9 8.9Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Ask about this project <span class="arrow" aria-hidden="true">&#8594;</span>
-              </button>
             </div>
           </article>
         </li>
 
         <li class="work-item">
           <article class="work-card" data-buzz="My part: designed the assistant&rsquo;s empty state, its wording, and how it handles being wrong, then tested it across 35+ sessions.">
-            <span class="work-visual"><img src="assets/work/costimizer.webp" alt="The Costimizer assistant: an agent picker offering a cost and a storage optimiser above a cloud-cost prompt, beside panels recommending an EC2 right-sizing with the projected monthly saving." width="1200" height="900" loading="lazy" decoding="async" /></span>
-            <h3 class="work-headline">An AI cost assistant: first useful action in <mark class="highlight">58 seconds</mark>, across 35+ test sessions</h3>
-            <p class="work-context">AI product &middot; Costimizer</p>
+            <span class="work-shot" style="--rot: 5deg;">
+              <span class="work-kicker">Costimizer</span>
+              <span class="work-shot-img"><img src="assets/work/costimizer.webp" alt="The Costimizer assistant: an agent picker offering a cost and a storage optimiser above a cloud-cost prompt, beside panels recommending an EC2 right-sizing with the projected monthly saving." width="1200" height="900" loading="lazy" decoding="async" /></span>
+              <span class="work-role-tag">
+                <b>Interaction<br /><mark class="work-mark">&amp; Writing</mark></b>
+                <i>And user testing</i>
+              </span>
+            </span>
+
+            <p class="work-name">Costimizer</p>
+            <h3 class="work-headline">An AI cost assistant, useful in 58 seconds</h3>
+            <p class="work-sub">Time to a first useful action, across 35+ test sessions.</p>
 
             <div class="work-actions">
 <a class="work-link" href="https://medium.com/@nitansh07/i-was-a-fresher-designer-asked-to-build-an-ai-nobody-fully-understood-heres-what-happened-155939ac0f88" target="_blank" rel="noopener">Read on Medium <span class="arrow" aria-hidden="true">&#8599;</span></a>

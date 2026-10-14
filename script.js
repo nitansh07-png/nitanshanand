@@ -2129,7 +2129,7 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
 })();
 
 /* ------------------------------------------------------------------ *
- * More projects: the rail's arrows                                    *
+ * The rails' arrows: Selected work, and More projects                 *
  *                                                                     *
  * One card per press, measured off the first two items rather than    *
  * assumed, so it keeps step when the breakpoint changes the card      *
@@ -2137,41 +2137,48 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
  * edge signal left now that the scrollbar is gone.                     *
  * ------------------------------------------------------------------ */
 (function () {
-  var rail = document.getElementById("mp-rail");
-  var prev = document.getElementById("mp-prev");
-  var next = document.getElementById("mp-next");
-  if (!rail || !prev || !next) return;
+  function wire(railId, prevId, nextId) {
+    var rail = document.getElementById(railId);
+    var prev = document.getElementById(prevId);
+    var next = document.getElementById(nextId);
+    if (!rail || !prev || !next) return;
 
-  function step() {
-    var items = rail.children;
-    if (items.length > 1) return items[1].offsetLeft - items[0].offsetLeft;
-    return items.length ? items[0].getBoundingClientRect().width : rail.clientWidth;
+    function step() {
+      var items = rail.children;
+      if (items.length > 1) return items[1].offsetLeft - items[0].offsetLeft;
+      return items.length ? items[0].getBoundingClientRect().width : rail.clientWidth;
+    }
+
+    function sync() {
+      var max = rail.scrollWidth - rail.clientWidth;
+      // The rail carries 4px of padding so the focus ring has room, and it
+      // comes to rest at that, not at zero. Measured rather than assumed, so
+      // changing the padding cannot quietly strand the left arrow enabled.
+      var start = parseFloat(getComputedStyle(rail).paddingLeft) || 0;
+      prev.disabled = rail.scrollLeft <= start + 2;
+      next.disabled = rail.scrollLeft >= max - 1;
+    }
+
+    function go(dir) {
+      rail.scrollBy({ left: dir * step(), behavior: "smooth" });
+    }
+
+    prev.addEventListener("click", function () { go(-1); });
+    next.addEventListener("click", function () { go(1); });
+
+    var ticking = false;
+    rail.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; sync(); });
+    }, { passive: true });
+    window.addEventListener("resize", sync, { passive: true });
+
+    sync();
   }
 
-  function sync() {
-    var max = rail.scrollWidth - rail.clientWidth;
-    // The rail carries 4px of padding so the focus ring has room, and it
-    // comes to rest at that, not at zero. Measured rather than assumed, so
-    // changing the padding cannot quietly strand the left arrow enabled.
-    var start = parseFloat(getComputedStyle(rail).paddingLeft) || 0;
-    prev.disabled = rail.scrollLeft <= start + 2;
-    next.disabled = rail.scrollLeft >= max - 1;
-  }
-
-  function go(dir) {
-    rail.scrollBy({ left: dir * step(), behavior: "smooth" });
-  }
-
-  prev.addEventListener("click", function () { go(-1); });
-  next.addEventListener("click", function () { go(1); });
-
-  var ticking = false;
-  rail.addEventListener("scroll", function () {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { ticking = false; sync(); });
-  }, { passive: true });
-  window.addEventListener("resize", sync, { passive: true });
-
-  sync();
+  // Selected work and More projects scroll the same way, so they share the
+  // same control. Each wires itself only if its own markup is present.
+  wire("work-rail", "work-prev", "work-next");
+  wire("mp-rail", "mp-prev", "mp-next");
 })();

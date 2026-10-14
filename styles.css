@@ -18,6 +18,8 @@
   --color-accent:     #1e40af;   /* deep blue, against the warm paper ground */
   --color-on-accent:  #ffffff;
   --color-highlight:  #fd2;
+  --color-live:       #146c2e;   /* the "Live" pill: dark enough to clear 4.5:1
+                                    against its own 13% tint on warm paper */
   --color-rule:       rgba(39, 29, 22, 0.1);
   --color-header-bg:  rgba(250, 249, 247, 0.82);
   --color-linkedin:   var(--color-accent);
@@ -86,6 +88,7 @@
     --color-sunken:    #232725;
     --color-hairline:  #2e3331;
     --color-accent:    #6d9bf6;
+    --color-live:      #58cc8f;
     --color-on-accent: #0a1730;
     --color-rule:      rgba(236, 233, 228, 0.09);
     --color-header-bg: rgba(19, 21, 20, 0.82);
@@ -111,6 +114,7 @@
   --color-sunken:    #232725;
   --color-hairline:  #2e3331;
   --color-accent:    #6d9bf6;
+  --color-live:      #58cc8f;
   --color-on-accent: #0a1730;
   --color-rule:      rgba(236, 233, 228, 0.09);
   --color-header-bg: rgba(19, 21, 20, 0.82);
@@ -2405,39 +2409,239 @@ html.cursor-custom iframe * { cursor: auto !important; }
    it takes over without the layout moving.
    ========================================================================= */
 
+/* The heading keeps the arrows company, same as More projects. */
+.work-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.work-head .t-section { margin-bottom: 0; }
+.work-arrows { flex: none; }
+
+/* Three across, the fourth reached by scrolling. Same mechanics as the
+   More projects rail so the page has one sideways behaviour, not two. */
 .work-grid {
   list-style: none;
-  padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin-top: 32px;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(290px, calc((100% - 2 * 26px) / 3));
+  gap: 26px;
+  margin: clamp(26px, 3vw, 38px) 0 0;
+  padding: 4px;
+  margin-inline: -4px;   /* cancels the padding the focus ring needs */
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
 }
-/* A uniform two-up: no card spans the row, so the four read as a set. */
-/* Spans the row like the lead card, but keeps the ordinary headline size:
-   it is a full-width card, not a second lead. */
+.work-grid::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.work-grid:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.work-item { scroll-snap-align: start; }
 
-
+/* Unboxed: the panel carries the frame, the words sit on the page under it.
+   A border around the whole card put a second frame around a thing that
+   already had one. */
 .work-card {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  /* No bottom padding: the diagram runs to the card's edge, and overflow
-     clips it back to the corner radius. */
-  /* No top padding: the image supplies it and runs to the card's edge. */
-  padding: 0 24px 22px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* --- the panel ----------------------------------------------------------
+   Grid paper, with the screenshot tilted and running off the right edge, so
+   it reads as an object laid down rather than a picture pasted in. The tilt
+   is per card (--rot) because four identical angles look like a template. */
+.work-shot {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 2.75;
   overflow: hidden;
   border: 1px solid var(--color-hairline);
-  border-radius: 14px;
-  background: var(--color-raised);
+  border-radius: 16px;
+  background-color: var(--color-sunken);
+  /* A dot grid rather than ruled lines: it gives the panel a ground without
+     drawing a box around the screenshot sitting on it. Mixed from the ink
+     token, so it re-tints in dark mode with no second variable. */
+  --grid-dot: color-mix(in srgb, var(--color-ink) 15%, transparent);
   transition: border-color var(--dur-ui) var(--ease-calm),
               transform var(--dur-ui) var(--ease-calm);
 }
-.work-card:hover,
-.work-card:focus-within {
+/* The pattern rides on its own layer so it can be masked. A background
+   image cannot be faded per layer, and masking .work-shot itself would eat
+   the screenshot and the role text with it. Sits under both: as a
+   pseudo-element it paints before every child of the panel. */
+.work-shot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(var(--grid-dot) 1.2px, transparent 1.3px);
+  background-size: 18px 18px;
+  /* Densest behind the role statement, dissolving toward the shot, so the
+     paper reads as a surface the screenshot is lying on rather than as a
+     texture tiled edge to edge behind it. */
+  -webkit-mask-image: radial-gradient(125% 115% at 24% 76%, #000 30%, transparent 88%);
+  mask-image: radial-gradient(125% 115% at 24% 76%, #000 30%, transparent 88%);
+}
+
+.work-card:hover .work-shot,
+.work-card:focus-within .work-shot {
   border-color: color-mix(in srgb, var(--color-accent) 42%, var(--color-hairline));
   transform: translateY(-2px);
+}
+
+/* Anchored off the right edge and oversized, so the crop is deliberate:
+   the shot continues past the card rather than stopping inside it. */
+.work-shot-img {
+  position: absolute;
+  top: 9%;
+  left: 57%;
+  right: -15%;
+  bottom: -13%;
+  overflow: hidden;
+  border-radius: 7px;
+  transform: rotate(var(--rot, -5deg));
+  box-shadow: 0 18px 34px -18px rgba(0, 0, 0, 0.45),
+              0 2px 8px -2px rgba(0, 0, 0, 0.25);
+}
+.work-shot-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+/* Project name, top left, out of the way of the shot. */
+.work-kicker {
+  position: absolute;
+  z-index: 2;
+  top: clamp(14px, 1.6vw, 19px);
+  left: clamp(15px, 1.7vw, 20px);
+  max-width: 42%;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-soft);
+}
+
+/* The role, bottom left, in display type. */
+.work-role-tag {
+  position: absolute;
+  z-index: 2;
+  left: clamp(15px, 1.7vw, 20px);
+  bottom: clamp(14px, 1.6vw, 19px);
+  /* Stops short of where the shot begins, so the two never overlap.
+     "System Design" is the longest line of the four and sets this. */
+  max-width: 52%;
+}
+.work-role-tag b {
+  display: block;
+  font: var(--display-wght) 20px / 1.14 var(--font-display);
+  letter-spacing: -0.028em;
+  color: var(--color-ink);
+}
+.work-role-tag i {
+  display: block;
+  margin-top: 7px;
+  font-style: normal;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-soft);
+}
+/* A real highlighter band here, not the page's colour-only emphasis: over
+   grid paper a block of yellow is what reads, and the panel is the one place
+   on the site that carries artwork behind its words. box-decoration-break
+   keeps the band whole if the line ever wraps. */
+.work-mark {
+  display: inline;
+  padding: 0 0.16em;
+  background: var(--color-highlight);
+  color: #212121;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* --- the words under the panel ------------------------------------------ */
+.work-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0 0;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--color-soft);
+}
+.work-live {
+  padding: 2px 9px;
+  border: 1px solid color-mix(in srgb, var(--color-live) 45%, transparent);
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--color-live) 13%, transparent);
+  color: var(--color-live);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Two lines reserved whether the copy fills them or not. Without this a
+   one-line sub or a two-line title rides up and the body text starts 35px
+   higher on some cards than others, which reads across the row as cards set
+   in different sizes. The em value is the fallback for no lh support. */
+.work-headline {
+  min-height: 2.4em;
+  min-height: 2lh;
+  margin: 7px 0 0;
+  font: var(--display-wght) clamp(1.3rem, 2.1vw, 1.8rem) / 1.2 var(--font-display);
+  letter-spacing: -0.026em;
+  text-wrap: balance;
+  color: var(--color-ink);
+}
+.work-sub {
+  min-height: 3.1em;
+  min-height: 2lh;
+  margin: 9px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--color-soft);
+}
+
+
+
+@media (max-width: 760px) {
+  /* A plain percentage, not minmax: with a 258px floor the card came out
+     NARROWER on a phone than in the 290px desktop column, which cropped the
+     shot down to a blank strip of page margin and clipped the role line. */
+  .work-grid { grid-auto-columns: 86%; }
+  .work-shot { aspect-ratio: 4 / 3; }
+  .work-role-tag { max-width: 50%; }
+}
+
+/* "System Design" is the longest role line and sets the floor here. */
+@media (max-width: 380px) {
+  .work-role-tag b { font-size: 18px; }
+  .work-kicker { font-size: 9.5px; }
+  .work-role-tag i { font-size: 9.5px; }
+  /* 237px card: the shot starts at 135px and the text box has to end before
+     it, inset and gap included. "System Design" wraps to two lines here. */
+  .work-role-tag { max-width: 46%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-grid { scroll-behavior: auto; }
+  .work-card:hover .work-shot,
+  .work-card:focus-within .work-shot { transform: none; }
+  .work-shot { transition: border-color var(--dur-ui) var(--ease-calm); }
 }
 
 .work-meta {
@@ -2457,12 +2661,6 @@ html.cursor-custom iframe * { cursor: auto !important; }
   letter-spacing: 0.012em;
 }
 
-.work-headline {
-  margin: 0;
-  font: var(--display-wght) clamp(1.2rem, 2vw, 1.75rem) / 1.25 var(--font-display);
-  letter-spacing: -0.022em;
-  text-wrap: balance;
-}
 
 
 .work-result { margin-top: 10px; font-size: 15px; line-height: 1.6; }
@@ -2583,12 +2781,18 @@ html.cursor-custom iframe * { cursor: auto !important; }
    Every card gets it. On the section library card the one action is the
    "Ask about this project" button, so the overlay stretches that instead
    and a click anywhere opens the assistant with the question ready. */
-.work-actions > .work-link::after {
+.work-actions > .work-link:not(.ask-about)::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  border-radius: 14px;
+  border-radius: 16px;
+}
+/* The whole card is one target, so the keyboard ring belongs on the card,
+   not on the link's few words. The overlay already traces the card exactly. */
+.work-actions > .work-link:not(.ask-about):focus-visible::after {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 /* Anything else interactive has to sit above that overlay or the card
    swallows it. The panel is lifted too: it holds its own content once
@@ -2605,9 +2809,6 @@ html.cursor-custom iframe * { cursor: auto !important; }
 .work-card:hover .work-link { text-decoration-color: var(--color-accent); }
 .work-card:hover .work-link .arrow { transform: translateX(2px); }
 
-@media (max-width: 720px) {
-  .work-grid { grid-template-columns: minmax(0, 1fr); }
-}
 
 /* --- "See my thinking" --------------------------------------------------- */
 
