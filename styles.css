@@ -20,6 +20,14 @@
   --color-highlight:  #fd2;
   --color-live:       #146c2e;   /* the "Live" pill: dark enough to clear 4.5:1
                                     against its own 13% tint on warm paper */
+  /* Hover wash. Over light paper the tint has to be LIGHTER than the paper
+     in value, not darker: a dark hue at low alpha just greys the panel down
+     to a dingy taupe (rgb(229,212,203) at 52%/44%). High lightness adds the
+     colour without dropping the value. Dark mode overrides all four. */
+  --glow-s:   90%;
+  --glow-l:   78%;
+  --glow-top: 0.38;
+  --glow-mid: 0.13;
   --color-rule:       rgba(39, 29, 22, 0.1);
   --color-header-bg:  rgba(250, 249, 247, 0.82);
   --color-linkedin:   var(--color-accent);
@@ -89,6 +97,10 @@
     --color-hairline:  #2e3331;
     --color-accent:    #6d9bf6;
     --color-live:      #58cc8f;
+    --glow-s:   88%;
+    --glow-l:   56%;
+    --glow-top: 0.34;
+    --glow-mid: 0.12;
     --color-on-accent: #0a1730;
     --color-rule:      rgba(236, 233, 228, 0.09);
     --color-header-bg: rgba(19, 21, 20, 0.82);
@@ -115,6 +127,10 @@
   --color-hairline:  #2e3331;
   --color-accent:    #6d9bf6;
   --color-live:      #58cc8f;
+  --glow-s:   88%;
+  --glow-l:   56%;
+  --glow-top: 0.34;
+  --glow-mid: 0.12;
   --color-on-accent: #0a1730;
   --color-rule:      rgba(236, 233, 228, 0.09);
   --color-header-bg: rgba(19, 21, 20, 0.82);
@@ -2467,14 +2483,19 @@ html.cursor-custom iframe * { cursor: auto !important; }
   background-color: var(--color-sunken);
   /* Hover wash. --glow is a hue set per card from its own screenshot, so a
      card lights up in its artwork's colour rather than one house accent.
-     The panel's own background paints below ::before, which is what puts
-     the wash under the dots and under the shot rather than over them. */
+     The panel's own background paints below its children, which is what
+     puts the wash under both the motifs and the screenshot.
+
+     Linear, not radial: a radial ending at 78% left a faint curved edge
+     arcing across the panel, which on light paper read as the boundary of
+     a stain. A top-to-bottom fade reaching transparent exactly at the
+     bottom edge has no boundary to see. */
   --glow: 215;
   background-image:
-    radial-gradient(135% 105% at 50% 0%,
-      hsl(var(--glow) 88% 56% / calc(var(--glow-a) * 0.34)) 0%,
-      hsl(var(--glow) 88% 56% / calc(var(--glow-a) * 0.12)) 45%,
-      transparent 78%);
+    linear-gradient(to bottom,
+      hsl(var(--glow) var(--glow-s) var(--glow-l) / calc(var(--glow-a) * var(--glow-top))) 0%,
+      hsl(var(--glow) var(--glow-s) var(--glow-l) / calc(var(--glow-a) * var(--glow-mid))) 48%,
+      transparent 100%);
   transition: border-color var(--dur-ui) var(--ease-calm),
               transform var(--dur-ui) var(--ease-calm),
               --glow-a var(--dur-ui) var(--ease-calm);
