@@ -2465,36 +2465,76 @@ html.cursor-custom iframe * { cursor: auto !important; }
   border: 1px solid var(--color-hairline);
   border-radius: 16px;
   background-color: var(--color-sunken);
-  /* A dot grid rather than ruled lines: it gives the panel a ground without
-     drawing a box around the screenshot sitting on it. Mixed from the ink
-     token, so it re-tints in dark mode with no second variable. */
-  --grid-dot: color-mix(in srgb, var(--color-ink) 15%, transparent);
+  /* Hover wash. --glow is a hue set per card from its own screenshot, so a
+     card lights up in its artwork's colour rather than one house accent.
+     The panel's own background paints below ::before, which is what puts
+     the wash under the dots and under the shot rather than over them. */
+  --glow: 215;
+  background-image:
+    radial-gradient(135% 105% at 50% 0%,
+      hsl(var(--glow) 88% 56% / calc(var(--glow-a) * 0.34)) 0%,
+      hsl(var(--glow) 88% 56% / calc(var(--glow-a) * 0.12)) 45%,
+      transparent 78%);
   transition: border-color var(--dur-ui) var(--ease-calm),
-              transform var(--dur-ui) var(--ease-calm);
+              transform var(--dur-ui) var(--ease-calm),
+              --glow-a 420ms var(--ease-calm);
 }
-/* The pattern rides on its own layer so it can be masked. A background
-   image cannot be faded per layer, and masking .work-shot itself would eat
-   the screenshot and the role text with it. Sits under both: as a
-   pseudo-element it paints before every child of the panel. */
-.work-shot::before {
-  content: "";
+/* Registered so the wash can fade in. An unregistered custom property is
+   just a string to the engine, and jumps from 0 to 1 with no transition. */
+@property --glow-a {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+/* --- motifs ---------------------------------------------------------------
+   The panel's ground: line icons of what the product actually deals with,
+   scattered and revealed on hover. Decorative, so the whole layer is
+   aria-hidden in the markup and inert to the pointer; the card's single
+   click target is unaffected. It sits before .work-shot-img in the DOM, so
+   it paints under the screenshot. */
+/* The sprite only defines shapes. Taking it out of flow stops it reserving
+   a line box at the foot of the page. */
+.wm-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.work-motifs {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(var(--grid-dot) 1.2px, transparent 1.3px);
-  background-size: 18px 18px;
-  /* Densest behind the role statement, dissolving toward the shot, so the
-     paper reads as a surface the screenshot is lying on rather than as a
-     texture tiled edge to edge behind it. */
-  -webkit-mask-image: radial-gradient(125% 115% at 24% 76%, #000 30%, transparent 88%);
-  mask-image: radial-gradient(125% 115% at 24% 76%, #000 30%, transparent 88%);
+  opacity: 0;
+  transition: opacity 420ms var(--ease-calm);
+}
+.work-card:hover .work-motifs,
+.work-card:focus-within .work-motifs { opacity: 1; }
+
+.wm {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  rotate: var(--r);
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Low enough to stay a ground rather than compete with the role
+     statement sitting over it. */
+  opacity: 0.22;
 }
 
 .work-card:hover .work-shot,
 .work-card:focus-within .work-shot {
   border-color: color-mix(in srgb, var(--color-accent) 42%, var(--color-hairline));
   transform: translateY(-2px);
+  --glow-a: 1;
 }
 
 /* Anchored off the right edge and oversized, so the crop is deliberate:
@@ -2639,6 +2679,7 @@ html.cursor-custom iframe * { cursor: auto !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .work-grid { scroll-behavior: auto; }
+  .work-motifs { transition: none; }
   .work-card:hover .work-shot,
   .work-card:focus-within .work-shot { transform: none; }
   .work-shot { transition: border-color var(--dur-ui) var(--ease-calm); }
