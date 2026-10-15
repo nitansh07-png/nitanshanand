@@ -621,19 +621,23 @@ mark { background: none; color: inherit; }
 
 /* --- resume hover preview ------------------------------------------------ *
    A peek at page 1 on hover or keyboard focus. The image is only fetched on
-   first reveal, so the 99KB render costs nothing on load. Pointer-events stay
-   off so the popover can never swallow the click on the link underneath.     */
+   first reveal, so the render costs nothing on load. The card takes the
+   pointer only while it is open: it holds a full-screen button and a
+   download link now, and closed it must not swallow clicks meant for the
+   link underneath.                                                           */
 
 .resume-hint { position: relative; display: inline-flex; }
 
 .resume-peek {
   position: absolute;
-  /* Beside the button, vertically centred on it. */
-  top: 50%;
+  /* Beside the button and hanging DOWN from its top edge. Centred on the
+     button it reached 179px above and sat squarely on the headline, which
+     is the one thing in the hero worth not covering. */
+  top: 0;
   left: calc(100% + 14px);
   z-index: 60;
   display: block;
-  width: 260px;
+  width: 300px;
   padding: 8px;
   border: 1px solid var(--color-hairline);
   border-radius: 12px;
@@ -643,16 +647,20 @@ mark { background: none; color: inherit; }
   /* The -50% y stays in every state, so the entrance only slides on x.
      --peek-shift is set by script.js to nudge the card back into the
      viewport when centring on the button would hang it off an edge. */
-  transform: translate(-8px, calc(-50% + var(--peek-shift, 0px))) scale(0.98);
-  transform-origin: 0 50%;
+  transform: translate(-8px, var(--peek-shift, 0px)) scale(0.98);
+  transform-origin: 0 20%;
   pointer-events: none;
   visibility: hidden;
   transition: opacity 0.18s var(--ease-calm), transform 0.22s var(--ease-calm), visibility 0s linear 0.2s;
 }
 .resume-hint.is-peeking .resume-peek {
   opacity: 1;
-  transform: translate(0, calc(-50% + var(--peek-shift, 0px)));
+  transform: translate(0, var(--peek-shift, 0px));
   visibility: visible;
+  /* The card holds buttons now, so it has to accept the pointer. Only once
+     open: a non-interactive card would still swallow clicks meant for the
+     page behind it. */
+  pointer-events: auto;
   transition-delay: 0s;
 }
 
@@ -665,11 +673,146 @@ mark { background: none; color: inherit; }
 }
 
 .resume-peek-foot {
-  display: block;
-  padding: 7px 2px 1px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  padding: 8px 2px 1px;
+}
+.resume-peek-meta {
   color: var(--color-soft);
   font-family: var(--font-mono);
   font-size: 11px;
+}
+.resume-peek-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.resume-peek-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--color-ink);
+  font: 500 11.5px/1 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--dur-tap) var(--ease-calm),
+              color var(--dur-tap) var(--ease-calm);
+}
+.resume-peek-btn svg { width: 13px; height: 13px; flex: none; }
+.resume-peek-btn:hover {
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  color: var(--color-accent);
+}
+.resume-peek-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* --- resume, full screen ------------------------------------------------- */
+
+.resume-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 36px);
+}
+.resume-modal[hidden] { display: none; }
+
+.resume-modal-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 13, 12, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity var(--dur-ui) var(--ease-calm);
+}
+.resume-modal.is-open .resume-modal-scrim { opacity: 1; }
+
+.resume-modal-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(980px, 100%);
+  height: min(100%, 94vh);
+  overflow: hidden;
+  border: 1px solid var(--color-hairline);
+  border-radius: 14px;
+  background: var(--color-raised);
+  box-shadow: 0 32px 80px -28px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(8px) scale(0.99);
+  transition: opacity var(--dur-ui) var(--ease-calm),
+              transform var(--dur-ui) var(--ease-calm);
+}
+.resume-modal.is-open .resume-modal-card { opacity: 1; transform: none; }
+
+.resume-modal-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 14px;
+  padding: 10px 12px 10px 16px;
+  border-bottom: 1px solid var(--color-hairline);
+}
+.resume-modal-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.resume-modal-tools { display: inline-flex; align-items: center; gap: 6px; }
+
+.resume-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 8px;
+  background: none;
+  color: var(--color-ink);
+  font: 500 13px/1 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--dur-tap) var(--ease-calm),
+              color var(--dur-tap) var(--ease-calm);
+}
+.resume-modal-btn svg { width: 15px; height: 15px; flex: none; }
+.resume-modal-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.resume-modal-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* The PDF needs a light sheet behind it in either theme: the file has no
+   background of its own and renders black-on-transparent. */
+.resume-modal-frame {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  background: #fff;
+}
+
+/* On a phone the dialog is the whole screen, and the touch targets grow. */
+@media (max-width: 600px) {
+  .resume-modal { padding: 0; }
+  .resume-modal-card { height: 100%; border: 0; border-radius: 0; }
+  .resume-modal-btn { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-modal-scrim,
+  .resume-modal-card { transition: none; }
+  .resume-modal-card { transform: none; }
 }
 
 /* Touch has no hover, and the popover would just cover the page. */

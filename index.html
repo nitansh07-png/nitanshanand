@@ -99,10 +99,25 @@
         <span class="resume-hint">
           <a data-buzz="One page. I promise." class="home-resume-button" href="Nitansh-Anand-Resume.pdf" download>Download resume</a>
           <!-- Page 1 rendered from the PDF. Regenerate with tools/build-resume-preview.md
-               if the resume changes. Decorative: the link itself is the content. -->
-          <span class="resume-peek" aria-hidden="true">
+               if the resume changes. The image is decorative, but the card is
+               no longer aria-hidden: it holds real controls now, and hiding
+               focusable things from assistive tech is worse than not having
+               them. -->
+          <span class="resume-peek">
             <img data-src="assets/resume-preview.webp" alt="" width="720" height="932" decoding="async" />
-            <span class="resume-peek-foot">1 page &middot; PDF</span>
+            <span class="resume-peek-foot">
+              <span class="resume-peek-meta">1 page &middot; PDF</span>
+              <span class="resume-peek-actions">
+                <button type="button" class="resume-peek-btn" data-resume-open>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Full screen
+                </button>
+                <a class="resume-peek-btn" href="Nitansh-Anand-Resume.pdf" download>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Download
+                </a>
+              </span>
+            </span>
           </span>
         </span>
 
@@ -898,6 +913,32 @@
 <script src="claude-usage.js"></script>
 <script src="ask-knowledge.js"></script>
 <script src="linkedin-posts.js"></script>
+  <!-- ───────────────────  RESUME, FULL SCREEN  ───────────────────
+       Opened from the hover preview. The PDF goes in an iframe so the
+       browser's own viewer supplies zoom, scroll, print and its own save,
+       rather than this page reimplementing any of it. src is set on first
+       open, so no visitor pays for the PDF unless they ask for it.
+       ───────────────────────────────────────────────────────────── -->
+  <div class="resume-modal" id="resume-modal" hidden>
+    <div class="resume-modal-scrim" data-resume-close></div>
+    <div class="resume-modal-card" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title">
+      <div class="resume-modal-bar">
+        <p class="resume-modal-title" id="resume-modal-title">Nitansh Anand, resume</p>
+        <span class="resume-modal-tools">
+          <a class="resume-modal-btn" href="Nitansh-Anand-Resume.pdf" download>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download
+          </a>
+          <button type="button" class="resume-modal-btn resume-modal-close" data-resume-close>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            Close
+          </button>
+        </span>
+      </div>
+      <iframe class="resume-modal-frame" title="Nitansh Anand, resume" data-src="Nitansh-Anand-Resume.pdf"></iframe>
+    </div>
+  </div>
+
 <script src="script.js"></script>
 
   <!-- ───────────────────  MOTIF SPRITE  ───────────────────
@@ -1002,6 +1043,8 @@
       </symbol>
     </defs>
   </svg>
+
+
 
 </body>
 </html>

@@ -1517,7 +1517,9 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
 
     var MARGIN = 12;
     var b = link.getBoundingClientRect();
-    var wanted = b.top + b.height / 2 - cardH / 2;
+    // Its resting place is the button's top edge, so that is what the shift
+    // is measured against.
+    var wanted = b.top;
     var lowest = window.innerHeight - cardH - MARGIN;
     // Taller than the viewport: pin to the top and let it clip at the bottom.
     var settled = lowest < MARGIN ? MARGIN : clamp(MARGIN, wanted, lowest);
@@ -1549,7 +1551,13 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
     // Focus can arrive mid-scroll, so measure again once layout has settled.
     requestAnimationFrame(reposition);
   });
-  link.addEventListener("blur", function () { close(0); });
+
+  // Closing on the link's own blur made the card's buttons unreachable: the
+  // first Tab into them dismissed the thing holding them. Close only when
+  // focus leaves the hint altogether.
+  hint.addEventListener("focusout", function (e) {
+    if (!hint.contains(e.relatedTarget)) close(0);
+  });
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && hint.classList.contains("is-peeking")) close(0);
@@ -1563,6 +1571,100 @@ function clamp(min, v, max) { return Math.max(min, Math.min(v, max)); }
   }
   window.addEventListener("scroll", keepInView, { passive: true });
   window.addEventListener("resize", keepInView);
+})();
+
+/* ------------------------------------------------------------------ *
+ * Resume, full screen                                                 *
+ *                                                                     *
+ * Opened from the hover preview. The PDF is handed to an iframe so the *
+ * browser's own viewer supplies zoom, scroll, print and save; this     *
+ * page only owns the shell. src is set on first open, so the file is   *
+ * never fetched for someone who does not ask for it.                   *
+ * ------------------------------------------------------------------ */
+(function () {
+  var modal = document.getElementById("resume-modal");
+  if (!modal) return;
+
+  var card = modal.querySelector(".resume-modal-card");
+  var frame = modal.querySelector(".resume-modal-frame");
+  var closeBtn = modal.querySelector(".resume-modal-close");
+  var openers = [].slice.call(document.querySelectorAll("[data-resume-open]"));
+  if (!card || !frame || !closeBtn || !openers.length) return;
+
+  var opener = null;
+  var loaded = false;
+  var inerted = [];
+
+  // Same walk the ask panel uses: everything that is not the dialog goes
+  // inert, so the tab ring cannot wander behind the overlay.
+  function setInert(on) {
+    if (!on) {
+      inerted.forEach(function (el) { el.removeAttribute("inert"); });
+      inerted = [];
+      return;
+    }
+    if (inerted.length) return;
+    var node = modal;
+    while (node && node.parentNode && node !== document.body) {
+      [].slice.call(node.parentNode.children).forEach(function (el) {
+        if (el === node || el.hasAttribute("inert")) return;
+        el.setAttribute("inert", "");
+        inerted.push(el);
+      });
+      node = node.parentNode;
+    }
+  }
+
+  function open(from) {
+    opener = from || null;
+    if (!loaded) { loaded = true; frame.src = frame.dataset.src; }
+    modal.hidden = false;
+    // Force a reflow between [hidden] coming off and the class going on, or
+    // the browser has no start state to animate from. A forced layout read
+    // rather than requestAnimationFrame: rAF is throttled in a background
+    // tab, and the dialog would open invisible.
+    void modal.offsetHeight;
+    modal.classList.add("is-open");
+    setInert(true);
+    document.documentElement.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function close() {
+    modal.classList.remove("is-open");
+    // Release inert BEFORE restoring focus: focus() on an inert element is
+    // a no-op and the caret would end up on <body>.
+    setInert(false);
+    document.documentElement.style.overflow = "";
+    modal.hidden = true;
+    restoreFocus();
+    opener = null;
+  }
+
+  // The opener sits inside the hover card, which has gone back to
+  // visibility:hidden by the time this runs, and focus() on a hidden element
+  // is a no-op that would strand the caret on <body>. Fall back to the link
+  // that owns the card, which is always on screen.
+  function restoreFocus() {
+    if (opener && document.contains(opener)) {
+      opener.focus();
+      if (document.activeElement === opener) return;
+    }
+    var link = document.querySelector(".home-resume-button");
+    if (link) link.focus();
+  }
+
+  openers.forEach(function (btn) {
+    btn.addEventListener("click", function () { open(btn); });
+  });
+
+  modal.addEventListener("click", function (e) {
+    if (e.target.closest("[data-resume-close]")) close();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.hidden) close();
+  });
 })();
 
 /* ------------------------------------------------------------------ *
